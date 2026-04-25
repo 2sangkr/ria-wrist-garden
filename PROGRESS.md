@@ -1,103 +1,127 @@
-# 리아의 손목정원 — 개발 진행사항
+# 리아샵 — 개발 진행사항
 
 > 마지막 업데이트: 2026-04-25
 
 ---
 
-## Phase 1: 정적 페이지 완성 ✅ 완료 (2026-04-25)
+## ✅ 완료된 작업
 
-### 완료된 작업
+### Phase 0: 환경 세팅
+- [x] Next.js 16 + TypeScript + Tailwind CSS 프로젝트 초기화
+- [x] autoprefixer 설치
+- [x] GitHub 레포지토리 생성 및 연결 (`https://github.com/2sangkr/ria-wrist-garden`)
+- [x] git 커밋 / 푸시 설정 완료
 
-| 항목 | 상태 | 비고 |
+### Phase 1: 디자인 시스템 + 전체 페이지 구조
+
+#### 디자인 시스템 (index.html 기준)
+- [x] 색상 변수: `--bg #fff / --ink #222 / --ink-soft #555 / --ink-mute #999 / --line #e5e5e5`
+- [x] 폰트: Noto Sans KR + Playfair Display
+- [x] Tailwind 커스텀 컬러 및 폰트 설정
+
+#### 공통 레이아웃
+- [x] **Header** — 유틸리티바(로그인/회원가입/장바구니) → 로고(중앙) → 스티키 네비 3단 구조
+- [x] **Footer** — 4열 그리드 (사업자정보 / SHOP / HELP / 고객센터)
+- [x] 모바일 햄버거 메뉴
+
+#### 페이지
+| 경로 | 설명 | 상태 |
 |------|------|------|
-| 프로젝트 초기 세팅 (Next.js 16 + TypeScript + Tailwind) | ✅ | `package.json`, `tsconfig.json`, `tailwind.config.ts` |
-| 디자인 시스템 설정 | ✅ | 컬러 팔레트 CSS 변수, 폰트 설정 |
-| 공통 헤더 (반응형, 모바일 햄버거 메뉴) | ✅ | `src/components/layout/Header.tsx` |
-| 공통 푸터 (사업자 정보 포함) | ✅ | `src/components/layout/Footer.tsx` |
-| 메인 페이지 (히어로, 카테고리, 베스트, 스토리, 배송 배너) | ✅ | `src/app/page.tsx` |
-| 전체 상품 목록 페이지 | ✅ | `src/app/shop/page.tsx` |
-| 카테고리별 페이지 | ✅ | `src/app/shop/[category]/page.tsx` |
-| 상품 상세 페이지 (옵션 선택, 작가 노트, 상품 정보표) | ✅ | `src/app/product/[slug]/page.tsx` |
-| 장바구니 담기 버튼 컴포넌트 | ✅ | `src/components/product/AddToCartButton.tsx` |
-| 작가 이야기 페이지 | ✅ | `src/app/story/page.tsx` |
-| 사이즈 가이드 페이지 | ✅ | `src/app/guide/size/page.tsx` |
-| 관리 방법 페이지 | ✅ | `src/app/guide/care/page.tsx` |
-| 배송·교환·환불 페이지 | ✅ | `src/app/guide/shipping/page.tsx` |
-| 장바구니 페이지 (UI 스켈레톤) | ✅ | `src/app/cart/page.tsx` |
-| 404 페이지 | ✅ | `src/app/not-found.tsx` |
-| 상품 타입 정의 | ✅ | `src/types/index.ts` |
-| 상품 더미 데이터 (4개) | ✅ | `src/lib/products.ts` |
+| `/` | 홈 (히어로 배너 + 신상품 + 베스트 + 카테고리 열) | ✅ |
+| `/shop` | 전체상품 (배너 + 정렬바 + 4열 그리드 + 페이지네이션) | ✅ |
+| `/shop/[category]` | 카테고리별 (new / best / summer / classic / nature / custom) | ✅ |
+| `/product/[slug]` | 상품 상세 (이미지 + 옵션 선택 + 작가 노트 + 상품 정보표) | ✅ |
+| `/story` | 작가 이야기 | ✅ |
+| `/guide/size` | 사이즈 가이드 | ✅ |
+| `/guide/care` | 관리 방법 | ✅ |
+| `/guide/shipping` | 배송·교환·환불 | ✅ |
+| `/cart` | 장바구니 (UI 스켈레톤) | ✅ |
+| `/not-found` | 404 페이지 | ✅ |
 
-### 커밋 히스토리
-- `c1ffb0e` feat: Phase 1 — 프로젝트 초기 세팅
-- `4bb8394` feat: Phase 1 완성 — 전체 페이지 구조 (정적 페이지)
+#### 컴포넌트
+- [x] **ProductCard** — 1:1 썸네일, 라벨형(상품명/판매가), 컬러닷, 하트 버튼, 배지(NEW/BEST/SOLD OUT)
+- [x] **AddToCartButton** — 사이즈 선택, 수량 선택, 각인 텍스트(custom), 장바구니/바로구매 버튼
 
-### 미완료 (다음 단계로 이월)
-- [ ] 실제 상품 사진 교체 (현재 그라디언트 플레이스홀더)
-- [ ] 모바일 실기기 테스트
+#### 데이터
+- [x] 상품 더미 데이터 8개 (바다의산호, 꿀빛오후, 이끼정원, 장미노을, 바닐라크림, 숲속산책, 복숭아꽃, 안개낀아침)
+- [x] 타입 정의 (`Product`, `CartItem`, `Order`, `ColorOption`, `SizeOption`)
 
 ---
 
-## Phase 2: 콘텐츠 채우기 🔜 예정
+## 🔜 남은 작업
 
-| 항목 | 상태 |
-|------|------|
-| 상품 사진 5~10개 등록 | ⏳ 사용자 촬영 필요 |
-| 작가 노트 최종 검수 | ⏳ |
-| 사이즈 가이드 일러스트 | ⏳ |
-| 배송·교환 정책 최종 확인 | ⏳ |
-| 개인정보처리방침 작성 | ⏳ |
-| 이용약관 작성 | ⏳ |
+### Phase 2: 콘텐츠 완성
+- [ ] 실제 상품 사진 교체 (현재 그라디언트 플레이스홀더) — **사용자 촬영 필요**
+- [ ] 푸터 사업자 정보 실제 값 입력 (대표자명, 주소, 사업자번호 등) — **사용자 입력 필요**
+- [ ] 개인정보처리방침 페이지 (`/legal/privacy`)
+- [ ] 이용약관 페이지 (`/legal/terms`)
+- [ ] 사이즈 가이드 일러스트 추가
+- [ ] 모바일 실기기 테스트 (380px / 768px)
+
+### Phase 3: 장바구니 + 주문 기능
+- [ ] 장바구니 상태 관리 (Zustand 또는 Context API)
+- [ ] 장바구니 담기 실제 동작 (ProductCard → Cart 연동)
+- [ ] 장바구니 페이지 완성 (상품 목록, 수량 변경, 삭제, 5만원 무료배송 게이지)
+- [ ] 주문서 페이지 (`/checkout`) — 배송지 입력, 결제수단 선택
+- [ ] 주문 완료 페이지 (`/order/complete`)
+- [ ] 비회원 주문 지원 (이메일 + 전화번호만 입력)
+
+### Phase 4: 결제 연동 (사업자등록 완료 후)
+- [ ] Supabase 프로젝트 설정 (DB 스키마, Storage, RLS 정책)
+- [ ] 토스페이먼츠 가맹점 신청 — **사용자 작업 필요 (사업자등록증 필요)**
+- [ ] 토스페이먼츠 결제 위젯 연동
+- [ ] 웹훅으로 주문 상태 자동 업데이트
+- [ ] 주문 내역 조회 페이지 (`/account/orders`)
+- [ ] 관리자 페이지 (`/admin`) — 주문 목록, 상태 변경, CSV 다운로드
+
+### Phase 5: 운영 도구
+- [ ] 인스타그램 피드 임베드 (메인 하단)
+- [ ] 카카오톡 채널 연결 버튼
+- [ ] Google Analytics 4 스크립트 삽입
+- [ ] 이메일 알림 (주문 접수/발송 시 — Resend 사용 예정)
+
+### Phase 6: 오픈 전 최종 점검
+- [ ] Lighthouse 성능 90점 이상 목표
+- [ ] SEO: 각 페이지 메타 태그, OG 이미지, sitemap.xml, robots.txt
+- [ ] 모든 페이지 모바일 실기기 최종 확인
+- [ ] 결제 테스트 모드로 전체 플로우 검증 (장바구니 → 결제 → 주문완료 → 환불)
+- [ ] 사업자 정보 풋터 표기 최종 확인 (전자상거래법 의무사항)
+- [ ] Vercel 배포 (도메인 연결)
 
 ---
 
-## Phase 3: 결제·주문 연동 🔜 예정
+## 사용자 직접 해야 할 항목
 
-| 항목 | 상태 |
+| 항목 | 이유 |
 |------|------|
-| Supabase 프로젝트 설정 | ⏳ |
-| 토스페이먼츠 가맹점 신청 | ⏳ 사업자등록 완료 후 |
-| 결제 위젯 연동 | ⏳ |
-| 관리자 페이지 | ⏳ |
-| 장바구니 상태 관리 (Zustand) | ⏳ |
+| 사업자등록 | 통신판매업 신고 및 PG 가맹점 심사 필요 |
+| 도메인 구매 | gabia.com 또는 hosting.kr 권장 |
+| 상품 사진 촬영 | WebP 형식, 1080px 기준으로 전달 |
+| 토스페이먼츠 가맹점 신청 | 사업자등록 완료 후 진행 |
+| 푸터 사업자 정보 입력 | `src/components/layout/Footer.tsx` 수정 |
 
 ---
 
-## Phase 4: 운영 도구 🔜 예정
+## 커밋 히스토리
 
-| 항목 | 상태 |
+| 커밋 | 내용 |
 |------|------|
-| 인스타그램 피드 임베드 | ⏳ |
-| 카카오톡 채널 연결 | ⏳ |
-| Google Analytics 4 | ⏳ |
-| 이메일 알림 (Resend) | ⏳ |
-
----
-
-## Phase 5: 오픈 전 점검 🔜 예정
-
-| 항목 | 상태 |
-|------|------|
-| 모바일 실기기 테스트 | ⏳ |
-| 결제 테스트 모드 검증 | ⏳ |
-| Lighthouse 90점 이상 | ⏳ |
-| SEO 메타 태그, sitemap.xml | ⏳ |
-| 사업자 정보 최종 확인 | ⏳ |
+| `c1ffb0e` | feat: Phase 1 — 프로젝트 초기 세팅 |
+| `4bb8394` | feat: Phase 1 완성 — 전체 페이지 구조 |
+| `b3f633c` | docs: PROGRESS.md 최초 작성 |
+| `deab78c` | feat: index.html 디자인으로 전면 재작업 |
 
 ---
 
 ## 기술 스택
 
-- **Frontend**: Next.js 16, TypeScript, Tailwind CSS
-- **폰트**: Cormorant Garamond, Gowun Batang, Gowun Dodum
-- **DB (예정)**: Supabase
-- **결제 (예정)**: 토스페이먼츠
-- **호스팅 (예정)**: Vercel
-
-## 사용자 작업 필요 항목
-
-1. **사업자등록** — 통신판매업 신고를 위해 필요
-2. **도메인 구매** — gabia.com 또는 hosting.kr 권장
-3. **상품 사진 촬영** — 실제 팔찌 사진 (WebP 변환 후 전달)
-4. **푸터 사업자 정보 입력** — `src/components/layout/Footer.tsx` 수정 필요
-5. **토스페이먼츠 가맹점 신청** — 사업자등록 완료 후
+| 구분 | 기술 |
+|------|------|
+| 프레임워크 | Next.js 16 (App Router) |
+| 언어 | TypeScript |
+| 스타일 | Tailwind CSS + PostCSS |
+| 폰트 | Noto Sans KR, Playfair Display |
+| DB (예정) | Supabase |
+| 결제 (예정) | 토스페이먼츠 |
+| 호스팅 (예정) | Vercel |
+| 레포지토리 | https://github.com/2sangkr/ria-wrist-garden |
