@@ -6,6 +6,11 @@ export type SizeOption = {
   stock: number;
 };
 
+export type ColorOption = {
+  name: string;
+  hex: string;
+};
+
 export type Product = {
   id: string;
   slug: string;
@@ -16,7 +21,9 @@ export type Product = {
   compare_at_price?: number;
   description: string;
   materials: string[];
+  colors: ColorOption[];
   sizes: SizeOption[];
+  thumb_class: string;
   images: string[];
   is_featured: boolean;
   is_new: boolean;
@@ -33,11 +40,7 @@ export type CartItem = {
 export type Order = {
   id: string;
   order_number: string;
-  customer: {
-    name: string;
-    email: string;
-    phone: string;
-  };
+  customer: { name: string; email: string; phone: string };
   shipping_address: {
     name: string;
     phone: string;

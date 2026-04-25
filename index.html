@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>리아샵 - 핸드메이드 팔찌</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --ink: #222222;
+    --ink-soft: #555555;
+    --ink-mute: #999999;
+    --line: #e5e5e5;
+    --line-soft: #f0f0f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 13px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  ul, ol { list-style: none; }
+
+  /* === 상단 유틸리티 바 === */
+  .util-bar {
+    border-bottom: 1px solid var(--line);
+    font-size: 11px;
+  }
+  .util-wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 18px;
+    color: var(--ink-soft);
+  }
+  .util-wrap a:hover { color: var(--ink); }
+  .util-wrap .cart-count { color: var(--ink); font-weight: 500; }
+
+  /* === 헤더 === */
+  header {
+    border-bottom: 1px solid var(--line);
+    background: #fff;
+  }
+  .header-wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    text-align: center;
+  }
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+  }
+  .logo i { font-style: italic; font-weight: 400; }
+  .logo-sub {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: var(--ink-mute);
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+
+  /* === 메인 네비 === */
+  .main-nav {
+    border-bottom: 1px solid var(--line);
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .nav-wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+  }
+  .nav-wrap a {
+    display: block;
+    padding: 16px 4px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .nav-wrap a.active,
+  .nav-wrap a:hover { border-bottom-color: var(--ink); }
+
+  /* === 브레드크럼 === */
+  .breadcrumb {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 18px 20px;
+    font-size: 11px;
+    color: var(--ink-mute);
+  }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb span { margin: 0 6px; }
+
+  /* === 카테고리 배너 === */
+  .cat-banner {
+    max-width: 1280px;
+    margin: 0 auto 32px;
+    padding: 0 20px;
+  }
+  .cat-banner-img {
+    width: 100%;
+    height: 220px;
+    background: linear-gradient(90deg, #f5f5f0 0%, #ebe6dc 50%, #f5f5f0 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cat-banner-img::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 50%, rgba(200, 160, 130, 0.15) 0%, transparent 25%),
+      radial-gradient(circle at 80% 50%, rgba(160, 180, 150, 0.12) 0%, transparent 25%);
+  }
+  .cat-banner-text { position: relative; text-align: center; }
+  .cat-banner-en {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 48px;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+  }
+  .cat-banner-ko {
+    font-size: 13px;
+    letter-spacing: 0.3em;
+    color: var(--ink-soft);
+    margin-top: 8px;
+  }
+
+  /* === 카테고리 헤더 === */
+  .cat-header {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px 20px;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+  }
+  .cat-title {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+  .cat-count { font-size: 12px; color: var(--ink-soft); }
+  .cat-count strong { color: var(--ink); font-weight: 500; }
+
+  /* === 정렬 바 === */
+  .sort-bar {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .sort-options { display: flex; gap: 0; }
+  .sort-options a {
+    font-size: 12px;
+    color: var(--ink-soft);
+    padding: 4px 14px;
+    border-right: 1px solid var(--line);
+    transition: color 0.2s;
+  }
+  .sort-options a:first-child { padding-left: 0; }
+  .sort-options a:last-child { border-right: none; }
+  .sort-options a.active { color: var(--ink); font-weight: 500; }
+  .sort-options a:hover { color: var(--ink); }
+  .sort-tools {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    font-size: 11px;
+    color: var(--ink-soft);
+  }
+  .sort-tools select {
+    border: 1px solid var(--line);
+    background: #fff;
+    padding: 5px 10px;
+    font-size: 11px;
+    color: var(--ink-soft);
+    font-family: inherit;
+  }
+  .sort-tools button {
+    border: 1px solid var(--line);
+    background: #fff;
+    padding: 5px 14px;
+    font-size: 11px;
+    color: var(--ink);
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  /* === 상품 그리드 === */
+  .products {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 50px 24px;
+  }
+  .product { text-align: left; }
+  .product-thumb {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: #f7f7f7;
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+  .product-thumb-bg {
+    position: absolute;
+    inset: 0;
+    transition: transform 0.5s ease;
+  }
+  .product:hover .product-thumb-bg { transform: scale(1.04); }
+  .product-thumb-bg::after {
+    content: attr(data-label);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    letter-spacing: 0.2em;
+  }
+  .thumb-1 { background: linear-gradient(135deg, #e8d4c4, #c8a08a); }
+  .thumb-2 { background: linear-gradient(135deg, #d6cfb3, #b89d7e); }
+  .thumb-3 { background: linear-gradient(135deg, #c8d6c0, #95a892); }
+  .thumb-4 { background: linear-gradient(135deg, #d8b8a8, #a87a68); }
+  .thumb-5 { background: linear-gradient(135deg, #e0d4c0, #b8a888); }
+  .thumb-6 { background: linear-gradient(135deg, #c4b8a8, #8a7d6c); }
+  .thumb-7 { background: linear-gradient(135deg, #ddc4b4, #b89478); }
+  .thumb-8 { background: linear-gradient(135deg, #d0d4c8, #9aa090); }
+
+  .product-wish {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 28px;
+    height: 28px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+  }
+  .product-wish svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 1.5;
+  }
+  .product-soldout {
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+  .product-soldout span {
+    background: var(--ink);
+    color: #fff;
+    padding: 8px 20px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    font-weight: 500;
+  }
+  .product-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--ink);
+    color: #fff;
+    padding: 4px 10px;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    font-weight: 500;
+    z-index: 2;
+  }
+  .product-badge.new { background: #c8755e; }
+  .product-name {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .product-name strong {
+    font-weight: 500;
+    color: var(--ink-soft);
+    margin-right: 4px;
+  }
+  .product-meta {
+    font-size: 11px;
+    color: var(--ink-mute);
+    margin-bottom: 8px;
+  }
+  .product-price {
+    font-size: 13px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .product-price strong {
+    font-weight: 400;
+    color: var(--ink-soft);
+    margin-right: 4px;
+  }
+  .product-price s {
+    color: var(--ink-mute);
+    margin-right: 8px;
+    font-weight: 400;
+  }
+  .product-color {
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .product-color strong { color: var(--ink-soft); font-weight: 400; }
+  .color-dots { display: flex; gap: 4px; }
+  .color-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+  }
+
+  /* === 페이지네이션 === */
+  .pagination {
+    text-align: center;
+    padding: 20px 0 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+  }
+  .pagination a, .pagination button {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--line);
+    background: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .pagination a.active {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
+
+  /* === 푸터 === */
+  footer {
+    border-top: 1px solid var(--line);
+    background: #fafafa;
+    padding: 50px 20px 30px;
+    font-size: 11px;
+    color: var(--ink-soft);
+  }
+  .footer-wrap { max-width: 1280px; margin: 0 auto; }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 24px;
+  }
+  .footer-col h4 {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 14px;
+    letter-spacing: 0.05em;
+  }
+  .footer-col a {
+    display: block;
+    margin-bottom: 6px;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--ink); }
+  .footer-info { line-height: 1.8; }
+  .footer-info strong {
+    color: var(--ink);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 6px;
+    font-size: 12px;
+  }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-bottom-links a { margin-right: 14px; }
+  .footer-bottom-links a:hover { color: var(--ink); }
+
+  /* === 반응형 === */
+  @media (max-width: 980px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 40px 16px; }
+    .nav-wrap { gap: 24px; overflow-x: auto; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 30px; }
+    .cat-banner-img { height: 140px; }
+    .cat-banner-en { font-size: 32px; }
+    .sort-bar { flex-direction: column; gap: 12px; align-items: flex-start; }
+    .sort-options { flex-wrap: wrap; }
+    .util-wrap { gap: 12px; padding: 8px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="util-bar">
+  <div class="util-wrap">
+    <a href="#">로그인</a>
+    <a href="#">회원가입</a>
+    <a href="#">마이페이지</a>
+    <a href="#">주문조회</a>
+    <a href="#">고객센터</a>
+    <a href="#" class="cart-count">장바구니 (0)</a>
+  </div>
+</div>
+
+<header>
+  <div class="header-wrap">
+    <a href="#" class="logo">Lia<i>'s</i> Shop</a>
+    <div class="logo-sub">HANDMADE BRACELET</div>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <div class="nav-wrap">
+    <a href="#">전체상품</a>
+    <a href="#" class="active">신상품</a>
+    <a href="#">베스트</a>
+    <a href="#">여름시리즈</a>
+    <a href="#">클래식</a>
+    <a href="#">자연시리즈</a>
+    <a href="#">주문제작</a>
+    <a href="#">공지·이용안내</a>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="#">홈</a> <span>&gt;</span> <a href="#">신상품</a>
+</div>
+
+<div class="cat-banner">
+  <div class="cat-banner-img">
+    <div class="cat-banner-text">
+      <div class="cat-banner-en">New Arrivals</div>
+      <div class="cat-banner-ko">2 0 2 6   S P R I N G</div>
+    </div>
+  </div>
+</div>
+
+<div class="cat-header">
+  <h1 class="cat-title">신상품</h1>
+  <div class="cat-count">등록 제품 : <strong>8</strong>개</div>
+</div>
+
+<div class="sort-bar">
+  <div class="sort-options">
+    <a href="#" class="active">신상품</a>
+    <a href="#">상품명</a>
+    <a href="#">낮은가격</a>
+    <a href="#">높은가격</a>
+    <a href="#">제조사</a>
+    <a href="#">사용후기</a>
+  </div>
+  <div class="sort-tools">
+    <button>상품비교</button>
+    <select>
+      <option>- 조건선택 -</option>
+      <option>가격대별</option>
+      <option>색상별</option>
+    </select>
+  </div>
+</div>
+
+<div class="products">
+  <div class="product-grid">
+
+    <div class="product">
+      <div class="product-thumb">
+        <div class="product-thumb-bg thumb-1" data-label="— ocean coral —"></div>
+        <span class="product-badge new">NEW</span>
+        <div class="product-wish"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5 6.5 5c2 0 3.5 1 5.5 3 2-2 3.5-3 5.5-3 4 0 5.5 4 4 7-2.5 4.5-9.5 9-9.5 9z"/></svg></div>
+      </div>
+      <div class="product-name"><strong>상품명 :</strong>바다의 산호 팔찌</div>
+      <div class="product-meta">코랄 비즈 · 스테인리스 줄</div>
+      <div class="product-color">
+        <strong>상품색상 :</strong>
+        <span class="color-dots">
+          <span class="color-dot" style="background:#d4806b"></span>
+          <span class="color-dot" style="background:#e8b3a0"></span>
+        </span>
+      </div>
+      <div class="product-price"><strong>판매가 :</strong>18,000원</div>
+    </div>
+
+    <div class="product">
+      <div class="product-thumb">
+        <div class="product-thumb-bg thumb-2" data-label="— honey afternoon —"></div>
+        <span class="product-badge new">NEW</span>
+        <div class="product-wish"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5 6.5 5c2 0 3.5 1 5.5 3 2-2 3.5-3 5.5-3 4 0 5.5 4 4 7-2.5 4.5-9.5 9-9.5 9z"/></svg></div>
+      </div>
+      <div class="product-name"><strong>상품명 :</strong>꿀빛 오후 팔찌</div>
+      <div class="product-meta">유리 비즈 · 골드 디테일</div>
+      <div class="product-price"><strong>판매가 :</strong>16,500원</div>
+    </div>
+
+    <div class="product">
+      <div class="product-thumb">
+        <div class="product-thumb-bg thumb-3" data-label="— moss garden —"></div>
+        <span class="product-badge">BEST</span>
+        <div class="product-soldout"><span>SOLD OUT</span></div>
+        <div class="product-wish"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5 6.5 5c2 0 3.5 1 5.5 3 2-2 3.5-3 5.5-3 4 0 5.5 4 4 7-2.5 4.5-9.5 9-9.5 9z"/></svg></div>
+      </div>
+      <div class="product-name"><strong>상품명 :</strong>이끼 정원 팔찌</div>
+      <div class="product-meta">세이지 그린 비즈 · 실크 끈</div>
+      <div class="product-price"><strong>판매가 :</strong>19,000원</div>
+    </div>
+
+    <div class="product">
+      <div class="product-thumb">
+        <div class="product-thumb-bg thumb-4" data-label="— rose sunset —"></div>
+        <span class="product-badge new">NEW</span>
+        <div class="product-wish"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5 6.5 5c2 0 3.5 1 5.5 3 2-2 3.5-3 5.5-3 4 0 5.5 4 4 7-2.5 4.5-9.5 9-9.5 9z"/></svg></div>
+      </div>
+      <div class="product-name"><strong>상품명 :</strong>장미 노을 팔찌</div>
+      <div class="product-meta">로즈 골드 · 핸드페인팅 비즈</div>
+      <div class="product-price"><strong>판매가 :</strong><s>24,000원</s>21,000원</div>
+    </div>
+
+    <div class="product">
+      <div class="product-thumb">
+        <div class="product-thumb-bg thumb-5" data-label="— vanilla cream —"></div>
+        <div class="product-wish"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5 6.5 5c2 0 3.5 1 5.5 3 2-2 3.5-3 5.5-3 4 0 5.5 4 4 7-2.5 4.5-9.5 9-9.5 9z"/></svg></div>
+      </div>
+      <div class="product-name"><strong>상품명 :</strong>바닐라 크림 팔찌</div>
+      <div class="product-meta">아이보리 진주 · 실버 체인</div>
+      <div class="product-color">
+        <strong>상품색상 :</strong>
+        <span class="color-dots">
+          <span class="color-dot" style="background:#f0e6d2"></span>
+          <span class="color-dot" style="background:#d8c8a0"></span>
+        </span>
+      </div>
+      <div class="product-price"><strong>판매가 :</strong>17,500원</div>
+    </div>
+
+    <div class="product">
+      <div class="product-thumb">
+        <div class="product-thumb-bg thumb-6" data-label="— forest walk —"></div>
+        <span class="product-badge">BEST</span>
+        <div class="product-wish"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5 6.5 5c2 0 3.5 1 5.5 3 2-2 3.5-3 5.5-3 4 0 5.5 4 4 7-2.5 4.5-9.5 9-9.5 9z"/></svg></div>
+      </div>
+      <div class="product-name"><strong>상품명 :</strong>숲속 산책 팔찌</div>
+      <div class="product-meta">우드 비즈 · 가죽 끈</div>
+      <div class="product-price"><strong>판매가 :</strong>15,000원</div>
+    </div>
+
+    <div class="product">
+      <div class="product-thumb">
+        <div class="product-thumb-bg thumb-7" data-label="— peach blossom —"></div>
+        <div class="product-soldout"><span>SOLD OUT</span></div>
+        <div class="product-wish"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5 6.5 5c2 0 3.5 1 5.5 3 2-2 3.5-3 5.5-3 4 0 5.5 4 4 7-2.5 4.5-9.5 9-9.5 9z"/></svg></div>
+      </div>
+      <div class="product-name"><strong>상품명 :</strong>복숭아 꽃 팔찌</div>
+      <div class="product-meta">파스텔 핑크 비즈 · 실크 끈</div>
+      <div class="product-price"><strong>판매가 :</strong>16,000원</div>
+    </div>
+
+    <div class="product">
+      <div class="product-thumb">
+        <div class="product-thumb-bg thumb-8" data-label="— misty morning —"></div>
+        <span class="product-badge new">NEW</span>
+        <div class="product-wish"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5 6.5 5c2 0 3.5 1 5.5 3 2-2 3.5-3 5.5-3 4 0 5.5 4 4 7-2.5 4.5-9.5 9-9.5 9z"/></svg></div>
+      </div>
+      <div class="product-name"><strong>상품명 :</strong>안개 낀 아침 팔찌</div>
+      <div class="product-meta">스모키 그레이 비즈 · 실버</div>
+      <div class="product-price"><strong>판매가 :</strong>20,000원</div>
+    </div>
+
+  </div>
+
+  <div class="pagination">
+    <button>‹‹</button>
+    <button>‹</button>
+    <a href="#" class="active">1</a>
+    <a href="#">2</a>
+    <a href="#">3</a>
+    <button>›</button>
+    <button>››</button>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-wrap">
+    <div class="footer-top">
+      <div class="footer-col footer-info">
+        <strong>리아샵 (Lia's Shop)</strong>
+        대표자 : OOO<br>
+        소재지 : 서울특별시 OO구 OO로 00<br>
+        사업자등록번호 : 000-00-00000<br>
+        통신판매업 신고 : 0000-서울-0000<br>
+        개인정보보호책임자 : OOO
+      </div>
+      <div class="footer-col">
+        <h4>SHOP</h4>
+        <a href="#">전체 상품</a>
+        <a href="#">신상품</a>
+        <a href="#">베스트</a>
+        <a href="#">주문 제작</a>
+      </div>
+      <div class="footer-col">
+        <h4>HELP</h4>
+        <a href="#">배송 안내</a>
+        <a href="#">교환·환불</a>
+        <a href="#">사이즈 가이드</a>
+        <a href="#">자주 묻는 질문</a>
+      </div>
+      <div class="footer-col">
+        <h4>고객센터</h4>
+        <a href="#">카카오채널 [리아샵]</a>
+        <a href="#">hello@liashop.kr</a>
+        <a href="#">02-000-0000</a>
+        <a href="#" style="margin-top:10px;">Instagram @lia_shop</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>COPYRIGHT © 리아샵. ALL RIGHTS RESERVED.</span>
+      <div class="footer-bottom-links">
+        <a href="#">개인정보 처리방침</a>
+        <a href="#">이용약관</a>
+        <a href="#">이용안내</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

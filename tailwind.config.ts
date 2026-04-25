@@ -9,24 +9,19 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        cream: "#f5efe6",
-        "cream-deep": "#ede4d3",
-        ink: "#2b2419",
-        "ink-soft": "#5a4f3f",
-        rose: "#c08772",
-        "rose-deep": "#9a6450",
-        sage: "#8a9a7b",
-        gold: "#b8956a",
-        line: "#d4c5ae",
+        bg: "#ffffff",
+        ink: "#222222",
+        "ink-soft": "#555555",
+        "ink-mute": "#999999",
+        line: "#e5e5e5",
+        "line-soft": "#f0f0f0",
       },
       fontFamily: {
-        display: ["Cormorant Garamond", "Georgia", "serif"],
-        korean: ["Gowun Batang", "serif"],
-        body: ["Gowun Dodum", "sans-serif"],
+        sans: ["Noto Sans KR", "sans-serif"],
+        display: ["Playfair Display", "Georgia", "serif"],
       },
-      boxShadow: {
-        warm: "0 12px 30px rgba(43, 36, 25, 0.1)",
-        "warm-lg": "0 20px 50px rgba(43, 36, 25, 0.15)",
+      maxWidth: {
+        site: "1280px",
       },
     },
   },
