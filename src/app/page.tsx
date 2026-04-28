@@ -106,13 +106,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ══ 브러시 텍스트 ══ */}
+      {/* ══ 메인 카피 ══ */}
       <section className="py-8 text-center px-4">
         <p
-          className="text-[22px] sm:text-[28px] text-gray-700"
-          style={{ fontFamily: "'Nanum Brush Script', cursive" }}
+          className="text-[22px] sm:text-[28px] text-gray-800"
+          style={{ fontFamily: "'Jua', sans-serif" }}
         >
-          청소년 작가님들의 작품을 기다립니다.
+          손으로 만든 게 제일 힙해요
         </p>
       </section>
 
