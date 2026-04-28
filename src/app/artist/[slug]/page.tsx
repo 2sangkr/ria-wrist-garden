@@ -47,16 +47,20 @@ export default async function ArtistPage({ params }: Props) {
             작품 목록
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {artist.works?.map((work, i) => (
-              <div key={i} className="aspect-square rounded-xl overflow-hidden relative bg-gray-100">
-                <Image
-                  src={work.image}
-                  alt={work.title}
-                  fill
-                  className="object-cover hover:scale-105 transition-transform duration-300"
-                  sizes="(max-width: 768px) 50vw, 33vw"
-                />
-              </div>
+            {artist.works?.map((work) => (
+              <Link key={work.slug} href={`/artist/${slug}/${work.slug}`} className="group block">
+                <div className="aspect-square rounded-xl overflow-hidden relative bg-gray-100">
+                  <Image
+                    src={work.image}
+                    alt={work.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    sizes="(max-width: 768px) 50vw, 33vw"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 rounded-xl" />
+                </div>
+                <p className="text-[12px] text-gray-600 mt-2 font-medium">{work.title}</p>
+              </Link>
             ))}
             {(!artist.works || artist.works.length === 0) && (
               <div
