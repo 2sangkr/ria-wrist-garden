@@ -28,10 +28,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-bg text-ink text-[13px]">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+      <body className="min-h-screen bg-white text-[13px]">
+        {children}
       </body>
     </html>
   );

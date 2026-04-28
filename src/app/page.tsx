@@ -1,115 +1,129 @@
 import Link from 'next/link';
-import ProductCard from '@/components/product/ProductCard';
-import { PRODUCTS } from '@/lib/products';
+import { ARTISTS } from '@/lib/artists';
 
 export default function HomePage() {
-  const newProducts = PRODUCTS.filter((p) => p.is_new).slice(0, 4);
-  const bestProducts = PRODUCTS.filter((p) => p.is_featured).slice(0, 4);
-
   return (
-    <>
-      {/* 히어로 배너 */}
-      <div
-        className="w-full h-[400px] md:h-[560px] relative overflow-hidden flex items-center justify-center"
-        style={{ background: 'linear-gradient(135deg, #f5f5f0 0%, #ebe6dc 40%, #e0d8cc 100%)' }}
-      >
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              'radial-gradient(circle at 25% 60%, rgba(200,160,130,0.18) 0%, transparent 35%), radial-gradient(circle at 75% 40%, rgba(160,180,150,0.15) 0%, transparent 35%)',
-          }}
-        />
-        <div className="relative text-center px-5">
-          <p className="text-[11px] tracking-[0.4em] text-ink-mute uppercase mb-6">
-            Handmade with love
-          </p>
-          <h1 className="font-display italic text-[52px] md:text-[72px] text-ink leading-tight mb-6">
-            Lia&apos;s Shop
+    <div className="min-h-screen bg-white flex flex-col">
+
+      {/* ── 상단 바 ── */}
+      <div className="relative flex items-start justify-between px-8 pt-8 pb-0">
+
+        {/* 좌측 상단: 크레파스 4줄 */}
+        <CrayonLines />
+
+        {/* 우측 상단: 꿈꾸는 2Sang */}
+        <div className="text-right shrink-0 pl-8">
+          <p className="text-[11px] tracking-[0.3em] text-gray-400 uppercase mb-1">dreaming</p>
+          <h1
+            className="text-[28px] md:text-[36px] font-bold text-gray-800 leading-tight"
+            style={{ fontFamily: "'Noto Sans KR', sans-serif" }}
+          >
+            꿈꾸는 2Sang
           </h1>
-          <p className="text-[13px] text-ink-soft mb-10 tracking-wide">
-            초등학생 리아가 하나하나 손으로 만드는 핸드메이드 팔찌
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
-              href="/shop/new"
-              className="bg-ink text-white px-10 py-3 text-[13px] font-medium tracking-[0.1em] hover:bg-ink-soft transition-colors"
-            >
-              신상품 보기
-            </Link>
-            <Link
-              href="/shop"
-              className="border border-ink text-ink px-10 py-3 text-[13px] font-medium tracking-[0.1em] hover:bg-ink hover:text-white transition-colors"
-            >
-              전체상품
-            </Link>
-          </div>
         </div>
       </div>
 
-      {/* 신상품 섹션 */}
-      <section className="max-w-site mx-auto px-5 pt-16 pb-12">
-        <div className="flex items-end justify-between mb-8 pb-4 border-b border-line">
-          <div>
-            <h2 className="text-[20px] font-bold tracking-[0.05em]">신상품</h2>
-            <p className="text-[11px] text-ink-mute mt-1">New Arrivals</p>
-          </div>
-          <Link href="/shop/new" className="text-[12px] text-ink-soft hover:text-ink transition-colors">
-            더보기 &gt;
-          </Link>
+      {/* ── 가운데 메인 텍스트 ── */}
+      <div className="flex-1 flex items-center justify-center px-8 py-16 md:py-24">
+        <div className="text-center">
+          <p
+            className="text-[22px] md:text-[36px] lg:text-[44px] font-bold text-gray-800 leading-relaxed"
+            style={{ fontFamily: "'Noto Sans KR', sans-serif", wordBreak: 'keep-all' }}
+          >
+            청소년 작가님들의
+            <br />
+            작품을 기다립니다.
+          </p>
+          <p className="mt-5 text-[14px] md:text-[16px] text-gray-400" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
+            당신의 작품이 여기에 전시됩니다
+          </p>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-[50px]">
-          {newProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      </section>
+      </div>
 
-      {/* 베스트 섹션 */}
-      <section className="max-w-site mx-auto px-5 pt-4 pb-16">
-        <div className="flex items-end justify-between mb-8 pb-4 border-b border-line">
-          <div>
-            <h2 className="text-[20px] font-bold tracking-[0.05em]">베스트</h2>
-            <p className="text-[11px] text-ink-mute mt-1">Best Sellers</p>
-          </div>
-          <Link href="/shop/best" className="text-[12px] text-ink-soft hover:text-ink transition-colors">
-            더보기 &gt;
-          </Link>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-[50px]">
-          {bestProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      </section>
-
-      {/* 카테고리 배너 열 */}
-      <section className="max-w-site mx-auto px-5 pb-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {[
-            { slug: 'summer',  en: 'Summer',  ko: '여름시리즈', bg: 'linear-gradient(135deg,#e8d4c4,#c8a08a)' },
-            { slug: 'classic', en: 'Classic', ko: '클래식',     bg: 'linear-gradient(135deg,#d6cfb3,#b89d7e)' },
-            { slug: 'nature',  en: 'Nature',  ko: '자연시리즈', bg: 'linear-gradient(135deg,#c8d6c0,#95a892)' },
-            { slug: 'custom',  en: 'Custom',  ko: '주문제작',   bg: 'linear-gradient(135deg,#d8b8a8,#a87a68)' },
-          ].map((cat) => (
+      {/* ── 하단 작가 그리드 ── */}
+      <div className="px-8 pb-16">
+        <div className="max-w-2xl mx-auto grid grid-cols-4 gap-6 md:gap-10">
+          {ARTISTS.map((artist) => (
             <Link
-              key={cat.slug}
-              href={`/shop/${cat.slug}`}
-              className="group relative h-[140px] overflow-hidden flex items-center justify-center"
-              style={{ background: cat.bg }}
+              key={artist.id}
+              href={`/artist/${artist.slug}`}
+              className="group flex flex-col items-center gap-3"
             >
-              <div className="text-center">
-                <div className="font-display italic text-[22px] text-white/80 tracking-wide group-hover:text-white transition-colors">
-                  {cat.en}
-                </div>
-                <div className="text-[10px] tracking-[0.3em] text-white/60 mt-1 group-hover:text-white/80 transition-colors">
-                  {cat.ko}
-                </div>
+              {/* 동그란 얼굴 */}
+              <div
+                className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-white shadow-md transition-transform duration-200 group-hover:scale-110 group-hover:shadow-lg flex items-center justify-center"
+                style={{ background: artist.profileColor }}
+              >
+                {/* 실제 사진이 없으면 이니셜 */}
+                <span
+                  className="text-[20px] md:text-[24px] font-bold text-white/80 select-none"
+                  style={{ fontFamily: "'Noto Sans KR', sans-serif" }}
+                >
+                  {artist.name[0]}
+                </span>
               </div>
+              {/* 이름 */}
+              <span
+                className="text-[12px] md:text-[13px] text-gray-600 group-hover:text-gray-900 transition-colors"
+                style={{ fontFamily: "'Noto Sans KR', sans-serif" }}
+              >
+                {artist.name}
+              </span>
             </Link>
           ))}
         </div>
-      </section>
-    </>
+      </div>
+
+    </div>
+  );
+}
+
+/* 크레파스 4줄 SVG 컴포넌트 */
+function CrayonLines() {
+  const lines = [
+    { color: '#e8312a', y: 12,  roughness: [0,3,-2,4,-1,2,0] },
+    { color: '#f5c518', y: 36,  roughness: [2,-1,3,0,-3,2,-1] },
+    { color: '#1a6fce', y: 60,  roughness: [-1,2,0,3,-2,1,3] },
+    { color: '#2db35d', y: 84,  roughness: [1,-3,2,-1,3,0,-2] },
+  ];
+
+  return (
+    <svg
+      width="220"
+      height="100"
+      viewBox="0 0 220 100"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="shrink-0"
+      aria-label="크레파스 장식 선"
+    >
+      {lines.map((line, li) => {
+        /* 8개 포인트로 울퉁불퉁한 크레파스 선 생성 */
+        const pts = line.roughness.map((dy, i) => ({
+          x: i * 30 + 5,
+          y: line.y + dy,
+        }));
+
+        /* SVG path 문자열 */
+        const d = pts.reduce((acc, p, i) => {
+          if (i === 0) return `M ${p.x} ${p.y}`;
+          const prev = pts[i - 1];
+          const cx = (prev.x + p.x) / 2;
+          return acc + ` Q ${cx} ${prev.y} ${p.x} ${p.y}`;
+        }, '');
+
+        return (
+          <path
+            key={li}
+            d={d}
+            stroke={line.color}
+            strokeWidth="14"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            opacity="0.88"
+          />
+        );
+      })}
+    </svg>
   );
 }
