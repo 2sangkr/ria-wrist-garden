@@ -62,7 +62,9 @@ export default function AboutPage() {
               작품의 완성도보다 진심을 봅니다.
             </p>
             <a
-              href="mailto:hello@2sang.kr"
+              href="https://docs.google.com/forms/d/e/1FAIpQLScC1hyx1mblspGbI2s-DUxt3P9MIBQOVYAsEAUC50JfwftWqg/viewform?usp=header"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 mt-5 bg-gray-800 text-white text-[13px] font-medium px-6 py-3 rounded-full hover:bg-gray-700 transition-colors"
             >
               참여 문의하기 →
