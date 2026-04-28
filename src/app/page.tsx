@@ -9,90 +9,54 @@ const BLOB_SHAPES = [
   '45% 55% 40% 60% / 60% 40% 55% 45%',
   '55% 45% 65% 35% / 40% 60% 50% 50%',
   '40% 60% 50% 50% / 55% 45% 60% 40%',
-  '65% 35% 45% 55% / 45% 55% 40% 60%',
-  '50% 50% 60% 40% / 35% 65% 45% 55%',
-  '35% 65% 55% 45% / 60% 40% 65% 35%',
-  '55% 45% 40% 60% / 50% 50% 55% 45%',
 ];
 
 const NAV_LINKS = [
-  { href: '/',       label: '홈' },
-  { href: '/works',  label: '작품 보기' },
-  { href: '/about',  label: '꿈꾸는 2Sang' },
+  { href: '/',      label: '홈' },
+  { href: '/works', label: '작품 보기' },
+  { href: '/about', label: '꿈꾸는 2Sang' },
 ];
 
 export default function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-white" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
+    <div className="min-h-screen bg-white">
 
-      {/* ══════════ 헤더 ══════════ */}
-      <header className="border-b border-gray-200 bg-white sticky top-0 z-50">
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-
-          {/* 로고 + 아이콘 행 */}
-          <div className="flex items-center justify-between py-3">
-            {/* 로고 */}
-            <Link href="/" className="flex items-center gap-2 sm:gap-3">
+      {/* 헤더 */}
+      <header className="sticky top-0 z-50 bg-white border-b border-gray-100">
+        <div className="max-w-[1100px] mx-auto px-5 sm:px-8">
+          <div className="flex items-center justify-between h-14">
+            <Link href="/" className="flex items-center gap-3">
               <CrayonLines />
-              <div className="leading-tight">
-                <div className="text-[10px] sm:text-[11px] tracking-[0.25em] text-gray-400 uppercase">dreaming</div>
-                <div className="text-[18px] sm:text-[22px] font-bold text-gray-800 leading-none">꿈꾸는 2Sang</div>
-              </div>
+              <span className="text-[17px] font-bold text-gray-900 tracking-tight">꿈꾸는 2Sang</span>
             </Link>
 
-            {/* 우측: 아이콘 + 햄버거 */}
-            <div className="flex items-center gap-3 sm:gap-4 text-gray-600">
-              <Link href="/account/login" aria-label="로그인" className="hover:text-gray-900 transition-colors">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-                </svg>
-              </Link>
-              <Link href="/cart" aria-label="장바구니" className="hover:text-gray-900 transition-colors">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-                  <line x1="3" y1="6" x2="21" y2="6"/>
-                  <path d="M16 10a4 4 0 01-8 0"/>
-                </svg>
-              </Link>
-              {/* 모바일 햄버거 */}
-              <button
-                className="sm:hidden flex flex-col gap-[5px] p-1"
-                onClick={() => setMenuOpen(!menuOpen)}
-                aria-label="메뉴 열기"
-              >
-                <span className={`block w-5 h-[1.5px] bg-gray-700 transition-all origin-center ${menuOpen ? 'rotate-45 translate-y-[6.5px]' : ''}`} />
-                <span className={`block w-5 h-[1.5px] bg-gray-700 transition-all ${menuOpen ? 'opacity-0' : ''}`} />
-                <span className={`block w-5 h-[1.5px] bg-gray-700 transition-all origin-center ${menuOpen ? '-rotate-45 -translate-y-[6.5px]' : ''}`} />
-              </button>
-            </div>
+            {/* PC 네비 */}
+            <nav className="hidden sm:flex items-center gap-8">
+              {NAV_LINKS.map((l) => (
+                <Link key={l.href} href={l.href}
+                  className="text-[13px] text-gray-500 hover:text-gray-900 transition-colors">
+                  {l.label}
+                </Link>
+              ))}
+            </nav>
+
+            {/* 모바일 햄버거 */}
+            <button className="sm:hidden p-1" onClick={() => setMenuOpen(!menuOpen)} aria-label="메뉴">
+              <span className={`block w-5 h-[1.5px] bg-gray-800 transition-all origin-center mb-[5px] ${menuOpen ? 'rotate-45 translate-y-[6.5px]' : ''}`} />
+              <span className={`block w-5 h-[1.5px] bg-gray-800 transition-all mb-[5px] ${menuOpen ? 'opacity-0' : ''}`} />
+              <span className={`block w-5 h-[1.5px] bg-gray-800 transition-all origin-center ${menuOpen ? '-rotate-45 -translate-y-[6.5px]' : ''}`} />
+            </button>
           </div>
 
-          {/* PC 네비 — 가로 스크롤 가능 */}
-          <nav className="hidden sm:flex justify-center gap-4 md:gap-8 border-t border-gray-100 overflow-x-auto scrollbar-hide">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="py-3 text-[12px] md:text-[13px] font-medium text-gray-600 border-b-2 border-transparent hover:border-gray-800 hover:text-gray-900 transition-colors whitespace-nowrap shrink-0"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-
-          {/* 모바일 드롭다운 메뉴 */}
           {menuOpen && (
-            <div className="sm:hidden border-t border-gray-100 py-2">
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="block px-2 py-3 text-[13px] font-medium text-gray-700 border-b border-gray-50 hover:text-gray-900 hover:bg-gray-50 transition-colors"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {link.label}
+            <div className="sm:hidden py-3 border-t border-gray-100">
+              {NAV_LINKS.map((l) => (
+                <Link key={l.href} href={l.href}
+                  className="block py-3 text-[14px] text-gray-700 hover:text-gray-900"
+                  onClick={() => setMenuOpen(false)}>
+                  {l.label}
                 </Link>
               ))}
             </div>
@@ -100,124 +64,61 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* ══════════ 배너 ══════════ */}
-      <section className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-5 pb-2">
-        <div
-          className="w-full rounded-2xl overflow-hidden relative flex items-center"
-          style={{
-            background: 'linear-gradient(135deg, #ffe0ec 0%, #fff0f5 50%, #ffd6e8 100%)',
-            minHeight: '160px',
-          }}
-        >
-          <div className="absolute top-3 right-5 text-[60px] sm:text-[80px] opacity-10 select-none">🌸</div>
-          <div className="absolute bottom-3 right-28 text-[36px] sm:text-[50px] opacity-10 select-none">✿</div>
-
-          <div className="px-6 sm:px-10 py-6 sm:py-8 relative z-10">
-            <p className="text-[11px] sm:text-[12px] tracking-[0.2em] text-pink-400 uppercase mb-1 sm:mb-2">Spring 2026</p>
-            <h2 className="text-[18px] sm:text-[22px] md:text-[28px] font-bold text-gray-800 leading-snug mb-3">
-              봄에 만나는<br />
-              <span className="text-pink-500">청소년 작가</span> 베스트 작품
-            </h2>
-            <Link
-              href="/shop"
-              className="inline-block bg-white text-gray-800 text-[11px] sm:text-[12px] font-medium px-4 sm:px-5 py-2 rounded-full shadow-sm hover:shadow-md transition-shadow"
-            >
-              작품 둘러보기 →
-            </Link>
-          </div>
-
-          {/* PC에서만 보이는 미니 카드 */}
-          <div className="hidden md:flex gap-3 absolute right-10 top-1/2 -translate-y-1/2">
-            {[
-              { bg: 'linear-gradient(135deg,#fcd5ce,#f8a5a0)', label: '팔찌' },
-              { bg: 'linear-gradient(135deg,#d5e8fc,#a0c8f8)', label: '일러스트' },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className="w-[90px] h-[110px] rounded-xl shadow-md flex items-end justify-center pb-3"
-                style={{ background: item.bg }}
-              >
-                <span className="text-[11px] text-white/80 font-medium">{item.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════ 메인 텍스트 ══════════ */}
-      <section className="py-8 sm:py-10 text-center px-4">
-        <p
-          className="text-[26px] sm:text-[36px] md:text-[44px] text-gray-800 leading-snug"
+      {/* 히어로 */}
+      <section className="max-w-[1100px] mx-auto px-5 sm:px-8 pt-16 pb-20 text-center">
+        <p className="text-[12px] tracking-[0.25em] text-gray-400 uppercase mb-6">dreaming 2sang</p>
+        <h1
+          className="text-[36px] sm:text-[52px] text-gray-900 leading-snug mb-8"
           style={{ fontFamily: "'Nanum Brush Script', cursive" }}
         >
-          청소년 작가님들의 작품을 기다립니다.
-        </p>
+          청소년 작가님들의<br />작품을 기다립니다.
+        </h1>
+        <Link href="/works"
+          className="inline-block text-[13px] font-medium text-white bg-gray-900 px-7 py-3 rounded-full hover:bg-gray-700 transition-colors">
+          작품 보러가기
+        </Link>
       </section>
 
-      {/* ══════════ 크리에이터 그리드 ══════════ */}
-      <section className="max-w-[1200px] mx-auto px-4 sm:px-6 pb-16">
-        <h3 className="text-[14px] sm:text-[15px] font-bold text-gray-800 mb-6 sm:mb-8 text-center">
-          크리에이터의 샵을 둘러보세요!
-        </h3>
+      {/* 작가 그리드 */}
+      <section className="max-w-[1100px] mx-auto px-5 sm:px-8 pb-24">
+        <p className="text-[12px] tracking-[0.2em] text-gray-400 uppercase mb-10 text-center">creators</p>
 
-        {/* 모바일: 2열 / 태블릿+: 4열 */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 md:gap-12">
           {ARTISTS.map((artist, idx) =>
             artist.isEmpty ? (
-              /* ── 빈 자리 ── */
-              <div key={artist.id} className="flex flex-col items-center gap-2 text-center">
-                <a
-                  href="https://docs.google.com/forms/d/e/1FAIpQLScC1hyx1mblspGbI2s-DUxt3P9MIBQOVYAsEAUC50JfwftWqg/viewform?usp=header"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group"
-                >
+              <div key={artist.id} className="flex flex-col items-center gap-3 text-center">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScC1hyx1mblspGbI2s-DUxt3P9MIBQOVYAsEAUC50JfwftWqg/viewform?usp=header"
+                  target="_blank" rel="noopener noreferrer">
                   <div
-                    className="w-[100px] h-[100px] sm:w-[90px] sm:h-[90px] md:w-[110px] md:h-[110px] flex items-center justify-center mx-auto transition-all duration-200 group-hover:scale-105"
-                    style={{
-                      borderRadius: BLOB_SHAPES[idx % BLOB_SHAPES.length],
-                      border: '2px dashed #d1d5db',
-                      background: '#f9fafb',
-                    }}
+                    className="w-[96px] h-[96px] mx-auto flex items-center justify-center transition-transform duration-200 hover:scale-105"
+                    style={{ borderRadius: BLOB_SHAPES[idx % BLOB_SHAPES.length], border: '1.5px dashed #d1d5db', background: '#f9fafb' }}
                   >
-                    <span className="text-[28px] text-gray-300 group-hover:text-gray-400 transition-colors select-none">?</span>
+                    <span className="text-[24px] text-gray-300">+</span>
                   </div>
                 </a>
-                <p className="text-[12px] text-gray-400">작가 모집 중</p>
-                <p className="text-[10px] text-gray-300 hidden sm:block">작가를 기다립니다</p>
-                <a
-                  href="https://docs.google.com/forms/d/e/1FAIpQLScC1hyx1mblspGbI2s-DUxt3P9MIBQOVYAsEAUC50JfwftWqg/viewform?usp=header"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[11px] border border-dashed border-gray-300 text-gray-400 px-3 py-1.5 rounded hover:bg-gray-50 hover:text-gray-600 transition-colors"
-                >
+                <p className="text-[12px] text-gray-400">모집 중</p>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScC1hyx1mblspGbI2s-DUxt3P9MIBQOVYAsEAUC50JfwftWqg/viewform?usp=header"
+                  target="_blank" rel="noopener noreferrer"
+                  className="text-[11px] text-gray-400 border border-dashed border-gray-200 px-3 py-1.5 rounded-full hover:border-gray-400 hover:text-gray-600 transition-colors">
                   참여하기
                 </a>
               </div>
             ) : (
-              /* ── 실제 작가 ── */
-              <div key={artist.id} className="flex flex-col items-center gap-2 text-center">
-                <Link href={`/artist/${artist.slug}`} className="group">
+              <div key={artist.id} className="flex flex-col items-center gap-3 text-center">
+                <Link href={`/artist/${artist.slug}`}>
                   <div
-                    className="w-[100px] h-[100px] sm:w-[90px] sm:h-[90px] md:w-[110px] md:h-[110px] shadow-md transition-all duration-200 group-hover:scale-110 group-hover:shadow-xl flex items-center justify-center mx-auto"
-                    style={{
-                      background: artist.profileColor,
-                      borderRadius: BLOB_SHAPES[idx % BLOB_SHAPES.length],
-                    }}
+                    className="w-[96px] h-[96px] mx-auto flex items-center justify-center shadow-sm transition-all duration-200 hover:scale-105 hover:shadow-md"
+                    style={{ background: artist.profileColor, borderRadius: BLOB_SHAPES[idx % BLOB_SHAPES.length] }}
                   >
-                    <span className="text-[36px] sm:text-[32px] md:text-[38px] font-bold text-white/75 select-none">
-                      {artist.name[0]}
-                    </span>
+                    <span className="text-[34px] font-bold text-white/70 select-none">{artist.name[0]}</span>
                   </div>
                 </Link>
-                <p className="text-[13px] sm:text-[12px] font-medium text-gray-800">{artist.name}</p>
-                <p className="text-[11px] text-gray-400 tracking-wide">
-                  {artist.tags.join(' ')}
-                </p>
-                <Link
-                  href={`/artist/${artist.slug}`}
-                  className="text-[11px] border border-gray-300 text-gray-600 px-3 py-1.5 rounded hover:bg-gray-50 hover:border-gray-500 transition-colors"
-                >
+                <div>
+                  <p className="text-[13px] font-medium text-gray-900">{artist.name}</p>
+                  <p className="text-[11px] text-gray-400 mt-0.5">{artist.tags.join(' ')}</p>
+                </div>
+                <Link href={`/artist/${artist.slug}`}
+                  className="text-[11px] text-gray-500 border border-gray-200 px-3 py-1.5 rounded-full hover:border-gray-500 hover:text-gray-800 transition-colors">
                   둘러보기
                 </Link>
               </div>
@@ -230,7 +131,6 @@ export default function HomePage() {
   );
 }
 
-/* ── 크레파스 SVG ── */
 function CrayonLines() {
   const lines = [
     { color: '#e8312a', offsets: [0, 2, -1, 3, -2, 1, 2, -1] },
@@ -239,7 +139,7 @@ function CrayonLines() {
     { color: '#2db35d', offsets: [2, -1, 3, 1, -2, 0, 3, -1] },
   ];
   return (
-    <svg width="56" height="44" viewBox="0 0 72 52" fill="none" aria-hidden="true">
+    <svg width="44" height="34" viewBox="0 0 72 52" fill="none" aria-hidden="true">
       {lines.map((line, li) => {
         const baseY = 7 + li * 13;
         const pts = line.offsets.map((dy, i) => ({ x: i * 10 + 2, y: baseY + dy }));
@@ -248,10 +148,7 @@ function CrayonLines() {
           const prev = pts[i - 1];
           return acc + ` Q${(prev.x + p.x) / 2},${prev.y} ${p.x},${p.y}`;
         }, '');
-        return (
-          <path key={li} d={d} stroke={line.color} strokeWidth="8"
-            strokeLinecap="round" strokeLinejoin="round" opacity="0.9" />
-        );
+        return <path key={li} d={d} stroke={line.color} strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" opacity="0.9" />;
       })}
     </svg>
   );

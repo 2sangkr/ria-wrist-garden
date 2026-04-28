@@ -12,66 +12,50 @@ export default async function ArtistPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* 상단 */}
-      <div className="px-8 pt-8 pb-6 border-b border-gray-100">
-        <Link href="/" className="text-[12px] text-gray-400 hover:text-gray-700 transition-colors">
-          ← 홈으로
-        </Link>
-      </div>
+      <div className="max-w-[720px] mx-auto px-5 sm:px-8 py-12">
 
-      {/* 작가 프로필 */}
-      <div className="max-w-3xl mx-auto px-8 py-12">
-        <div className="flex items-center gap-6 mb-12">
+        {/* 뒤로가기 */}
+        <Link href="/" className="text-[12px] text-gray-400 hover:text-gray-700 transition-colors">
+          ← 홈
+        </Link>
+
+        {/* 작가 프로필 */}
+        <div className="mt-10 mb-14">
           <div
-            className="w-20 h-20 rounded-full flex items-center justify-center shadow-md shrink-0"
-            style={{ background: artist.profileColor }}
+            className="w-[72px] h-[72px] flex items-center justify-center mb-5"
+            style={{
+              background: artist.profileColor,
+              borderRadius: '60% 40% 55% 45% / 50% 60% 40% 50%',
+            }}
           >
-            <span className="text-[28px] font-bold text-white/80" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
-              {artist.name[0]}
-            </span>
+            <span className="text-[26px] font-bold text-white/80 select-none">{artist.name[0]}</span>
           </div>
-          <div>
-            <h1 className="text-[24px] font-bold text-gray-800" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
-              {artist.name}
-            </h1>
-            <p className="text-[12px] text-gray-400 mt-1 tracking-wide">{artist.tags.join(' ')}</p>
-            <p className="text-[14px] text-gray-500 mt-1" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
-              {artist.bio}
-            </p>
-          </div>
+          <h1 className="text-[24px] font-bold text-gray-900 mb-1">{artist.name}</h1>
+          <p className="text-[13px] text-gray-400">{artist.bio}</p>
         </div>
 
         {/* 작품 목록 */}
-        <div>
-          <h2 className="text-[16px] font-bold text-gray-700 mb-6" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
-            작품 목록
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {artist.works?.map((work) => (
+        {artist.works && artist.works.length > 0 ? (
+          <div className="grid grid-cols-2 gap-4 sm:gap-6">
+            {artist.works.map((work) => (
               <Link key={work.slug} href={`/artist/${slug}/${work.slug}`} className="group block">
-                <div className="aspect-square rounded-xl overflow-hidden relative bg-gray-100">
+                <div className="aspect-square rounded-xl overflow-hidden relative bg-gray-100 mb-3">
                   <Image
                     src={work.image}
                     alt={work.title}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    sizes="(max-width: 768px) 50vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 720px) 50vw, 360px"
                   />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 rounded-xl" />
                 </div>
-                <p className="text-[12px] text-gray-600 mt-2 font-medium">{work.title}</p>
+                <p className="text-[13px] font-medium text-gray-800">{work.title}</p>
               </Link>
             ))}
-            {(!artist.works || artist.works.length === 0) && (
-              <div
-                className="aspect-square rounded-xl flex items-center justify-center text-[13px] text-gray-400 col-span-2 md:col-span-3"
-                style={{ background: artist.profileColor + '33' }}
-              >
-                작품이 등록되면 여기에 표시됩니다.
-              </div>
-            )}
           </div>
-        </div>
+        ) : (
+          <p className="text-[14px] text-gray-400">작품이 곧 올라옵니다.</p>
+        )}
+
       </div>
     </div>
   );

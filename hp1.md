@@ -1,0 +1,325 @@
+# HP1 스냅샷 — 되돌리기 기준점
+
+> "hp1.md로 되돌려줘" 하면 이 파일의 내용을 기준으로 복원합니다.
+
+## Git 커밋 해시
+```
+976d4c9
+```
+복원 명령: `git checkout 976d4c9 -- src/`
+
+---
+
+## 현재 상태 요약
+- 메인 홈: 크레파스 로고, 배너, 브러시 텍스트, 작가 블롭 4칸 (D.hee + 빈 3자리)
+- 작가 페이지: `/artist/dhee` — 블롭 아바타, 작품 목록 그리드
+- 작품 상세: `/artist/dhee/work-1`, `/artist/dhee/work-2` — 이미지, 작가 한 마디, 비즈 오빗 아바타, 재료 박스, 가격/구매 버튼
+- 소개 페이지: `/about` — 크레파스 구분선, 플랫폼 소개
+- 작품 보기: `/works` — 상품 그리드 (dummy products)
+
+---
+
+## src/lib/artists.ts
+```typescript
+export type Work = {
+  slug: string;
+  title: string;
+  image: string;
+  artistMessage: string;
+  materialsStory: string;
+  materials: string[];
+  price: number;
+  stock: number;
+};
+
+export type Artist = {
+  id: string;
+  slug: string;
+  name: string;
+  tags: string[];
+  bio: string;
+  profileColor: string;
+  isEmpty?: boolean;
+  works?: Work[];
+};
+
+export function formatPrice(price: number) {
+  return price.toLocaleString('ko-KR') + '원';
+}
+
+export const ARTISTS: Artist[] = [
+  {
+    id: '1',
+    slug: 'dhee',
+    name: 'D.hee',
+    tags: ['#핸드메이드', '#수공예'],
+    bio: '핸드메이드 팔찌를 만듭니다.',
+    profileColor: '#f4c2c2',
+    works: [
+      {
+        slug: 'work-1',
+        title: '봄날의 손목정원',
+        image: '/images/dhee-work-1.jpg',
+        artistMessage: '만들면서 내내 봄 생각을 했어요. 받는 분도 따뜻해지면 좋겠어요.',
+        materialsStory: '문구점을 세 군데나 돌아다니며 직접 고른 천연석 비즈예요. 색이 조금씩 달라서 하나씩 맞춰 끼우는 게 제일 재미있었어요.',
+        materials: ['천연석 비즈', '은침', '탄성줄'],
+        price: 12000,
+        stock: 3,
+      },
+      {
+        slug: 'work-2',
+        title: '여름밤 팔찌',
+        image: '/images/dhee-work-2.jpg',
+        artistMessage: '밤하늘 같은 색이어서 여름밤이라고 이름 붙였어요.',
+        materialsStory: '어두운 계열의 비즈를 모아모아 만들었어요. 밤하늘처럼 깊고 시원한 느낌을 담고 싶었어요.',
+        materials: ['유리 비즈', '메탈 참', '탄성줄'],
+        price: 13000,
+        stock: 2,
+      },
+    ],
+  },
+  { id: '2', slug: '', name: '', tags: [], bio: '', profileColor: '', isEmpty: true },
+  { id: '3', slug: '', name: '', tags: [], bio: '', profileColor: '', isEmpty: true },
+  { id: '4', slug: '', name: '', tags: [], bio: '', profileColor: '', isEmpty: true },
+];
+```
+
+---
+
+## src/app/page.tsx
+```tsx
+'use client';
+
+import Link from 'next/link';
+import { useState } from 'react';
+import { ARTISTS } from '@/lib/artists';
+
+const BLOB_SHAPES = [
+  '60% 40% 55% 45% / 50% 60% 40% 50%',
+  '45% 55% 40% 60% / 60% 40% 55% 45%',
+  '55% 45% 65% 35% / 40% 60% 50% 50%',
+  '40% 60% 50% 50% / 55% 45% 60% 40%',
+  '65% 35% 45% 55% / 45% 55% 40% 60%',
+  '50% 50% 60% 40% / 35% 65% 45% 55%',
+  '35% 65% 55% 45% / 60% 40% 65% 35%',
+  '55% 45% 40% 60% / 50% 50% 55% 45%',
+];
+
+const NAV_LINKS = [
+  { href: '/',       label: '홈' },
+  { href: '/works',  label: '작품 보기' },
+  { href: '/about',  label: '꿈꾸는 2Sang' },
+];
+
+export default function HomePage() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  return (
+    <div className="min-h-screen bg-white" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
+
+      {/* 헤더 */}
+      <header className="border-b border-gray-200 bg-white sticky top-0 z-50">
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
+          <div className="flex items-center justify-between py-3">
+            <Link href="/" className="flex items-center gap-2 sm:gap-3">
+              <CrayonLines />
+              <div className="leading-tight">
+                <div className="text-[10px] sm:text-[11px] tracking-[0.25em] text-gray-400 uppercase">dreaming</div>
+                <div className="text-[18px] sm:text-[22px] font-bold text-gray-800 leading-none">꿈꾸는 2Sang</div>
+              </div>
+            </Link>
+            <div className="flex items-center gap-3 sm:gap-4 text-gray-600">
+              <Link href="/account/login" aria-label="로그인" className="hover:text-gray-900 transition-colors">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+                </svg>
+              </Link>
+              <Link href="/cart" aria-label="장바구니" className="hover:text-gray-900 transition-colors">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                  <line x1="3" y1="6" x2="21" y2="6"/>
+                  <path d="M16 10a4 4 0 01-8 0"/>
+                </svg>
+              </Link>
+              <button className="sm:hidden flex flex-col gap-[5px] p-1" onClick={() => setMenuOpen(!menuOpen)} aria-label="메뉴 열기">
+                <span className={`block w-5 h-[1.5px] bg-gray-700 transition-all origin-center ${menuOpen ? 'rotate-45 translate-y-[6.5px]' : ''}`} />
+                <span className={`block w-5 h-[1.5px] bg-gray-700 transition-all ${menuOpen ? 'opacity-0' : ''}`} />
+                <span className={`block w-5 h-[1.5px] bg-gray-700 transition-all origin-center ${menuOpen ? '-rotate-45 -translate-y-[6.5px]' : ''}`} />
+              </button>
+            </div>
+          </div>
+          <nav className="hidden sm:flex justify-center gap-4 md:gap-8 border-t border-gray-100 overflow-x-auto scrollbar-hide">
+            {NAV_LINKS.map((link) => (
+              <Link key={link.href} href={link.href}
+                className="py-3 text-[12px] md:text-[13px] font-medium text-gray-600 border-b-2 border-transparent hover:border-gray-800 hover:text-gray-900 transition-colors whitespace-nowrap shrink-0">
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+          {menuOpen && (
+            <div className="sm:hidden border-t border-gray-100 py-2">
+              {NAV_LINKS.map((link) => (
+                <Link key={link.href} href={link.href}
+                  className="block px-2 py-3 text-[13px] font-medium text-gray-700 border-b border-gray-50 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+                  onClick={() => setMenuOpen(false)}>
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      </header>
+
+      {/* 배너 */}
+      <section className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-5 pb-2">
+        <div className="w-full rounded-2xl overflow-hidden relative flex items-center"
+          style={{ background: 'linear-gradient(135deg, #ffe0ec 0%, #fff0f5 50%, #ffd6e8 100%)', minHeight: '160px' }}>
+          <div className="absolute top-3 right-5 text-[60px] sm:text-[80px] opacity-10 select-none">🌸</div>
+          <div className="absolute bottom-3 right-28 text-[36px] sm:text-[50px] opacity-10 select-none">✿</div>
+          <div className="px-6 sm:px-10 py-6 sm:py-8 relative z-10">
+            <p className="text-[11px] sm:text-[12px] tracking-[0.2em] text-pink-400 uppercase mb-1 sm:mb-2">Spring 2026</p>
+            <h2 className="text-[18px] sm:text-[22px] md:text-[28px] font-bold text-gray-800 leading-snug mb-3">
+              봄에 만나는<br /><span className="text-pink-500">청소년 작가</span> 베스트 작품
+            </h2>
+            <Link href="/shop" className="inline-block bg-white text-gray-800 text-[11px] sm:text-[12px] font-medium px-4 sm:px-5 py-2 rounded-full shadow-sm hover:shadow-md transition-shadow">
+              작품 둘러보기 →
+            </Link>
+          </div>
+          <div className="hidden md:flex gap-3 absolute right-10 top-1/2 -translate-y-1/2">
+            {[{ bg: 'linear-gradient(135deg,#fcd5ce,#f8a5a0)', label: '팔찌' }, { bg: 'linear-gradient(135deg,#d5e8fc,#a0c8f8)', label: '일러스트' }].map((item) => (
+              <div key={item.label} className="w-[90px] h-[110px] rounded-xl shadow-md flex items-end justify-center pb-3" style={{ background: item.bg }}>
+                <span className="text-[11px] text-white/80 font-medium">{item.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 메인 텍스트 */}
+      <section className="py-8 sm:py-10 text-center px-4">
+        <p className="text-[26px] sm:text-[36px] md:text-[44px] text-gray-800 leading-snug"
+          style={{ fontFamily: "'Nanum Brush Script', cursive" }}>
+          청소년 작가님들의 작품을 기다립니다.
+        </p>
+      </section>
+
+      {/* 크리에이터 그리드 */}
+      <section className="max-w-[1200px] mx-auto px-4 sm:px-6 pb-16">
+        <h3 className="text-[14px] sm:text-[15px] font-bold text-gray-800 mb-6 sm:mb-8 text-center">크리에이터의 샵을 둘러보세요!</h3>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 md:gap-8">
+          {ARTISTS.map((artist, idx) =>
+            artist.isEmpty ? (
+              <div key={artist.id} className="flex flex-col items-center gap-2 text-center">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScC1hyx1mblspGbI2s-DUxt3P9MIBQOVYAsEAUC50JfwftWqg/viewform?usp=header" target="_blank" rel="noopener noreferrer" className="group">
+                  <div className="w-[100px] h-[100px] sm:w-[90px] sm:h-[90px] md:w-[110px] md:h-[110px] flex items-center justify-center mx-auto transition-all duration-200 group-hover:scale-105"
+                    style={{ borderRadius: BLOB_SHAPES[idx % BLOB_SHAPES.length], border: '2px dashed #d1d5db', background: '#f9fafb' }}>
+                    <span className="text-[28px] text-gray-300 group-hover:text-gray-400 transition-colors select-none">?</span>
+                  </div>
+                </a>
+                <p className="text-[12px] text-gray-400">작가 모집 중</p>
+                <p className="text-[10px] text-gray-300 hidden sm:block">작가를 기다립니다</p>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScC1hyx1mblspGbI2s-DUxt3P9MIBQOVYAsEAUC50JfwftWqg/viewform?usp=header" target="_blank" rel="noopener noreferrer"
+                  className="text-[11px] border border-dashed border-gray-300 text-gray-400 px-3 py-1.5 rounded hover:bg-gray-50 hover:text-gray-600 transition-colors">
+                  참여하기
+                </a>
+              </div>
+            ) : (
+              <div key={artist.id} className="flex flex-col items-center gap-2 text-center">
+                <Link href={`/artist/${artist.slug}`} className="group">
+                  <div className="w-[100px] h-[100px] sm:w-[90px] sm:h-[90px] md:w-[110px] md:h-[110px] shadow-md transition-all duration-200 group-hover:scale-110 group-hover:shadow-xl flex items-center justify-center mx-auto"
+                    style={{ background: artist.profileColor, borderRadius: BLOB_SHAPES[idx % BLOB_SHAPES.length] }}>
+                    <span className="text-[36px] sm:text-[32px] md:text-[38px] font-bold text-white/75 select-none">{artist.name[0]}</span>
+                  </div>
+                </Link>
+                <p className="text-[13px] sm:text-[12px] font-medium text-gray-800">{artist.name}</p>
+                <p className="text-[11px] text-gray-400 tracking-wide">{artist.tags.join(' ')}</p>
+                <Link href={`/artist/${artist.slug}`}
+                  className="text-[11px] border border-gray-300 text-gray-600 px-3 py-1.5 rounded hover:bg-gray-50 hover:border-gray-500 transition-colors">
+                  둘러보기
+                </Link>
+              </div>
+            )
+          )}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function CrayonLines() {
+  const lines = [
+    { color: '#e8312a', offsets: [0, 2, -1, 3, -2, 1, 2, -1] },
+    { color: '#f5c518', offsets: [1, -2, 2, -1, 3, -1, 0, 2] },
+    { color: '#1a6fce', offsets: [-1, 3, 0, -2, 1, 2, -1, 3] },
+    { color: '#2db35d', offsets: [2, -1, 3, 1, -2, 0, 3, -1] },
+  ];
+  return (
+    <svg width="56" height="44" viewBox="0 0 72 52" fill="none" aria-hidden="true">
+      {lines.map((line, li) => {
+        const baseY = 7 + li * 13;
+        const pts = line.offsets.map((dy, i) => ({ x: i * 10 + 2, y: baseY + dy }));
+        const d = pts.reduce((acc, p, i) => {
+          if (i === 0) return `M${p.x},${p.y}`;
+          const prev = pts[i - 1];
+          return acc + ` Q${(prev.x + p.x) / 2},${prev.y} ${p.x},${p.y}`;
+        }, '');
+        return <path key={li} d={d} stroke={line.color} strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" opacity="0.9" />;
+      })}
+    </svg>
+  );
+}
+```
+
+---
+
+## src/app/layout.tsx
+```tsx
+import type { Metadata } from 'next';
+import './globals.css';
+
+export const metadata: Metadata = {
+  title: { default: '리아샵 - 핸드메이드 팔찌', template: '%s | 리아샵' },
+  description: '초등학생 리아가 직접 손으로 만드는 핸드메이드 팔찌 쇼핑몰.',
+  keywords: ['핸드메이드 팔찌', '손목 장신구', '각인 팔찌', '수공예'],
+  openGraph: { type: 'website', locale: 'ko_KR', siteName: '리아샵' },
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="ko">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;1,400&family=Nanum+Brush+Script&display=swap" rel="stylesheet" />
+      </head>
+      <body className="min-h-screen bg-white text-[13px]">{children}</body>
+    </html>
+  );
+}
+```
+
+---
+
+## src/app/about/page.tsx
+(내용: 꿈꾸는 2Sang 소개, 크레파스 구분선, 구글 폼 링크)
+→ git checkout 976d4c9 -- src/app/about/page.tsx 로 복원
+
+## src/app/works/page.tsx
+(내용: 작품 그리드, dummy products, THUMB_STYLES)
+→ git checkout 976d4c9 -- src/app/works/page.tsx 로 복원
+
+## src/app/artist/[slug]/page.tsx
+(내용: 블롭 아바타 프로필, 작품 목록 그리드 — 클릭 시 상세 이동)
+→ git checkout 976d4c9 -- src/app/artist/[slug]/page.tsx 로 복원
+
+## src/app/artist/[slug]/[workSlug]/page.tsx
+(내용: 작품 이미지, 작가 한 마디 브러시 폰트, 비즈 오빗 아바타, 재료 박스, 가격/구매)
+→ git checkout 976d4c9 -- "src/app/artist/[slug]/[workSlug]/page.tsx" 로 복원
+
+---
+
+## 복원 방법 (전체)
+```bash
+git checkout 976d4c9 -- src/
+```
+이 명령 하나로 src/ 폴더 전체가 커밋 976d4c9 시점으로 돌아갑니다.
