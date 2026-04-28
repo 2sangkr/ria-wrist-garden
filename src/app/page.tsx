@@ -16,13 +16,10 @@ const BLOB_SHAPES = [
 ];
 
 const NAV_LINKS = [
-  { href: '/shop',         label: '전체상품' },
-  { href: '/shop/new',     label: '신상품' },
-  { href: '/shop/best',    label: '베스트' },
-  { href: '/shop/summer',  label: '여름시리즈' },
-  { href: '/shop/classic', label: '클래식' },
-  { href: '/shop/nature',  label: '자연시리즈' },
-  { href: '/shop/custom',  label: '주문제작' },
+  { href: '/',        label: '홈' },
+  { href: '/artists', label: '작가들' },
+  { href: '/works',   label: '전체 작품' },
+  { href: '/about',   label: '소개' },
 ];
 
 export default function HomePage() {
