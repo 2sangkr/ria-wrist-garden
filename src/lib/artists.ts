@@ -35,7 +35,7 @@ export const ARTISTS: Artist[] = [
     works: [
       {
         slug: 'work-1',
-        title: '봄날 책갈피',
+        title: '책갈피',
         image: '/images/dhee-work-1.jpg',
         artistMessage: '만들면서 내내 봄 생각을 했어요.',
         materialsStory: '색이 마음에 들어서 직접 골랐어요. 하나하나 손으로 만들었습니다.',
@@ -45,7 +45,7 @@ export const ARTISTS: Artist[] = [
       },
       {
         slug: 'work-2',
-        title: '여름밤 책갈피',
+        title: '키링',
         image: '/images/dhee-work-2.jpg',
         artistMessage: '밤하늘 같은 색이어서 여름밤이라고 이름 붙였어요.',
         materialsStory: '어두운 색감이 마음에 들어서 골랐어요. 시원한 느낌을 담고 싶었어요.',
