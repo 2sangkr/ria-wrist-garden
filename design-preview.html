@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>작가 소개 스타일 선택 — 꿈꾸는 2Sang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Noto Sans KR',sans-serif; background:#f5f5f5; color:#222; }
+
+  /* ── 상단 안내 ── */
+  .top-bar {
+    background:#fff;
+    border-bottom:1px solid #e5e5e5;
+    padding:20px 40px;
+    position:sticky;
+    top:0;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .top-bar h1 { font-size:16px; font-weight:700; }
+  .top-bar p  { font-size:12px; color:#888; margin-top:2px; }
+  .selected-badge {
+    font-size:13px;
+    font-weight:600;
+    color:#1a6fce;
+    background:#e8f0fe;
+    padding:6px 16px;
+    border-radius:999px;
+    display:none;
+  }
+  .selected-badge.show { display:inline-block; }
+
+  /* ── 섹션 ── */
+  .section {
+    background:#fff;
+    margin:32px 40px;
+    border-radius:16px;
+    padding:40px;
+    border:3px solid transparent;
+    transition:border-color 0.2s, box-shadow 0.2s;
+  }
+  .section.chosen {
+    border-color:#1a6fce;
+    box-shadow:0 0 0 4px rgba(26,111,206,0.1);
+  }
+  .section-header {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:32px;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .section-title { font-size:18px; font-weight:700; }
+  .section-desc  { font-size:12px; color:#888; margin-top:4px; }
+  .choose-btn {
+    padding:10px 28px;
+    border-radius:999px;
+    border:2px solid #ddd;
+    background:#fff;
+    font-size:13px;
+    font-weight:600;
+    color:#555;
+    cursor:pointer;
+    transition:all 0.2s;
+    font-family:inherit;
+  }
+  .choose-btn:hover { border-color:#1a6fce; color:#1a6fce; background:#f0f5ff; }
+  .choose-btn.active { background:#1a6fce; color:#fff; border-color:#1a6fce; }
+
+  /* ── 공통 그리드 ── */
+  .grid {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:28px 16px;
+  }
+  .card {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+    text-align:center;
+  }
+  .avatar-wrap { cursor:pointer; transition:transform 0.2s; }
+  .avatar-wrap:hover { transform:scale(1.07); }
+  .name  { font-size:13px; font-weight:500; color:#333; }
+  .age   { font-size:11px; color:#aaa; margin-left:3px; }
+  .bio   { font-size:11px; color:#aaa; line-height:1.5; }
+  .btn   {
+    font-size:11px; border:1px solid #ddd; color:#666;
+    padding:5px 14px; border-radius:4px; cursor:pointer;
+    background:#fff; font-family:inherit; transition:all 0.2s;
+  }
+  .btn:hover { background:#f8f8f8; border-color:#999; color:#222; }
+
+  /* ── 스타일 1: 동그라미 ── */
+  .circle-avatar {
+    width:88px; height:88px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    border:2px solid rgba(255,255,255,0.6);
+    box-shadow:0 3px 12px rgba(0,0,0,0.1);
+    font-size:32px; font-weight:700; color:rgba(255,255,255,0.75);
+  }
+
+  /* ── 스타일 2: 둥근 네모 ── */
+  .rounded-avatar {
+    width:88px; height:88px; border-radius:24px;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 3px 12px rgba(0,0,0,0.1);
+    font-size:32px; font-weight:700; color:rgba(255,255,255,0.75);
+  }
+
+  /* ── 스타일 3: 육각형 ── */
+  .hex-wrap {
+    width:96px; height:88px; position:relative;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .hex-avatar {
+    width:88px; height:88px;
+    clip-path:polygon(50% 0%,95% 25%,95% 75%,50% 100%,5% 75%,5% 25%);
+    display:flex; align-items:center; justify-content:center;
+    font-size:32px; font-weight:700; color:rgba(255,255,255,0.75);
+  }
+
+  /* ── 스타일 4: 블롭 (각자 다른 모양) ── */
+  .blob-avatar {
+    width:92px; height:92px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:30px; font-weight:700; color:rgba(255,255,255,0.75);
+    box-shadow:0 3px 12px rgba(0,0,0,0.1);
+  }
+  /* 블롭: 각 카드마다 다른 border-radius */
+  .blob-1 { border-radius:60% 40% 55% 45% / 50% 60% 40% 50%; }
+  .blob-2 { border-radius:45% 55% 40% 60% / 60% 40% 55% 45%; }
+  .blob-3 { border-radius:55% 45% 65% 35% / 40% 60% 50% 50%; }
+  .blob-4 { border-radius:40% 60% 50% 50% / 55% 45% 60% 40%; }
+  .blob-5 { border-radius:65% 35% 45% 55% / 45% 55% 40% 60%; }
+  .blob-6 { border-radius:50% 50% 60% 40% / 35% 65% 45% 55%; }
+  .blob-7 { border-radius:35% 65% 55% 45% / 60% 40% 65% 35%; }
+  .blob-8 { border-radius:55% 45% 40% 60% / 50% 50% 55% 45%; }
+
+  @media(max-width:640px) {
+    .section { margin:16px; padding:24px; }
+    .grid { grid-template-columns:repeat(4,1fr); gap:16px 8px; }
+    .circle-avatar,.rounded-avatar,.hex-avatar,.blob-avatar { width:64px; height:64px; font-size:22px; }
+    .hex-wrap { width:68px; height:64px; }
+    .top-bar { padding:16px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 상단 -->
+<div class="top-bar">
+  <div>
+    <h1>🎨 작가 소개 스타일 선택</h1>
+    <p>마음에 드는 스타일을 골라주세요. 선택하면 바로 적용합니다.</p>
+  </div>
+  <div class="selected-badge" id="badge">✓ 동그라미 선택됨</div>
+</div>
+
+<!-- ════════════════════════════
+     스타일 1: 동그라미
+════════════════════════════ -->
+<div class="section" id="s1">
+  <div class="section-header">
+    <div>
+      <div class="section-title">⭕ 스타일 1 — 동그라미</div>
+      <div class="section-desc">친근하고 부드러운 느낌. 가장 익숙한 프로필 형태</div>
+    </div>
+    <button class="choose-btn" onclick="choose(1,'동그라미')">이 스타일 선택</button>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <div class="avatar-wrap"><div class="circle-avatar" style="background:#f4c2c2">리</div></div>
+      <div class="name">리아<span class="age">10세</span></div>
+      <div class="bio">핸드메이드 팔찌</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="circle-avatar" style="background:#c2d4f4">준</div></div>
+      <div class="name">준호<span class="age">14세</span></div>
+      <div class="bio">그림·일러스트</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="circle-avatar" style="background:#c2f4d0">소</div></div>
+      <div class="name">소연<span class="age">13세</span></div>
+      <div class="bio">점토 조각</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="circle-avatar" style="background:#f4ecc2">민</div></div>
+      <div class="name">민준<span class="age">15세</span></div>
+      <div class="bio">사진·편집</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="circle-avatar" style="background:#e8c2f4">유</div></div>
+      <div class="name">유나<span class="age">12세</span></div>
+      <div class="bio">수채화</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="circle-avatar" style="background:#f4d4c2">지</div></div>
+      <div class="name">지원<span class="age">14세</span></div>
+      <div class="bio">캘리그라피</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="circle-avatar" style="background:#c2f4f0">서</div></div>
+      <div class="name">서준<span class="age">13세</span></div>
+      <div class="bio">종이 접기</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="circle-avatar" style="background:#f4c2e4">해</div></div>
+      <div class="name">해인<span class="age">15세</span></div>
+      <div class="bio">자수·패브릭</div>
+      <button class="btn">둘러보기</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════
+     스타일 2: 둥근 네모
+════════════════════════════ -->
+<div class="section" id="s2">
+  <div class="section-header">
+    <div>
+      <div class="section-title">🟦 스타일 2 — 둥근 네모</div>
+      <div class="section-desc">사진이 잘 보이고 깔끔한 현대적 느낌. 앱 아이콘 스타일</div>
+    </div>
+    <button class="choose-btn" onclick="choose(2,'둥근 네모')">이 스타일 선택</button>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <div class="avatar-wrap"><div class="rounded-avatar" style="background:#f4c2c2">리</div></div>
+      <div class="name">리아<span class="age">10세</span></div>
+      <div class="bio">핸드메이드 팔찌</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="rounded-avatar" style="background:#c2d4f4">준</div></div>
+      <div class="name">준호<span class="age">14세</span></div>
+      <div class="bio">그림·일러스트</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="rounded-avatar" style="background:#c2f4d0">소</div></div>
+      <div class="name">소연<span class="age">13세</span></div>
+      <div class="bio">점토 조각</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="rounded-avatar" style="background:#f4ecc2">민</div></div>
+      <div class="name">민준<span class="age">15세</span></div>
+      <div class="bio">사진·편집</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="rounded-avatar" style="background:#e8c2f4">유</div></div>
+      <div class="name">유나<span class="age">12세</span></div>
+      <div class="bio">수채화</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="rounded-avatar" style="background:#f4d4c2">지</div></div>
+      <div class="name">지원<span class="age">14세</span></div>
+      <div class="bio">캘리그라피</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="rounded-avatar" style="background:#c2f4f0">서</div></div>
+      <div class="name">서준<span class="age">13세</span></div>
+      <div class="bio">종이 접기</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="rounded-avatar" style="background:#f4c2e4">해</div></div>
+      <div class="name">해인<span class="age">15세</span></div>
+      <div class="bio">자수·패브릭</div>
+      <button class="btn">둘러보기</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════
+     스타일 3: 육각형
+════════════════════════════ -->
+<div class="section" id="s3">
+  <div class="section-header">
+    <div>
+      <div class="section-title">⬡ 스타일 3 — 육각형</div>
+      <div class="section-desc">벌집처럼 모으면 더 멋진 느낌. 개성 있고 세련된 스타일</div>
+    </div>
+    <button class="choose-btn" onclick="choose(3,'육각형')">이 스타일 선택</button>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <div class="avatar-wrap"><div class="hex-wrap"><div class="hex-avatar" style="background:#f4c2c2">리</div></div></div>
+      <div class="name">리아<span class="age">10세</span></div>
+      <div class="bio">핸드메이드 팔찌</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="hex-wrap"><div class="hex-avatar" style="background:#c2d4f4">준</div></div></div>
+      <div class="name">준호<span class="age">14세</span></div>
+      <div class="bio">그림·일러스트</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="hex-wrap"><div class="hex-avatar" style="background:#c2f4d0">소</div></div></div>
+      <div class="name">소연<span class="age">13세</span></div>
+      <div class="bio">점토 조각</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="hex-wrap"><div class="hex-avatar" style="background:#f4ecc2">민</div></div></div>
+      <div class="name">민준<span class="age">15세</span></div>
+      <div class="bio">사진·편집</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="hex-wrap"><div class="hex-avatar" style="background:#e8c2f4">유</div></div></div>
+      <div class="name">유나<span class="age">12세</span></div>
+      <div class="bio">수채화</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="hex-wrap"><div class="hex-avatar" style="background:#f4d4c2">지</div></div></div>
+      <div class="name">지원<span class="age">14세</span></div>
+      <div class="bio">캘리그라피</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="hex-wrap"><div class="hex-avatar" style="background:#c2f4f0">서</div></div></div>
+      <div class="name">서준<span class="age">13세</span></div>
+      <div class="bio">종이 접기</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="hex-wrap"><div class="hex-avatar" style="background:#f4c2e4">해</div></div></div>
+      <div class="name">해인<span class="age">15세</span></div>
+      <div class="bio">자수·패브릭</div>
+      <button class="btn">둘러보기</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════
+     스타일 4: 블롭
+════════════════════════════ -->
+<div class="section" id="s4">
+  <div class="section-header">
+    <div>
+      <div class="section-title">🫧 스타일 4 — 블롭 (작가마다 다른 모양)</div>
+      <div class="section-desc">각자 개성 있는 불규칙한 모양. 가장 예술적이고 트렌디한 스타일</div>
+    </div>
+    <button class="choose-btn" onclick="choose(4,'블롭')">이 스타일 선택</button>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <div class="avatar-wrap"><div class="blob-avatar blob-1" style="background:#f4c2c2">리</div></div>
+      <div class="name">리아<span class="age">10세</span></div>
+      <div class="bio">핸드메이드 팔찌</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="blob-avatar blob-2" style="background:#c2d4f4">준</div></div>
+      <div class="name">준호<span class="age">14세</span></div>
+      <div class="bio">그림·일러스트</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="blob-avatar blob-3" style="background:#c2f4d0">소</div></div>
+      <div class="name">소연<span class="age">13세</span></div>
+      <div class="bio">점토 조각</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="blob-avatar blob-4" style="background:#f4ecc2">민</div></div>
+      <div class="name">민준<span class="age">15세</span></div>
+      <div class="bio">사진·편집</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="blob-avatar blob-5" style="background:#e8c2f4">유</div></div>
+      <div class="name">유나<span class="age">12세</span></div>
+      <div class="bio">수채화</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="blob-avatar blob-6" style="background:#f4d4c2">지</div></div>
+      <div class="name">지원<span class="age">14세</span></div>
+      <div class="bio">캘리그라피</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="blob-avatar blob-7" style="background:#c2f4f0">서</div></div>
+      <div class="name">서준<span class="age">13세</span></div>
+      <div class="bio">종이 접기</div>
+      <button class="btn">둘러보기</button>
+    </div>
+    <div class="card">
+      <div class="avatar-wrap"><div class="blob-avatar blob-8" style="background:#f4c2e4">해</div></div>
+      <div class="name">해인<span class="age">15세</span></div>
+      <div class="bio">자수·패브릭</div>
+      <button class="btn">둘러보기</button>
+    </div>
+  </div>
+</div>
+
+<div style="height:60px"></div>
+
+<script>
+  function choose(num, name) {
+    // 모든 섹션 초기화
+    [1,2,3,4].forEach(n => {
+      document.getElementById('s'+n).classList.remove('chosen');
+      document.querySelectorAll('#s'+n+' .choose-btn')[0].classList.remove('active');
+      document.querySelectorAll('#s'+n+' .choose-btn')[0].textContent = '이 스타일 선택';
+    });
+    // 선택한 섹션 활성화
+    document.getElementById('s'+num).classList.add('chosen');
+    document.querySelectorAll('#s'+num+' .choose-btn')[0].classList.add('active');
+    document.querySelectorAll('#s'+num+' .choose-btn')[0].textContent = '✓ 선택됨';
+    // 상단 배지
+    const badge = document.getElementById('badge');
+    badge.textContent = '✓ ' + name + ' 선택됨';
+    badge.classList.add('show');
+    // 상단으로 스크롤
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+</script>
+</body>
+</html>

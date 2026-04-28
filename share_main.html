@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>꿈꾸는 2Sang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Nanum+Brush+Script&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #fff;
+    color: #222;
+    min-height: 100vh;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ── 헤더 ── */
+  header {
+    border-bottom: 1px solid #e5e5e5;
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+  }
+  .logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+  }
+  .logo-text .sub {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: #aaa;
+    text-transform: uppercase;
+  }
+  .logo-text .main {
+    font-size: 22px;
+    font-weight: 700;
+    color: #222;
+    line-height: 1;
+  }
+  .header-icons {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: #666;
+  }
+  .header-icons svg { cursor: pointer; }
+  .header-icons svg:hover { color: #222; }
+
+  /* 네비 */
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    border-top: 1px solid #f0f0f0;
+  }
+  nav a {
+    display: block;
+    padding: 12px 4px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #555;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  nav a:hover {
+    color: #111;
+    border-bottom-color: #222;
+  }
+
+  /* ── 배너 ── */
+  .banner-wrap {
+    max-width: 1200px;
+    margin: 24px auto 0;
+    padding: 0 20px;
+  }
+  .banner {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #ffe0ec 0%, #fff0f5 50%, #ffd6e8 100%);
+  }
+  .banner-deco1 {
+    position: absolute;
+    top: 16px;
+    right: 32px;
+    font-size: 80px;
+    opacity: 0.1;
+    user-select: none;
+  }
+  .banner-deco2 {
+    position: absolute;
+    bottom: 16px;
+    right: 130px;
+    font-size: 50px;
+    opacity: 0.1;
+    user-select: none;
+  }
+  .banner-content {
+    padding: 32px 40px;
+    position: relative;
+    z-index: 1;
+  }
+  .banner-content .tag {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: #f06292;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .banner-content h2 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #222;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+  .banner-content h2 span { color: #e91e8c; }
+  .banner-btn {
+    display: inline-block;
+    background: #fff;
+    color: #222;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px 20px;
+    border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .banner-btn:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+  .banner-cards {
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 12px;
+  }
+  .banner-card {
+    width: 100px;
+    height: 120px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 12px;
+  }
+  .banner-card span {
+    font-size: 11px;
+    color: rgba(255,255,255,0.85);
+    font-weight: 500;
+  }
+
+  /* ── 메인 텍스트 ── */
+  .main-text {
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .main-text p {
+    font-family: 'Nanum Brush Script', cursive;
+    font-size: 44px;
+    color: #222;
+    line-height: 1.3;
+  }
+
+  /* ── 크리에이터 그리드 ── */
+  .creators {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 64px;
+  }
+  .creators h3 {
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 24px;
+  }
+  .creator-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px 16px;
+  }
+  .creator-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+  }
+  .creator-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #f0f0f0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    font-size: 36px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.75);
+  }
+  .creator-avatar:hover {
+    transform: scale(1.07);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  }
+  .creator-name {
+    font-size: 12px;
+    color: #555;
+    line-height: 1.4;
+  }
+  .creator-name .age { color: #aaa; margin-left: 4px; font-size: 11px; }
+  .creator-bio {
+    font-size: 10px;
+    color: #aaa;
+    line-height: 1.4;
+    padding: 0 4px;
+  }
+  .creator-btn {
+    font-size: 11px;
+    border: 1px solid #ddd;
+    color: #666;
+    padding: 4px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #fff;
+  }
+  .creator-btn:hover {
+    background: #f8f8f8;
+    border-color: #aaa;
+    color: #222;
+  }
+
+  /* ── 반응형 ── */
+  @media (max-width: 768px) {
+    .creator-grid { grid-template-columns: repeat(4, 1fr); gap: 16px 8px; }
+    .creator-avatar { width: 70px; height: 70px; font-size: 26px; }
+    .main-text p { font-size: 28px; }
+    nav { gap: 14px; overflow-x: auto; }
+    nav a { font-size: 12px; padding: 10px 2px; }
+    .banner-cards { display: none; }
+    .banner-content h2 { font-size: 20px; }
+    .banner-content { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 헤더 -->
+<header>
+  <div class="header-inner">
+    <div class="header-top">
+      <!-- 로고 -->
+      <div class="logo-wrap">
+        <!-- 크레파스 4줄 SVG -->
+        <svg width="72" height="52" viewBox="0 0 72 52" fill="none" aria-hidden="true">
+          <path d="M2,7 Q7,7 12,9 Q17,6 22,8 Q27,5 32,7 Q37,4 42,6 Q47,5 52,7 Q57,4 62,7 Q67,5 72,7"
+            stroke="#e8312a" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+          <path d="M2,20 Q7,18 12,21 Q17,19 22,22 Q27,20 32,18 Q37,21 42,19 Q47,22 52,20 Q57,18 62,21 Q67,19 72,20"
+            stroke="#f5c518" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+          <path d="M2,33 Q7,31 12,34 Q17,36 22,33 Q27,31 32,34 Q37,32 42,35 Q47,33 52,31 Q57,34 62,32 Q67,35 72,33"
+            stroke="#1a6fce" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+          <path d="M2,46 Q7,44 12,47 Q17,45 22,43 Q27,46 32,44 Q37,47 42,45 Q47,43 52,46 Q57,44 62,47 Q67,45 72,46"
+            stroke="#2db35d" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+        </svg>
+        <div class="logo-text">
+          <div class="sub">dreaming</div>
+          <div class="main">꿈꾸는 2Sang</div>
+        </div>
+      </div>
+
+      <!-- 우측 아이콘 -->
+      <div class="header-icons">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5 6.5 5c2 0 3.5 1 5.5 3 2-2 3.5-3 5.5-3 4 0 5.5 4 4 7-2.5 4.5-9.5 9-9.5 9z"/>
+        </svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- 네비 -->
+    <nav>
+      <a href="#">전체상품</a>
+      <a href="#">신상품</a>
+      <a href="#">베스트</a>
+      <a href="#">여름시리즈</a>
+      <a href="#">클래식</a>
+      <a href="#">자연시리즈</a>
+      <a href="#">주문제작</a>
+    </nav>
+  </div>
+</header>
+
+<!-- 배너 -->
+<div class="banner-wrap">
+  <div class="banner">
+    <div class="banner-deco1">🌸</div>
+    <div class="banner-deco2">✿</div>
+    <div class="banner-content">
+      <p class="tag">Spring 2026</p>
+      <h2>봄에 만나는<br><span>청소년 작가</span> 베스트 작품</h2>
+      <a href="#" class="banner-btn">작품 둘러보기 →</a>
+    </div>
+    <div class="banner-cards">
+      <div class="banner-card" style="background: linear-gradient(135deg,#fcd5ce,#f8a5a0)">
+        <span>팔찌</span>
+      </div>
+      <div class="banner-card" style="background: linear-gradient(135deg,#d5e8fc,#a0c8f8)">
+        <span>일러스트</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 메인 텍스트 -->
+<div class="main-text">
+  <p>청소년 작가님들의 작품을 기다립니다.</p>
+</div>
+
+<!-- 크리에이터 그리드 -->
+<div class="creators">
+  <h3>크리에이터의 샵을 둘러보세요!</h3>
+  <div class="creator-grid">
+
+    <div class="creator-item">
+      <div class="creator-avatar" style="background:#f4c2c2">리</div>
+      <div class="creator-name">리아 <span class="age">10세</span></div>
+      <div class="creator-bio">핸드메이드 팔찌를 만듭니다.</div>
+      <button class="creator-btn">둘러보기</button>
+    </div>
+
+    <div class="creator-item">
+      <div class="creator-avatar" style="background:#c2d4f4">준</div>
+      <div class="creator-name">준호 <span class="age">14세</span></div>
+      <div class="creator-bio">그림과 일러스트를 그립니다.</div>
+      <button class="creator-btn">둘러보기</button>
+    </div>
+
+    <div class="creator-item">
+      <div class="creator-avatar" style="background:#c2f4d0">소</div>
+      <div class="creator-name">소연 <span class="age">13세</span></div>
+      <div class="creator-bio">점토로 작은 조각을 만듭니다.</div>
+      <button class="creator-btn">둘러보기</button>
+    </div>
+
+    <div class="creator-item">
+      <div class="creator-avatar" style="background:#f4ecc2">민</div>
+      <div class="creator-name">민준 <span class="age">15세</span></div>
+      <div class="creator-bio">사진을 찍고 편집합니다.</div>
+      <button class="creator-btn">둘러보기</button>
+    </div>
+
+    <div class="creator-item">
+      <div class="creator-avatar" style="background:#e8c2f4">유</div>
+      <div class="creator-name">유나 <span class="age">12세</span></div>
+      <div class="creator-bio">수채화 그림을 그립니다.</div>
+      <button class="creator-btn">둘러보기</button>
+    </div>
+
+    <div class="creator-item">
+      <div class="creator-avatar" style="background:#f4d4c2">지</div>
+      <div class="creator-name">지원 <span class="age">14세</span></div>
+      <div class="creator-bio">손글씨 캘리그라피를 씁니다.</div>
+      <button class="creator-btn">둘러보기</button>
+    </div>
+
+    <div class="creator-item">
+      <div class="creator-avatar" style="background:#c2f4f0">서</div>
+      <div class="creator-name">서준 <span class="age">13세</span></div>
+      <div class="creator-bio">종이 접기 작품을 만듭니다.</div>
+      <button class="creator-btn">둘러보기</button>
+    </div>
+
+    <div class="creator-item">
+      <div class="creator-avatar" style="background:#f4c2e4">해</div>
+      <div class="creator-name">해인 <span class="age">15세</span></div>
+      <div class="creator-bio">자수와 패브릭 아트를 합니다.</div>
+      <button class="creator-btn">둘러보기</button>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

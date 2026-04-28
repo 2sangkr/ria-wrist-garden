@@ -1,6 +1,17 @@
 import Link from 'next/link';
 import { ARTISTS } from '@/lib/artists';
 
+const BLOB_SHAPES = [
+  '60% 40% 55% 45% / 50% 60% 40% 50%',
+  '45% 55% 40% 60% / 60% 40% 55% 45%',
+  '55% 45% 65% 35% / 40% 60% 50% 50%',
+  '40% 60% 50% 50% / 55% 45% 60% 40%',
+  '65% 35% 45% 55% / 45% 55% 40% 60%',
+  '50% 50% 60% 40% / 35% 65% 45% 55%',
+  '35% 65% 55% 45% / 60% 40% 65% 35%',
+  '55% 45% 40% 60% / 50% 50% 55% 45%',
+];
+
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
@@ -132,15 +143,18 @@ export default function HomePage() {
         </h3>
 
         <div className="grid grid-cols-4 md:grid-cols-6 gap-4 md:gap-6">
-          {ARTISTS.map((artist) => (
+          {ARTISTS.map((artist, idx) => (
             <div key={artist.id} className="flex flex-col items-center gap-2 text-center">
-              {/* 동그란 프로필 */}
+              {/* 블롭 프로필 */}
               <Link href={`/artist/${artist.slug}`} className="group">
                 <div
-                  className="w-[80px] h-[80px] md:w-[100px] md:h-[100px] rounded-full overflow-hidden border-2 border-gray-100 shadow-sm transition-all duration-200 group-hover:scale-105 group-hover:shadow-md flex items-center justify-center mx-auto"
-                  style={{ background: artist.profileColor }}
+                  className="w-[80px] h-[80px] md:w-[100px] md:h-[100px] shadow-md transition-all duration-200 group-hover:scale-110 group-hover:shadow-lg flex items-center justify-center mx-auto"
+                  style={{
+                    background: artist.profileColor,
+                    borderRadius: BLOB_SHAPES[idx % BLOB_SHAPES.length],
+                  }}
                 >
-                  <span className="text-[28px] md:text-[32px] font-bold text-white/70 select-none">
+                  <span className="text-[28px] md:text-[32px] font-bold text-white/75 select-none">
                     {artist.name[0]}
                   </span>
                 </div>
