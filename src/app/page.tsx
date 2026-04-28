@@ -62,6 +62,50 @@ export default function HomePage() {
         </div>
       </header>
 
+      {/* ══ 분홍 배너 ══ */}
+      <section className="max-w-[1100px] mx-auto px-5 sm:px-8 pt-6 pb-2">
+        <div
+          className="w-full rounded-2xl overflow-hidden relative flex items-center"
+          style={{
+            background: 'linear-gradient(135deg, #ffe0ec 0%, #fff0f5 50%, #ffd6e8 100%)',
+            minHeight: '160px',
+          }}
+        >
+          <div className="absolute top-3 right-5 text-[60px] sm:text-[80px] opacity-10 select-none">🌸</div>
+          <div className="absolute bottom-3 right-28 text-[36px] sm:text-[50px] opacity-10 select-none">✿</div>
+
+          <div className="px-6 sm:px-10 py-6 sm:py-8 relative z-10">
+            <p className="text-[11px] sm:text-[12px] tracking-[0.2em] text-pink-400 uppercase mb-1 sm:mb-2">Spring 2026</p>
+            <h2 className="text-[18px] sm:text-[22px] md:text-[26px] font-bold text-gray-800 leading-snug mb-3">
+              봄에 만나는<br />
+              <span className="text-pink-500">청소년 작가</span> 베스트 작품
+            </h2>
+            <Link
+              href="/works"
+              className="inline-block bg-white text-gray-800 text-[11px] sm:text-[12px] font-medium px-4 sm:px-5 py-2 rounded-full shadow-sm hover:shadow-md transition-shadow"
+            >
+              작품 둘러보기 →
+            </Link>
+          </div>
+
+          {/* PC 미니 카드 */}
+          <div className="hidden md:flex gap-3 absolute right-10 top-1/2 -translate-y-1/2">
+            {[
+              { bg: 'linear-gradient(135deg,#fcd5ce,#f8a5a0)', label: '책갈피' },
+              { bg: 'linear-gradient(135deg,#d5e8fc,#a0c8f8)', label: '핸드메이드' },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="w-[90px] h-[110px] rounded-xl shadow-md flex items-end justify-center pb-3"
+                style={{ background: item.bg }}
+              >
+                <span className="text-[11px] text-white/80 font-medium">{item.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ══ 2Sang 소개 카드 ══ */}
       <section className="max-w-[1100px] mx-auto px-5 sm:px-8 pt-10 pb-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
