@@ -50,7 +50,7 @@ export const ARTISTS: Artist[] = [
         artistMessage: '밤하늘 같은 색이어서 여름밤이라고 이름 붙였어요.',
         materialsStory: '어두운 색감이 마음에 들어서 골랐어요. 시원한 느낌을 담고 싶었어요.',
         materials: ['종이', '리본', '수작업 마감'],
-        price: 3000,
+        price: 100000,
         stock: 4,
       },
     ],
