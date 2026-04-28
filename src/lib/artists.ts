@@ -40,7 +40,7 @@ export const ARTISTS: Artist[] = [
         artistMessage: '만들면서 내내 봄 생각을 했어요.',
         materialsStory: '색이 마음에 들어서 직접 골랐어요. 하나하나 손으로 만들었습니다.',
         materials: ['종이', '리본', '수작업 마감'],
-        price: 3000,
+        price: 300000,
         stock: 5,
       },
       {
