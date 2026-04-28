@@ -40,20 +40,14 @@ export default async function WorkDetailPage({ params }: Props) {
           <span className="text-[20px] font-bold text-gray-900">{formatPrice(work.price)}</span>
         </div>
 
-        {/* 작가의 한 마디 */}
-        <p
-          className="text-[24px] sm:text-[28px] text-gray-800 leading-snug mb-8"
-          style={{ fontFamily: "'Nanum Brush Script', cursive" }}
-        >
-          &ldquo;{work.artistMessage}&rdquo;
-        </p>
-
-        {/* 재료 */}
-        <p className="text-[13px] text-gray-400 mb-1">{work.materialsStory}</p>
-        <p className="text-[12px] text-gray-300">{work.materials.join(' · ')}</p>
+        {/* 작업 중 */}
+        <div className="flex items-center gap-2 my-8">
+          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+          <p className="text-[12px] text-gray-400 tracking-wide">작가가 소개글을 작성 중이에요</p>
+        </div>
 
         {/* 구분선 */}
-        <div className="my-8 border-t border-gray-100" />
+        <div className="mb-8 border-t border-gray-100" />
 
         {/* 재고 + 구매 */}
         <p className="text-[12px] text-gray-400 mb-4">
