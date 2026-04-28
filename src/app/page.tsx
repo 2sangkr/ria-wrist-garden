@@ -16,10 +16,9 @@ const BLOB_SHAPES = [
 ];
 
 const NAV_LINKS = [
-  { href: '/',        label: '홈' },
-  { href: '/artists', label: '작가들' },
-  { href: '/works',   label: '전체 작품' },
-  { href: '/about',   label: '소개' },
+  { href: '/',       label: '홈' },
+  { href: '/works',  label: '작품 보기' },
+  { href: '/about',  label: '꿈꾸는 2Sang' },
 ];
 
 export default function HomePage() {
