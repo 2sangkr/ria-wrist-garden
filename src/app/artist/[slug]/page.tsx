@@ -32,10 +32,8 @@ export default async function ArtistPage({ params }: Props) {
           <div>
             <h1 className="text-[24px] font-bold text-gray-800" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
               {artist.name}
-              {artist.age && (
-                <span className="ml-2 text-[14px] font-normal text-gray-400">{artist.age}세</span>
-              )}
             </h1>
+            <p className="text-[12px] text-gray-400 mt-1 tracking-wide">{artist.tags.join(' ')}</p>
             <p className="text-[14px] text-gray-500 mt-1" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
               {artist.bio}
             </p>

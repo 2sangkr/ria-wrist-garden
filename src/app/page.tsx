@@ -161,46 +161,68 @@ export default function HomePage() {
         </h3>
 
         {/* 모바일: 2열 / 태블릿+: 4열 */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-6 md:gap-8">
-          {ARTISTS.map((artist, idx) => (
-            <div key={artist.id} className="flex flex-col items-center gap-2 sm:gap-2 text-center">
-
-              {/* 블롭 아바타 */}
-              <Link href={`/artist/${artist.slug}`} className="group">
-                <div
-                  className="w-[100px] h-[100px] sm:w-[90px] sm:h-[90px] md:w-[110px] md:h-[110px] shadow-md transition-all duration-200 group-hover:scale-110 group-hover:shadow-xl flex items-center justify-center mx-auto"
-                  style={{
-                    background: artist.profileColor,
-                    borderRadius: BLOB_SHAPES[idx % BLOB_SHAPES.length],
-                  }}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 md:gap-8">
+          {ARTISTS.map((artist, idx) =>
+            artist.isEmpty ? (
+              /* ── 빈 자리 ── */
+              <div key={artist.id} className="flex flex-col items-center gap-2 text-center">
+                <a
+                  href="https://docs.google.com/forms/d/e/1FAIpQLScC1hyx1mblspGbI2s-DUxt3P9MIBQOVYAsEAUC50JfwftWqg/viewform?usp=header"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group"
                 >
-                  <span className="text-[36px] sm:text-[32px] md:text-[38px] font-bold text-white/75 select-none">
-                    {artist.name[0]}
-                  </span>
-                </div>
-              </Link>
-
-              {/* 이름 */}
-              <p className="text-[13px] sm:text-[12px] font-medium text-gray-700 leading-snug">
-                {artist.name}
-                {artist.age && <span className="text-gray-400 text-[11px] ml-1">{artist.age}세</span>}
-              </p>
-
-              {/* 소개 — 모바일에서도 표시, 작게 */}
-              <p className="text-[11px] text-gray-400 leading-snug px-1 hidden sm:block">{artist.bio}</p>
-              <p className="text-[11px] text-gray-400 leading-snug px-1 sm:hidden">
-                {artist.bio.length > 10 ? artist.bio.slice(0, 10) + '…' : artist.bio}
-              </p>
-
-              {/* 둘러보기 버튼 */}
-              <Link
-                href={`/artist/${artist.slug}`}
-                className="text-[11px] sm:text-[11px] border border-gray-300 text-gray-600 px-3 sm:px-3 py-1.5 rounded hover:bg-gray-50 hover:border-gray-500 transition-colors"
-              >
-                둘러보기
-              </Link>
-            </div>
-          ))}
+                  <div
+                    className="w-[100px] h-[100px] sm:w-[90px] sm:h-[90px] md:w-[110px] md:h-[110px] flex items-center justify-center mx-auto transition-all duration-200 group-hover:scale-105"
+                    style={{
+                      borderRadius: BLOB_SHAPES[idx % BLOB_SHAPES.length],
+                      border: '2px dashed #d1d5db',
+                      background: '#f9fafb',
+                    }}
+                  >
+                    <span className="text-[28px] text-gray-300 group-hover:text-gray-400 transition-colors select-none">?</span>
+                  </div>
+                </a>
+                <p className="text-[12px] text-gray-400">작가 모집 중</p>
+                <p className="text-[10px] text-gray-300 hidden sm:block">작가를 기다립니다</p>
+                <a
+                  href="https://docs.google.com/forms/d/e/1FAIpQLScC1hyx1mblspGbI2s-DUxt3P9MIBQOVYAsEAUC50JfwftWqg/viewform?usp=header"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[11px] border border-dashed border-gray-300 text-gray-400 px-3 py-1.5 rounded hover:bg-gray-50 hover:text-gray-600 transition-colors"
+                >
+                  참여하기
+                </a>
+              </div>
+            ) : (
+              /* ── 실제 작가 ── */
+              <div key={artist.id} className="flex flex-col items-center gap-2 text-center">
+                <Link href={`/artist/${artist.slug}`} className="group">
+                  <div
+                    className="w-[100px] h-[100px] sm:w-[90px] sm:h-[90px] md:w-[110px] md:h-[110px] shadow-md transition-all duration-200 group-hover:scale-110 group-hover:shadow-xl flex items-center justify-center mx-auto"
+                    style={{
+                      background: artist.profileColor,
+                      borderRadius: BLOB_SHAPES[idx % BLOB_SHAPES.length],
+                    }}
+                  >
+                    <span className="text-[36px] sm:text-[32px] md:text-[38px] font-bold text-white/75 select-none">
+                      {artist.name[0]}
+                    </span>
+                  </div>
+                </Link>
+                <p className="text-[13px] sm:text-[12px] font-medium text-gray-800">{artist.name}</p>
+                <p className="text-[11px] text-gray-400 tracking-wide">
+                  {artist.tags.join(' ')}
+                </p>
+                <Link
+                  href={`/artist/${artist.slug}`}
+                  className="text-[11px] border border-gray-300 text-gray-600 px-3 py-1.5 rounded hover:bg-gray-50 hover:border-gray-500 transition-colors"
+                >
+                  둘러보기
+                </Link>
+              </div>
+            )
+          )}
         </div>
       </section>
 
