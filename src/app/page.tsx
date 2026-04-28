@@ -32,7 +32,6 @@ export default function HomePage() {
               <span className="text-[17px] font-bold text-gray-900 tracking-tight">꿈꾸는 2Sang</span>
             </Link>
 
-            {/* PC 네비 */}
             <nav className="hidden sm:flex items-center gap-8">
               {NAV_LINKS.map((l) => (
                 <Link key={l.href} href={l.href}
@@ -42,7 +41,6 @@ export default function HomePage() {
               ))}
             </nav>
 
-            {/* 모바일 햄버거 */}
             <button className="sm:hidden p-1" onClick={() => setMenuOpen(!menuOpen)} aria-label="메뉴">
               <span className={`block w-5 h-[1.5px] bg-gray-800 transition-all origin-center mb-[5px] ${menuOpen ? 'rotate-45 translate-y-[6.5px]' : ''}`} />
               <span className={`block w-5 h-[1.5px] bg-gray-800 transition-all mb-[5px] ${menuOpen ? 'opacity-0' : ''}`} />
@@ -64,22 +62,83 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* 히어로 */}
-      <section className="max-w-[1100px] mx-auto px-5 sm:px-8 pt-16 pb-20 text-center">
-        <p className="text-[12px] tracking-[0.25em] text-gray-400 uppercase mb-6">dreaming 2sang</p>
-        <h1
-          className="text-[36px] sm:text-[52px] text-gray-900 leading-snug mb-8"
-          style={{ fontFamily: "'Nanum Brush Script', cursive" }}
-        >
-          청소년 작가님들의<br />작품을 기다립니다.
-        </h1>
-        <Link href="/works"
-          className="inline-block text-[13px] font-medium text-white bg-gray-900 px-7 py-3 rounded-full hover:bg-gray-700 transition-colors">
-          작품 보러가기
-        </Link>
+      {/* ══ 2Sang 소개 카드 ══ */}
+      <section className="max-w-[1100px] mx-auto px-5 sm:px-8 pt-10 pb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+          {/* 만드는 사람 */}
+          <div className="relative rounded-2xl overflow-hidden px-7 py-8"
+            style={{ background: '#fff8f7' }}>
+            {/* 크레파스 선 — 상단 */}
+            <div className="absolute top-0 left-0 right-0 flex h-[5px]">
+              <div className="flex-1 bg-[#e8312a] opacity-70" />
+              <div className="flex-1 bg-[#f5c518] opacity-70" />
+            </div>
+            {/* 크레파스 낙서 SVG */}
+            <svg className="absolute bottom-4 right-4 opacity-[0.07]"
+              width="72" height="72" viewBox="0 0 72 72" fill="none">
+              <path d="M8,36 Q18,10 36,8 Q54,6 64,20 Q74,34 60,54 Q46,70 28,64 Q10,58 8,36Z"
+                stroke="#e8312a" strokeWidth="6" fill="none" strokeLinecap="round"/>
+              <path d="M20,36 Q28,20 36,18 Q50,16 56,28 Q62,40 52,52 Q42,64 30,56 Q18,48 20,36Z"
+                stroke="#f5c518" strokeWidth="5" fill="none" strokeLinecap="round"/>
+            </svg>
+
+            <p className="text-[10px] tracking-[0.3em] text-[#e8312a] uppercase mb-4 font-medium">만드는 사람</p>
+            <p className="text-[18px] sm:text-[20px] font-bold text-gray-900 mb-3 leading-snug">
+              작가의 꿈
+            </p>
+            <p className="text-[13px] text-gray-500 leading-[1.9]">
+              스스로 만들고 표현하는 청소년이라면<br />
+              누구나 이곳에서 작가가 됩니다.
+            </p>
+          </div>
+
+          {/* 받는 사람 */}
+          <div className="relative rounded-2xl overflow-hidden px-7 py-8"
+            style={{ background: '#f7f9ff' }}>
+            {/* 크레파스 선 — 상단 */}
+            <div className="absolute top-0 left-0 right-0 flex h-[5px]">
+              <div className="flex-1 bg-[#1a6fce] opacity-70" />
+              <div className="flex-1 bg-[#2db35d] opacity-70" />
+            </div>
+            {/* 크레파스 낙서 SVG */}
+            <svg className="absolute bottom-4 right-4 opacity-[0.07]"
+              width="72" height="72" viewBox="0 0 72 72" fill="none">
+              <path d="M8,36 Q18,10 36,8 Q54,6 64,20 Q74,34 60,54 Q46,70 28,64 Q10,58 8,36Z"
+                stroke="#1a6fce" strokeWidth="6" fill="none" strokeLinecap="round"/>
+              <path d="M20,36 Q28,20 36,18 Q50,16 56,28 Q62,40 52,52 Q42,64 30,56 Q18,48 20,36Z"
+                stroke="#2db35d" strokeWidth="5" fill="none" strokeLinecap="round"/>
+            </svg>
+
+            <p className="text-[10px] tracking-[0.3em] text-[#1a6fce] uppercase mb-4 font-medium">받는 사람</p>
+            <p className="text-[18px] sm:text-[20px] font-bold text-gray-900 mb-3 leading-snug">
+              보내는 사람의 기쁨
+            </p>
+            <p className="text-[13px] text-gray-500 leading-[1.9]">
+              진심이 담긴 핸드메이드 작품을<br />
+              선물하거나 간직할 수 있어요.
+            </p>
+          </div>
+
+        </div>
+
+        {/* 2Sang 설명 한 줄 */}
+        <p className="text-center text-[11px] text-gray-300 mt-3 tracking-wide">
+          2Sang — 두 가지 상상이 만나는 곳
+        </p>
       </section>
 
-      {/* 작가 그리드 */}
+      {/* ══ 브러시 텍스트 ══ */}
+      <section className="py-8 text-center px-4">
+        <p
+          className="text-[22px] sm:text-[28px] text-gray-700"
+          style={{ fontFamily: "'Nanum Brush Script', cursive" }}
+        >
+          청소년 작가님들의 작품을 기다립니다.
+        </p>
+      </section>
+
+      {/* ══ 작가 그리드 ══ */}
       <section className="max-w-[1100px] mx-auto px-5 sm:px-8 pb-24">
         <p className="text-[12px] tracking-[0.2em] text-gray-400 uppercase mb-10 text-center">creators</p>
 
