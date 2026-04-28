@@ -32,10 +32,7 @@ export default function ArtistsPage() {
                 <span className="text-[40px] font-bold text-white/75 select-none">{artist.name[0]}</span>
               </div>
               <div>
-                <p className="text-[14px] font-medium text-gray-800">
-                  {artist.name}
-                  {artist.age && <span className="text-gray-400 text-[12px] ml-1">{artist.age}세</span>}
-                </p>
+                <p className="text-[14px] font-medium text-gray-800">{artist.name}</p>
                 <p className="text-[12px] text-gray-400 mt-1">{artist.bio}</p>
               </div>
               <span className="text-[11px] border border-gray-300 text-gray-500 px-3 py-1 rounded group-hover:bg-gray-50 group-hover:border-gray-500 transition-colors">

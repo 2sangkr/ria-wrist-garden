@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ARTISTS } from '@/lib/artists';
 
@@ -40,25 +41,32 @@ export default async function ArtistPage({ params }: Props) {
           </div>
         </div>
 
-        {/* 작품 영역 (추후 실제 작품으로 교체) */}
+        {/* 작품 목록 */}
         <div>
           <h2 className="text-[16px] font-bold text-gray-700 mb-6" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
             작품 목록
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="aspect-square rounded-lg flex items-center justify-center text-[13px] text-gray-400"
-                style={{ background: artist.profileColor + '55' }}
-              >
-                작품 {i}
+            {artist.works?.map((work, i) => (
+              <div key={i} className="aspect-square rounded-xl overflow-hidden relative bg-gray-100">
+                <Image
+                  src={work.image}
+                  alt={work.title}
+                  fill
+                  className="object-cover hover:scale-105 transition-transform duration-300"
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                />
               </div>
             ))}
+            {(!artist.works || artist.works.length === 0) && (
+              <div
+                className="aspect-square rounded-xl flex items-center justify-center text-[13px] text-gray-400 col-span-2 md:col-span-3"
+                style={{ background: artist.profileColor + '33' }}
+              >
+                작품이 등록되면 여기에 표시됩니다.
+              </div>
+            )}
           </div>
-          <p className="text-center text-[13px] text-gray-300 mt-10" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
-            작품이 등록되면 여기에 표시됩니다.
-          </p>
         </div>
       </div>
     </div>
