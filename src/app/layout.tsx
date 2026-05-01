@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: { default: '꿈꾸는 2Sang', template: '%s | 꿈꾸는 2Sang' },
-  description: '청소년 작가들의 핸드메이드 작품을 만나보세요.',
+  title: { default: '모든 아이의 모든 예술', template: '%s | 모든 아이의 모든 예술' },
+  description: '모든 아이의 모든 예술 — 어린이 작가들의 작품을 만나보세요.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

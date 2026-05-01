@@ -14,7 +14,7 @@ const BLOB_SHAPES = [
 const NAV_LINKS = [
   { href: '/',      label: '홈' },
   { href: '/works', label: '작품 보기' },
-  { href: '/about', label: '꿈꾸는 2Sang' },
+  { href: '/about', label: '소개' },
 ];
 
 export default function HomePage() {
@@ -29,7 +29,10 @@ export default function HomePage() {
           <div className="flex items-center justify-between h-14">
             <Link href="/" className="flex items-center gap-3">
               <CrayonLines />
-              <span className="text-[17px] font-bold text-gray-900 tracking-tight">꿈꾸는 2Sang</span>
+              <span className="text-[17px] font-bold text-gray-900 tracking-tight whitespace-nowrap" style={{ fontFamily: "'Jua', sans-serif" }}>
+                <span style={{ display: 'inline-block', background: '#e8312a', color: 'white', padding: '0 5px 1px', borderRadius: '4px', transform: 'rotate(-1.5deg)', fontSize: '1.05em' }}>모</span>든 아이의{' '}
+                <span style={{ display: 'inline-block', background: '#1a6fce', color: 'white', padding: '0 5px 1px', borderRadius: '4px', transform: 'rotate(1deg)', fontSize: '1.05em' }}>모</span>든 예술
+              </span>
             </Link>
 
             <nav className="hidden sm:flex items-center gap-8">
