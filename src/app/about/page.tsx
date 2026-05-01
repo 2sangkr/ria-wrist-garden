@@ -15,34 +15,40 @@ export default function AboutPage() {
             className="text-[36px] sm:text-[44px] text-gray-900 leading-snug"
             style={{ fontFamily: "'Nanum Brush Script', cursive" }}
           >
-            꿈꾸는 2Sang
+            모든 아이의 모든 예술
           </h1>
         </div>
 
         <div className="space-y-10 text-[14px] text-gray-600 leading-[2]">
 
           <section>
-            <h2 className="text-[15px] font-semibold text-gray-900 mb-3">우리는 누구인가요</h2>
             <p>
-              꿈꾸는 2Sang은 청소년 작가들이 자신의 작품을 세상에 선보이는 플랫폼입니다.
-              스스로의 방식으로 무언가를 만들고 있는 청소년이라면 누구나 이곳에서 작가가 될 수 있습니다.
+              아이들이 그리고 만든 것들,<br />
+              결국 박스에 넣어 두다가 버려지곤 했어요.
+            </p>
+            <p className="mt-4">
+              그게 아까웠어요.
             </p>
           </section>
 
           <section>
-            <h2 className="text-[15px] font-semibold text-gray-900 mb-3">왜 만들었나요</h2>
             <p>
-              재능 있는 청소년들이 만든 작품이 서랍 속에만 있는 게 아깝다는 생각에서 시작했습니다.
+              모든 아이의 모든 예술은<br />
+              그 작품들이 사라지지 않도록<br />
+              온라인 갤러리로 남기는 공간이에요.
             </p>
-            <p className="mt-4">
-              2Sang은 <em>"두 가지 상상"</em>을 뜻합니다.
-              만드는 사람의 꿈과, 받는 사람의 기쁨.
+          </section>
+
+          <section>
+            <p>
+              그림이든, 핸드메이드든, 레고든—<br />
+              아이가 만든 것이라면 무엇이든 여기서 작품이 됩니다.
             </p>
           </section>
 
           <section>
             <h2 className="text-[15px] font-semibold text-gray-900 mb-3">함께하고 싶다면</h2>
-            <p>초등학생부터 고등학생까지, 만들고 그리고 표현하는 청소년이라면 누구나 환영합니다.</p>
+            <p>내 아이의 작품을 갤러리에 올리고 싶다면 언제든 문의해주세요.</p>
             <a
               href="https://docs.google.com/forms/d/e/1FAIpQLScC1hyx1mblspGbI2s-DUxt3P9MIBQOVYAsEAUC50JfwftWqg/viewform?usp=header"
               target="_blank"
