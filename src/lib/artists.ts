@@ -192,7 +192,25 @@ export const ARTISTS: Artist[] = [
       },
     ],
   },
-  { id: '2', slug: '', name: '', tags: [], bio: '', profileColor: '', isEmpty: true },
+  {
+    id: '2',
+    slug: 'whee',
+    name: 'W.hee',
+    tags: ['#레고', '#모형', '#조립'],
+    bio: '레고로 만드는 정밀한 세계.',
+    profileColor: '#a8c8f0',
+    works: [
+      {
+        slug: 'work-1',
+        title: '2017년형 포드 F-150 랩터',
+        image: '/images/whee-work-1.jpg',
+        artistMessage: '',
+        materialsStory: '',
+        materials: ['레고'],
+        created_at: '2026-05-01',
+      },
+    ],
+  },
   { id: '3', slug: '', name: '', tags: [], bio: '', profileColor: '', isEmpty: true },
   { id: '4', slug: '', name: '', tags: [], bio: '', profileColor: '', isEmpty: true },
 ];
