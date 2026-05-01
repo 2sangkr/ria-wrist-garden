@@ -51,34 +51,25 @@ export default async function ArtistPage({ params }: Props) {
 
       {/* 갤러리 */}
       {works.length > 0 ? (
-        <div className="px-3 sm:px-6 pb-20">
-          <div className="columns-2 sm:columns-3 gap-2 sm:gap-3">
-            {works.map((work, i) => (
+        <div className="px-5 sm:px-8 pb-20">
+          <div className="grid grid-cols-2 gap-4 sm:gap-6">
+            {works.map((work) => (
               <Link
                 key={work.slug}
                 href={`/artist/${slug}/${work.slug}`}
-                className="group block break-inside-avoid mb-2 sm:mb-3"
+                className="group block"
               >
-                <div className="relative overflow-hidden bg-gray-50">
+                <div className="aspect-square rounded-xl overflow-hidden relative bg-gray-100 mb-3">
                   <Image
                     src={work.image}
                     alt={work.title}
-                    width={0}
-                    height={0}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                     sizes="(max-width: 640px) 50vw, 33vw"
-                    style={{ width: '100%', height: 'auto', display: 'block' }}
-                    className="transition-opacity duration-400 group-hover:opacity-85"
                   />
-                  <div className="absolute inset-0 flex items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="w-full px-3 py-2.5 bg-gradient-to-t from-black/50 to-transparent">
-                      <p className="text-white text-[12px] font-medium leading-tight">{work.title}</p>
-                      <p className="text-white/70 text-[11px] mt-0.5">{work.created_at}</p>
-                    </div>
-                  </div>
                 </div>
-                <p className="text-[10px] text-gray-300 mt-1.5 pl-0.5 tracking-widest">
-                  {String(i + 1).padStart(2, '0')}
-                </p>
+                <p className="text-[13px] font-medium text-gray-900 leading-snug">{work.title}</p>
+                <p className="text-[11px] text-gray-300 mt-0.5">{work.created_at}</p>
               </Link>
             ))}
           </div>
