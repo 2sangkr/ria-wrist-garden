@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ARTISTS, formatPrice } from '@/lib/artists';
+import { ARTISTS } from '@/lib/artists';
 
 export default function WorksPage() {
   const allWorks = ARTISTS.flatMap((artist) =>
@@ -48,7 +48,7 @@ export default function WorksPage() {
                 {/* 정보 */}
                 <p className="text-[13px] font-medium text-gray-900 leading-snug">{work.title}</p>
                 <p className="text-[11px] text-gray-400 mt-0.5">{artist.name}</p>
-                <p className="text-[12px] text-gray-700 mt-1">{formatPrice(work.price)}</p>
+                <p className="text-[11px] text-gray-300 mt-0.5">{work.created_at}</p>
               </Link>
             ))}
           </div>

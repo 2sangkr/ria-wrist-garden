@@ -72,9 +72,7 @@ export default async function ArtistPage({ params }: Props) {
                   <div className="absolute inset-0 flex items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="w-full px-3 py-2.5 bg-gradient-to-t from-black/50 to-transparent">
                       <p className="text-white text-[12px] font-medium leading-tight">{work.title}</p>
-                      {work.price > 0 && (
-                        <p className="text-white/70 text-[11px] mt-0.5">{work.price.toLocaleString('ko-KR')}원</p>
-                      )}
+                      <p className="text-white/70 text-[11px] mt-0.5">{work.created_at}</p>
                     </div>
                   </div>
                 </div>

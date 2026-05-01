@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ARTISTS, Artist, formatPrice } from '@/lib/artists';
+import { ARTISTS, Artist } from '@/lib/artists';
 
 type Props = { params: Promise<{ slug: string; workSlug: string }> };
 
@@ -12,6 +12,12 @@ export default async function WorkDetailPage({ params }: Props) {
 
   const work = artist.works.find((w) => w.slug === workSlug);
   if (!work) notFound();
+
+  const formattedDate = new Date(work.created_at).toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 
   return (
     <div className="min-h-screen bg-white">
@@ -34,34 +40,39 @@ export default async function WorkDetailPage({ params }: Props) {
           />
         </div>
 
-        {/* 제목 + 가격 */}
-        <div className="flex items-baseline justify-between mt-7 mb-5">
+        {/* 제목 + 날짜 */}
+        <div className="mt-7 mb-2">
           <h1 className="text-[20px] font-bold text-gray-900">{work.title}</h1>
-          <span className="text-[20px] font-bold text-gray-900">{formatPrice(work.price)}</span>
+          <p className="text-[12px] text-gray-400 mt-1">{formattedDate}</p>
         </div>
 
-        {/* 작업 중 */}
-        <div className="flex items-center gap-2 my-8">
-          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-          <p className="text-[12px] text-gray-400 tracking-wide">작가가 소개글을 작성 중이에요</p>
-        </div>
+        {/* 재료 */}
+        {work.materials.length > 0 && (
+          <p className="text-[12px] text-gray-400 mb-6">
+            {work.materials.join(' · ')}
+          </p>
+        )}
 
         {/* 구분선 */}
-        <div className="mb-8 border-t border-gray-100" />
+        <div className="border-t border-gray-100 mb-6" />
 
-        {/* 재고 + 구매 */}
-        <p className="text-[12px] text-gray-400 mb-4">
-          {work.stock > 0 ? `${work.stock}개 남았어요` : '품절'}
-        </p>
-
-        {work.stock > 0 ? (
-          <button className="w-full bg-gray-900 text-white text-[14px] font-medium py-4 rounded-full hover:bg-gray-700 transition-colors">
-            이 작품 데려가기
-          </button>
+        {/* 작가 메시지 */}
+        {work.artistMessage ? (
+          <p className="text-[14px] text-gray-700 leading-relaxed mb-4">
+            {work.artistMessage}
+          </p>
         ) : (
-          <button disabled className="w-full bg-gray-100 text-gray-400 text-[14px] py-4 rounded-full cursor-not-allowed">
-            품절
-          </button>
+          <div className="flex items-center gap-2 my-4">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+            <p className="text-[12px] text-gray-400 tracking-wide">작가가 소개글을 작성 중이에요</p>
+          </div>
+        )}
+
+        {/* 재료 스토리 */}
+        {work.materialsStory && (
+          <p className="text-[13px] text-gray-500 leading-relaxed mt-2">
+            {work.materialsStory}
+          </p>
         )}
 
         {/* 작가 */}

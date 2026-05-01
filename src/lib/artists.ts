@@ -5,8 +5,7 @@ export type Work = {
   artistMessage: string;
   materialsStory: string;
   materials: string[];
-  price: number;
-  stock: number;
+  created_at: string;
 };
 
 export type Artist = {
@@ -19,10 +18,6 @@ export type Artist = {
   isEmpty?: boolean;
   works?: Work[];
 };
-
-export function formatPrice(price: number) {
-  return price.toLocaleString('ko-KR') + '원';
-}
 
 export const ARTISTS: Artist[] = [
   {
@@ -40,8 +35,7 @@ export const ARTISTS: Artist[] = [
         artistMessage: '만들면서 내내 봄 생각을 했어요.',
         materialsStory: '색이 마음에 들어서 직접 골랐어요. 하나하나 손으로 만들었습니다.',
         materials: ['종이', '리본', '수작업 마감'],
-        price: 300000,
-        stock: 5,
+        created_at: '2026-04-29',
       },
       {
         slug: 'work-2',
@@ -50,8 +44,7 @@ export const ARTISTS: Artist[] = [
         artistMessage: '밤하늘 같은 색이어서 여름밤이라고 이름 붙였어요.',
         materialsStory: '어두운 색감이 마음에 들어서 골랐어요. 시원한 느낌을 담고 싶었어요.',
         materials: ['종이', '리본', '수작업 마감'],
-        price: 100000,
-        stock: 4,
+        created_at: '2026-04-29',
       },
       {
         slug: 'work-5',
@@ -60,8 +53,7 @@ export const ARTISTS: Artist[] = [
         artistMessage: '',
         materialsStory: '',
         materials: ['마커', '색연필', '스케치북'],
-        price: 30000,
-        stock: 1,
+        created_at: '2026-04-29',
       },
       {
         slug: 'work-6',
@@ -70,8 +62,7 @@ export const ARTISTS: Artist[] = [
         artistMessage: '',
         materialsStory: '',
         materials: ['마커', '색연필', '스케치북'],
-        price: 30000,
-        stock: 1,
+        created_at: '2026-04-29',
       },
       {
         slug: 'work-7',
@@ -80,8 +71,7 @@ export const ARTISTS: Artist[] = [
         artistMessage: '',
         materialsStory: '',
         materials: ['연필', '도화지'],
-        price: 20000,
-        stock: 1,
+        created_at: '2026-04-29',
       },
       {
         slug: 'work-8',
@@ -90,8 +80,7 @@ export const ARTISTS: Artist[] = [
         artistMessage: '',
         materialsStory: '',
         materials: ['연필', '도화지'],
-        price: 20000,
-        stock: 1,
+        created_at: '2026-04-29',
       },
       {
         slug: 'work-9',
@@ -100,8 +89,7 @@ export const ARTISTS: Artist[] = [
         artistMessage: '',
         materialsStory: '',
         materials: ['연필', '도화지'],
-        price: 20000,
-        stock: 1,
+        created_at: '2026-04-29',
       },
       {
         slug: 'work-10',
@@ -110,8 +98,7 @@ export const ARTISTS: Artist[] = [
         artistMessage: '',
         materialsStory: '',
         materials: ['연필', '도화지'],
-        price: 20000,
-        stock: 1,
+        created_at: '2026-04-29',
       },
       {
         slug: 'work-11',
@@ -120,8 +107,7 @@ export const ARTISTS: Artist[] = [
         artistMessage: '',
         materialsStory: '',
         materials: ['마커', '도화지'],
-        price: 20000,
-        stock: 1,
+        created_at: '2026-04-29',
       },
       {
         slug: 'work-12',
@@ -130,8 +116,7 @@ export const ARTISTS: Artist[] = [
         artistMessage: '',
         materialsStory: '',
         materials: ['연필', '스케치북'],
-        price: 20000,
-        stock: 1,
+        created_at: '2026-04-29',
       },
       {
         slug: 'work-13',
@@ -140,8 +125,7 @@ export const ARTISTS: Artist[] = [
         artistMessage: '',
         materialsStory: '',
         materials: ['연필', '스케치북'],
-        price: 20000,
-        stock: 1,
+        created_at: '2026-04-29',
       },
       {
         slug: 'work-14',
@@ -150,8 +134,7 @@ export const ARTISTS: Artist[] = [
         artistMessage: '',
         materialsStory: '',
         materials: ['연필', '노트'],
-        price: 15000,
-        stock: 1,
+        created_at: '2026-04-29',
       },
       {
         slug: 'work-15',
@@ -160,8 +143,7 @@ export const ARTISTS: Artist[] = [
         artistMessage: '',
         materialsStory: '',
         materials: ['연필', '스케치북'],
-        price: 20000,
-        stock: 1,
+        created_at: '2026-04-29',
       },
       {
         slug: 'work-16',
@@ -170,8 +152,7 @@ export const ARTISTS: Artist[] = [
         artistMessage: '',
         materialsStory: '',
         materials: ['연필', '스케치북'],
-        price: 20000,
-        stock: 1,
+        created_at: '2026-04-29',
       },
       {
         slug: 'work-17',
@@ -180,8 +161,7 @@ export const ARTISTS: Artist[] = [
         artistMessage: '',
         materialsStory: '',
         materials: ['펜', '도화지'],
-        price: 20000,
-        stock: 1,
+        created_at: '2026-04-29',
       },
     ],
   },
