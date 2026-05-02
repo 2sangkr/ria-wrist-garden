@@ -43,6 +43,7 @@ export const ARTISTS: Artist[] = [
         materialsStory: '색이 마음에 들어서 직접 골랐어요. 하나하나 손으로 만들었습니다.',
         materials: ['종이', '리본', '수작업 마감'],
         created_at: '2026-04-29',
+        age: 12,
       },
       {
         slug: 'work-2',
@@ -52,6 +53,7 @@ export const ARTISTS: Artist[] = [
         materialsStory: '어두운 색감이 마음에 들어서 골랐어요. 시원한 느낌을 담고 싶었어요.',
         materials: ['종이', '리본', '수작업 마감'],
         created_at: '2026-04-29',
+        age: 12,
       },
       {
         slug: 'work-5',
@@ -61,6 +63,7 @@ export const ARTISTS: Artist[] = [
         materialsStory: '',
         materials: ['마커', '색연필', '스케치북'],
         created_at: '2026-04-29',
+        age: 12,
       },
       {
         slug: 'work-6',
@@ -70,6 +73,7 @@ export const ARTISTS: Artist[] = [
         materialsStory: '',
         materials: ['마커', '색연필', '스케치북'],
         created_at: '2026-04-29',
+        age: 12,
       },
       {
         slug: 'work-7',
@@ -79,6 +83,7 @@ export const ARTISTS: Artist[] = [
         materialsStory: '',
         materials: ['연필', '도화지'],
         created_at: '2026-04-29',
+        age: 12,
       },
       {
         slug: 'work-8',
@@ -88,6 +93,7 @@ export const ARTISTS: Artist[] = [
         materialsStory: '',
         materials: ['연필', '도화지'],
         created_at: '2026-04-29',
+        age: 12,
       },
       {
         slug: 'work-9',
@@ -97,6 +103,7 @@ export const ARTISTS: Artist[] = [
         materialsStory: '',
         materials: ['연필', '도화지'],
         created_at: '2026-04-29',
+        age: 12,
       },
       {
         slug: 'work-10',
@@ -106,6 +113,7 @@ export const ARTISTS: Artist[] = [
         materialsStory: '',
         materials: ['연필', '도화지'],
         created_at: '2026-04-29',
+        age: 12,
       },
       {
         slug: 'work-11',
@@ -115,6 +123,7 @@ export const ARTISTS: Artist[] = [
         materialsStory: '',
         materials: ['마커', '도화지'],
         created_at: '2026-04-29',
+        age: 12,
       },
       {
         slug: 'work-12',
@@ -124,6 +133,7 @@ export const ARTISTS: Artist[] = [
         materialsStory: '',
         materials: ['연필', '스케치북'],
         created_at: '2026-04-29',
+        age: 12,
       },
       {
         slug: 'work-13',
@@ -133,6 +143,7 @@ export const ARTISTS: Artist[] = [
         materialsStory: '',
         materials: ['연필', '스케치북'],
         created_at: '2026-04-29',
+        age: 12,
       },
       {
         slug: 'work-14',
@@ -142,6 +153,7 @@ export const ARTISTS: Artist[] = [
         materialsStory: '',
         materials: ['연필', '노트'],
         created_at: '2026-04-29',
+        age: 12,
       },
       {
         slug: 'work-15',
@@ -151,6 +163,7 @@ export const ARTISTS: Artist[] = [
         materialsStory: '',
         materials: ['연필', '스케치북'],
         created_at: '2026-04-29',
+        age: 12,
       },
       {
         slug: 'work-16',
@@ -160,6 +173,7 @@ export const ARTISTS: Artist[] = [
         materialsStory: '',
         materials: ['연필', '스케치북'],
         created_at: '2026-04-29',
+        age: 12,
       },
       {
         slug: 'work-17',
@@ -169,6 +183,7 @@ export const ARTISTS: Artist[] = [
         materialsStory: '',
         materials: ['펜', '도화지'],
         created_at: '2026-04-29',
+        age: 12,
       },
       {
         slug: 'work-18',
@@ -178,6 +193,7 @@ export const ARTISTS: Artist[] = [
         materialsStory: '',
         materials: ['코바늘', '실'],
         created_at: '2026-05-01',
+        age: 12,
       },
       {
         slug: 'work-19',
@@ -187,6 +203,7 @@ export const ARTISTS: Artist[] = [
         materialsStory: '',
         materials: ['코바늘', '실'],
         created_at: '2026-05-01',
+        age: 12,
       },
       {
         slug: 'work-20',
@@ -196,6 +213,7 @@ export const ARTISTS: Artist[] = [
         materialsStory: '',
         materials: ['코바늘', '실'],
         created_at: '2026-05-01',
+        age: 12,
       },
     ],
   },
@@ -215,6 +233,7 @@ export const ARTISTS: Artist[] = [
         materialsStory: '',
         materials: ['레고'],
         created_at: '2026-05-01',
+        age: 13,
       },
     ],
   },
