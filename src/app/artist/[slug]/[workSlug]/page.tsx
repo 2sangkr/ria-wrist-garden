@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ARTISTS, Artist } from '@/lib/artists';
+import { ARTISTS, Artist, workDateLabel } from '@/lib/artists';
 
 type Props = { params: Promise<{ slug: string; workSlug: string }> };
 
@@ -13,11 +13,7 @@ export default async function WorkDetailPage({ params }: Props) {
   const work = artist.works.find((w) => w.slug === workSlug);
   if (!work) notFound();
 
-  const formattedDate = new Date(work.created_at).toLocaleDateString('ko-KR', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+  const formattedDate = workDateLabel(work);
 
   return (
     <div className="min-h-screen bg-white">

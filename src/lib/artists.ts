@@ -6,7 +6,14 @@ export type Work = {
   materialsStory: string;
   materials: string[];
   created_at: string;
+  age?: number;
 };
+
+export function workDateLabel(work: Work): string {
+  const year = work.created_at.slice(0, 4);
+  if (work.age !== undefined) return `${work.age}살 · ${year}`;
+  return year;
+}
 
 export type Artist = {
   id: string;

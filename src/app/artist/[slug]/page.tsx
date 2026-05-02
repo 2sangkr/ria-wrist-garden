@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ARTISTS } from '@/lib/artists';
+import { ARTISTS, workDateLabel } from '@/lib/artists';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -69,7 +69,7 @@ export default async function ArtistPage({ params }: Props) {
                   />
                 </div>
                 <p className="text-[13px] font-medium text-gray-900 leading-snug">{work.title}</p>
-                <p className="text-[11px] text-gray-300 mt-0.5">{work.created_at}</p>
+                <p className="text-[11px] text-gray-300 mt-0.5">{workDateLabel(work)}</p>
               </Link>
             ))}
           </div>
