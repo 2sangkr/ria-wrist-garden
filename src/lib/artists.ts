@@ -216,6 +216,16 @@ export const ARTISTS: Artist[] = [
         age: 12,
       },
       {
+        slug: 'work-22',
+        title: '축하드려요',
+        image: '/images/dhee-work-22.jpg',
+        artistMessage: '',
+        materialsStory: '',
+        materials: ['코바늘', '실'],
+        created_at: '2026-05-03',
+        age: 12,
+      },
+      {
         slug: 'work-21',
         title: '녹아내리는 도시',
         image: '/images/dhee-work-21.jpg',
