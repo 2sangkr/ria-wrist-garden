@@ -11,12 +11,7 @@ export default function WorksPage() {
     <div className="min-h-screen bg-white">
       <div className="max-w-[720px] mx-auto px-5 sm:px-8 py-12">
 
-        {/* 뒤로가기 */}
-        <Link href="/" className="text-[12px] text-gray-400 hover:text-gray-700 transition-colors">
-          ← 홈
-        </Link>
-
-        <div className="mt-10 mb-12">
+        <div className="mt-8 mb-12">
           <p className="text-[12px] tracking-[0.25em] text-gray-400 uppercase mb-2">works</p>
           <h1
             className="text-[28px] sm:text-[34px] text-gray-900"

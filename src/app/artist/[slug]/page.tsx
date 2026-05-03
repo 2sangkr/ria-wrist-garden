@@ -18,11 +18,7 @@ export default async function ArtistPage({ params }: Props) {
 
       {/* 헤더 */}
       <div className="px-6 sm:px-10 pt-10 pb-8">
-        <Link href="/" className="text-[12px] text-gray-400 hover:text-gray-700 transition-colors">
-          ← 홈
-        </Link>
-
-        <div className="mt-8 flex items-center gap-5">
+        <div className="mt-2 flex items-center gap-5">
           <div
             className="w-14 h-14 flex items-center justify-center shrink-0"
             style={{

@@ -5,11 +5,7 @@ export default function AboutPage() {
     <div className="min-h-screen bg-white">
       <div className="max-w-[600px] mx-auto px-5 sm:px-8 py-12">
 
-        <Link href="/" className="text-[12px] text-gray-400 hover:text-gray-700 transition-colors">
-          ← 홈
-        </Link>
-
-        <div className="mt-12 mb-14">
+        <div className="mt-8 mb-14">
           <p className="text-[12px] tracking-[0.25em] text-gray-400 uppercase mb-4">about</p>
           <h1
             className="text-[36px] sm:text-[44px] text-gray-900 leading-snug"
