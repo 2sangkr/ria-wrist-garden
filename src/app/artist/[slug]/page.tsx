@@ -1,10 +1,25 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ARTISTS, workDateLabel } from '@/lib/artists';
+import { ARTISTS, Work } from '@/lib/artists';
 import ShareButton from '@/components/ui/ShareButton';
 
 type Props = { params: Promise<{ slug: string }> };
+
+function groupByYear(works: Work[]): { label: string; works: Work[] }[] {
+  const map = new Map<string, { year: number; age?: number; works: Work[] }>();
+  for (const work of works) {
+    const year = work.created_at.slice(0, 4);
+    if (!map.has(year)) map.set(year, { year: Number(year), age: work.age, works: [] });
+    map.get(year)!.works.push(work);
+  }
+  return Array.from(map.values())
+    .sort((a, b) => b.year - a.year)
+    .map(({ year, age, works }) => ({
+      label: age !== undefined ? `${age}살 · ${year}` : `${year}`,
+      works,
+    }));
+}
 
 export default async function ArtistPage({ params }: Props) {
   const { slug } = await params;
@@ -12,11 +27,12 @@ export default async function ArtistPage({ params }: Props) {
   if (!artist) notFound();
 
   const works = artist.works ?? [];
+  const groups = groupByYear(works);
 
   return (
     <div className="min-h-screen bg-white">
 
-      {/* 헤더 */}
+      {/* 작가 정보 */}
       <div className="px-6 sm:px-10 pt-10 pb-8">
         <div className="mt-2 flex items-center gap-5">
           <div
@@ -49,30 +65,37 @@ export default async function ArtistPage({ params }: Props) {
         </div>
       </div>
 
-      {/* 갤러리 */}
-      {works.length > 0 ? (
-        <div className="px-5 sm:px-8 pb-20">
-          <div className="grid grid-cols-2 gap-4 sm:gap-6">
-            {works.map((work) => (
-              <Link
-                key={work.slug}
-                href={`/artist/${slug}/${work.slug}`}
-                className="group block"
-              >
-                <div className="aspect-square rounded-xl overflow-hidden relative bg-gray-100 mb-3">
-                  <Image
-                    src={work.image}
-                    alt={work.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 640px) 50vw, 33vw"
-                  />
-                </div>
-                <p className="text-[13px] font-medium text-gray-900 leading-snug">{work.title}</p>
-                <p className="text-[11px] text-gray-300 mt-0.5">{workDateLabel(work)}</p>
-              </Link>
-            ))}
-          </div>
+      {/* 갤러리 — 나이별 그룹 */}
+      {groups.length > 0 ? (
+        <div className="px-5 sm:px-8 pb-20 space-y-12">
+          {groups.map((group) => (
+            <div key={group.label}>
+              <div className="flex items-center gap-3 mb-6">
+                <span className="text-[13px] font-semibold text-gray-500">{group.label}</span>
+                <div className="flex-1 h-px bg-gray-100" />
+              </div>
+              <div className="grid grid-cols-2 gap-4 sm:gap-6">
+                {group.works.map((work) => (
+                  <Link
+                    key={work.slug}
+                    href={`/artist/${slug}/${work.slug}`}
+                    className="group block"
+                  >
+                    <div className="aspect-square rounded-xl overflow-hidden relative bg-gray-100 mb-3">
+                      <Image
+                        src={work.image}
+                        alt={work.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        sizes="(max-width: 640px) 50vw, 33vw"
+                      />
+                    </div>
+                    <p className="text-[13px] font-medium text-gray-900 leading-snug">{work.title}</p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       ) : (
         <p className="px-10 text-[14px] text-gray-400">작품이 곧 올라옵니다.</p>
