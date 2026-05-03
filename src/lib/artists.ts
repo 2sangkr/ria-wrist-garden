@@ -278,4 +278,6 @@ export const ARTISTS: Artist[] = [
     ],
   },
   { id: '4', slug: '', name: '', tags: [], bio: '', profileColor: '', isEmpty: true },
+  { id: '5', slug: '', name: '', tags: [], bio: '', profileColor: '', isEmpty: true },
+  { id: '6', slug: '', name: '', tags: [], bio: '', profileColor: '', isEmpty: true },
 ];
