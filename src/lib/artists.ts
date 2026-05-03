@@ -215,6 +215,16 @@ export const ARTISTS: Artist[] = [
         created_at: '2026-05-01',
         age: 12,
       },
+      {
+        slug: 'work-21',
+        title: '녹아내리는 도시',
+        image: '/images/dhee-work-21.jpg',
+        artistMessage: '',
+        materialsStory: '',
+        materials: ['아크릴 물감', '캔버스'],
+        created_at: '2023-01-01',
+        age: 9,
+      },
     ],
   },
   {
