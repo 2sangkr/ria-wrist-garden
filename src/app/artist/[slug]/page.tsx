@@ -14,7 +14,7 @@ function groupByYear(works: Work[]): { label: string; works: Work[] }[] {
     map.get(year)!.works.push(work);
   }
   return Array.from(map.values())
-    .sort((a, b) => b.year - a.year)
+    .sort((a, b) => a.year - b.year)
     .map(({ year, age, works }) => ({
       label: age !== undefined ? `${age}살 · ${year}` : `${year}`,
       works,
