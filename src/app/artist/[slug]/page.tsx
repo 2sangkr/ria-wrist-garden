@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ARTISTS, workDateLabel } from '@/lib/artists';
+import ShareButton from '@/components/ui/ShareButton';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -42,11 +43,14 @@ export default async function ArtistPage({ params }: Props) {
           </div>
         </div>
 
-        {works.length > 0 && (
-          <p className="mt-6 text-[12px] text-gray-300 tracking-widest uppercase">
-            {works.length} works
-          </p>
-        )}
+        <div className="mt-5 flex items-center gap-3">
+          {works.length > 0 && (
+            <p className="text-[12px] text-gray-300 tracking-widest uppercase">
+              {works.length} works
+            </p>
+          )}
+          <ShareButton title={`${artist.name} 갤러리`} text={`${artist.name}의 작품을 감상해보세요`} />
+        </div>
       </div>
 
       {/* 갤러리 */}

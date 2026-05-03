@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { ARTISTS } from '@/lib/artists';
+import ShareButton from '@/components/ui/ShareButton';
 
 const BLOB_SHAPES = [
   '60% 40% 55% 45% / 50% 60% 40% 50%',
@@ -35,13 +36,14 @@ export default function HomePage() {
               </span>
             </Link>
 
-            <nav className="hidden sm:flex items-center gap-8">
+            <nav className="hidden sm:flex items-center gap-6">
               {NAV_LINKS.map((l) => (
                 <Link key={l.href} href={l.href}
                   className="text-[13px] text-gray-500 hover:text-gray-900 transition-colors">
                   {l.label}
                 </Link>
               ))}
+              <ShareButton title="모든 아이의 모든 예술" text="아이들의 작품 갤러리를 구경해보세요" />
             </nav>
 
             <button className="sm:hidden p-1" onClick={() => setMenuOpen(!menuOpen)} aria-label="메뉴">
