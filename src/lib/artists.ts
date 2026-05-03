@@ -239,8 +239,8 @@ export const ARTISTS: Artist[] = [
   },
   {
     id: '2',
-    slug: 'whee',
-    name: 'W.hee',
+    slug: 'james',
+    name: 'James',
     tags: ['#레고', '#모형', '#조립'],
     bio: '레고로 만드는 정밀한 세계.',
     profileColor: '#a8c8f0',
