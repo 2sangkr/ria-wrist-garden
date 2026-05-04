@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>작가 노트 UI 샘플</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans KR', sans-serif; background: #fff; color: #111; }
+
+    /* ── 헤더 ── */
+    .header {
+      border-bottom: 1px solid #f3f4f6;
+      padding: 0 20px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header-logo { font-size: 13px; font-weight: 700; color: #111; }
+    .header-nav { display: flex; gap: 20px; font-size: 12px; color: #9ca3af; }
+
+    /* ── 페이지 ── */
+    .page { max-width: 600px; margin: 0 auto; padding: 48px 20px 80px; }
+    .back { font-size: 12px; color: #9ca3af; cursor: pointer; }
+    .back:hover { color: #374151; }
+
+    /* ── 이미지 ── */
+    .work-img {
+      width: 100%; aspect-ratio: 1;
+      border-radius: 16px;
+      background: #f3f4f6;
+      margin-top: 32px;
+      overflow: hidden;
+      position: relative;
+    }
+    .work-img img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ── 제목 ── */
+    .work-title-row {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 12px;
+      margin-top: 28px;
+    }
+    .work-title { font-size: 20px; font-weight: 700; color: #111; }
+    .work-date { font-size: 12px; color: #9ca3af; margin-top: 4px; }
+    .work-materials { font-size: 12px; color: #9ca3af; margin-top: 4px; margin-bottom: 24px; }
+
+    .divider { border: none; border-top: 1px solid #f3f4f6; margin-bottom: 24px; }
+
+    /* ── 기존 작가 메시지 ── */
+    .artist-msg { font-size: 14px; color: #374151; line-height: 1.8; margin-bottom: 16px; }
+
+    /* ══════════════════════════════════════
+       작가 노트 — 새로 추가되는 부분
+    ══════════════════════════════════════ */
+
+    /* 버전 A: 인용구 스타일 */
+    .artist-note-a {
+      background: #fffbf0;
+      border-left: 3px solid #fbbf24;
+      border-radius: 0 12px 12px 0;
+      padding: 16px 18px;
+      margin: 20px 0;
+    }
+    .artist-note-a .label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #d97706;
+      margin-bottom: 8px;
+    }
+    .artist-note-a .note-text {
+      font-size: 14px;
+      color: #78350f;
+      line-height: 1.8;
+      font-style: italic;
+    }
+
+    /* 버전 B: 말풍선 스타일 */
+    .artist-note-b {
+      background: #f0fdf4;
+      border-radius: 16px 16px 16px 4px;
+      padding: 16px 18px;
+      margin: 20px 0;
+      position: relative;
+    }
+    .artist-note-b .label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #16a34a;
+      margin-bottom: 8px;
+    }
+    .artist-note-b .note-text {
+      font-size: 14px;
+      color: #14532d;
+      line-height: 1.8;
+    }
+
+    /* 버전 C: 깔끔한 박스 스타일 */
+    .artist-note-c {
+      border: 1px solid #f3f4f6;
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin: 20px 0;
+    }
+    .artist-note-c .label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      margin-bottom: 8px;
+    }
+    .artist-note-c .note-text {
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.8;
+    }
+
+    /* ── 작가 프로필 ── */
+    .artist-row {
+      display: flex; align-items: center; gap: 16px; margin-top: 40px;
+    }
+    .artist-blob {
+      width: 44px; height: 44px;
+      background: #f4c2c2;
+      border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 700; color: rgba(255,255,255,0.8);
+      flex-shrink: 0;
+    }
+    .artist-name { font-size: 13px; font-weight: 500; color: #111; }
+    .artist-tags { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+    .artist-link { margin-left: auto; font-size: 11px; color: #9ca3af; cursor: pointer; }
+
+    /* ── 섹션 구분 라벨 ── */
+    .section-label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: #9ca3af; margin: 48px 0 20px;
+      padding-top: 48px;
+      border-top: 2px dashed #f3f4f6;
+    }
+
+    /* ── 공유 버튼 ── */
+    .share-btn {
+      font-size: 11px; color: #6b7280;
+      border: 1px solid #e5e7eb; border-radius: 999px;
+      padding: 6px 12px; cursor: pointer; flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 헤더 -->
+  <div class="header">
+    <span class="header-logo">모든 아이의 모든 예술</span>
+    <div class="header-nav">
+      <span>작가</span><span>작품</span><span>소개</span>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <div class="back">← D.hee</div>
+
+    <!-- 작품 이미지 -->
+    <div class="work-img">
+      <img src="/images/dhee-work-1.jpg" alt="책갈피"
+           onerror="this.parentElement.style.background='linear-gradient(135deg,#fcd5ce,#f8a5a0)'" />
+    </div>
+
+    <!-- 제목 -->
+    <div class="work-title-row">
+      <div>
+        <div class="work-title">책갈피</div>
+        <div class="work-date">12살 · 2026</div>
+      </div>
+      <button class="share-btn">공유</button>
+    </div>
+    <div class="work-materials">종이 · 리본 · 수작업 마감</div>
+
+    <hr class="divider" />
+
+    <!-- 기존 작가 메시지 -->
+    <p class="artist-msg">만들면서 내내 봄 생각을 했어요.</p>
+
+
+    <!-- ══════════════════════════════════
+         👇 작가 노트 — 3가지 스타일 비교
+    ══════════════════════════════════ -->
+
+    <p class="section-label">스타일 A — 인용구 (노란 포인트)</p>
+
+    <div class="artist-note-a">
+      <div class="label">작가 노트</div>
+      <div class="note-text">"리본 색 고를 때 제일 오래 걸렸어요. 분홍이랑 하늘색 사이에서 진짜 많이 고민했거든요."</div>
+    </div>
+
+
+    <p class="section-label">스타일 B — 말풍선 (초록 포인트)</p>
+
+    <div class="artist-note-b">
+      <div class="label">작가 노트</div>
+      <div class="note-text">"리본 색 고를 때 제일 오래 걸렸어요. 분홍이랑 하늘색 사이에서 진짜 많이 고민했거든요."</div>
+    </div>
+
+
+    <p class="section-label">스타일 C — 심플 박스 (테두리만)</p>
+
+    <div class="artist-note-c">
+      <div class="label">작가 노트</div>
+      <div class="note-text">"리본 색 고를 때 제일 오래 걸렸어요. 분홍이랑 하늘색 사이에서 진짜 많이 고민했거든요."</div>
+    </div>
+
+
+    <p class="section-label">노트가 없을 때 (빈 상태)</p>
+
+    <div class="artist-note-c" style="border-style: dashed; opacity: 0.5;">
+      <div class="label">작가 노트</div>
+      <div class="note-text" style="color: #9ca3af; font-style: italic;">아직 작가 노트가 없어요.</div>
+    </div>
+
+
+    <!-- 작가 프로필 -->
+    <div class="artist-row">
+      <div class="artist-blob">D</div>
+      <div>
+        <div class="artist-name">D.hee</div>
+        <div class="artist-tags">#핸드메이드 #드로잉 #일러스트</div>
+      </div>
+      <span class="artist-link">작가 페이지 →</span>
+    </div>
+
+  </div>
+
+</body>
+</html>
