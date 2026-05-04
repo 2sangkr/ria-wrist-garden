@@ -239,8 +239,8 @@ export const ARTISTS: Artist[] = [
   },
   {
     id: '3',
-    slug: 'rhee',
-    name: 'R.hee',
+    slug: 'emma',
+    name: 'Emma',
     tags: ['#아크릴', '#회화', '#동물'],
     bio: '따뜻한 색으로 세상을 그려요.',
     profileColor: '#f5c842',
