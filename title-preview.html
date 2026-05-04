@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>제목 샘플</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Jua&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #fafaf8;
+      font-family: 'Noto Sans KR', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      gap: 60px;
+      padding: 40px 20px;
+    }
+
+    .label {
+      font-size: 12px;
+      color: #999;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    /* ── 안 A: 모 = 크레파스 4색 교차 ── */
+    .version-a {
+      text-align: center;
+    }
+    .title-a {
+      font-family: 'Jua', sans-serif;
+      font-size: clamp(28px, 6vw, 52px);
+      line-height: 1.3;
+      color: #1a1a1a;
+      letter-spacing: -0.01em;
+    }
+    .mo-red   { color: #e8312a; position: relative; display: inline-block; }
+    .mo-blue  { color: #1a6fce; position: relative; display: inline-block; }
+
+    /* 크레파스 밑줄 효과 */
+    .mo-red::after, .mo-blue::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: -2px;
+      right: -2px;
+      height: 6px;
+      border-radius: 3px;
+      opacity: 0.35;
+    }
+    .mo-red::after  { background: #e8312a; }
+    .mo-blue::after { background: #1a6fce; }
+
+    /* ── 안 B: 모 = 크레파스 배경 하이라이트 ── */
+    .version-b { text-align: center; }
+    .title-b {
+      font-family: 'Jua', sans-serif;
+      font-size: clamp(28px, 6vw, 52px);
+      line-height: 1.5;
+      color: #1a1a1a;
+    }
+    .mo-highlight-r {
+      background: linear-gradient(135deg, #e8312a 60%, #f5a623);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 1.15em;
+      font-weight: 900;
+    }
+    .mo-highlight-b {
+      background: linear-gradient(135deg, #1a6fce 60%, #2db35d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 1.15em;
+      font-weight: 900;
+    }
+
+    /* ── 안 C: 크레파스 스트로크 로고 + 텍스트 ── */
+    .version-c { text-align: center; }
+    .title-c {
+      font-family: 'Jua', sans-serif;
+      font-size: clamp(28px, 6vw, 52px);
+      color: #1a1a1a;
+      line-height: 1.4;
+    }
+    .mo-box-r {
+      display: inline-block;
+      background: #e8312a;
+      color: white;
+      padding: 0 6px 2px;
+      border-radius: 4px;
+      font-size: 1.1em;
+      font-weight: 900;
+      transform: rotate(-1.5deg);
+      display: inline-block;
+    }
+    .mo-box-b {
+      display: inline-block;
+      background: #1a6fce;
+      color: white;
+      padding: 0 6px 2px;
+      border-radius: 4px;
+      font-size: 1.1em;
+      font-weight: 900;
+      transform: rotate(1deg);
+      display: inline-block;
+    }
+
+    /* 현재 로고 비교 */
+    .version-current { text-align: center; opacity: 0.5; }
+    .title-current {
+      font-family: 'Jua', sans-serif;
+      font-size: clamp(28px, 6vw, 52px);
+      color: #1a1a1a;
+    }
+
+    hr { width: 100%; max-width: 600px; border: none; border-top: 1px dashed #e0e0e0; }
+  </style>
+</head>
+<body>
+
+  <div class="version-current">
+    <p class="label">현재 (참고용)</p>
+    <div class="title-current">꿈꾸는 2Sang</div>
+  </div>
+
+  <hr>
+
+  <div class="version-a">
+    <p class="label">안 A — 모 컬러 + 크레파스 밑줄</p>
+    <div class="title-a">
+      <span class="mo-red">모</span>든 아이의<br>
+      <span class="mo-blue">모</span>든 예술
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="version-b">
+    <p class="label">안 B — 모 그라디언트 + 사이즈 강조</p>
+    <div class="title-b">
+      <span class="mo-highlight-r">모</span>든 아이의<br>
+      <span class="mo-highlight-b">모</span>든 예술
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="version-c">
+    <p class="label">안 C — 모 크레파스 박스</p>
+    <div class="title-c">
+      <span class="mo-box-r">모</span>든 아이의<br>
+      <span class="mo-box-b">모</span>든 예술
+    </div>
+  </div>
+
+</body>
+</html>

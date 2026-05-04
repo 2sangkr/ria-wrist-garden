@@ -115,17 +115,7 @@ export const ARTISTS: Artist[] = [
         created_at: '2026-04-29',
         age: 12,
       },
-      {
-        slug: 'work-11',
-        title: '라2벌',
-        image: '/images/dhee-work-11.jpg',
-        artistMessage: '',
-        materialsStory: '',
-        materials: ['마커', '도화지'],
-        created_at: '2026-04-29',
-        age: 12,
-      },
-      {
+{
         slug: 'work-12',
         title: '머리카락 스케치',
         image: '/images/dhee-work-12.jpg',
@@ -195,17 +185,7 @@ export const ARTISTS: Artist[] = [
         created_at: '2026-05-01',
         age: 12,
       },
-      {
-        slug: 'work-19',
-        title: '네잎크로버 (파랑)',
-        image: '/images/dhee-work-19.jpg',
-        artistMessage: '',
-        materialsStory: '',
-        materials: ['코바늘', '실'],
-        created_at: '2026-05-01',
-        age: 12,
-      },
-      {
+{
         slug: 'work-20',
         title: '네잎크로버 (핑크)',
         image: '/images/dhee-work-20.jpg',

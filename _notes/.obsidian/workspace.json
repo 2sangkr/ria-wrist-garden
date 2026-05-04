@@ -1,0 +1,207 @@
+{
+  "main": {
+    "id": "144eaf995bc6b971",
+    "type": "split",
+    "children": [
+      {
+        "id": "b9393d11471dd018",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "dbba86e02c7a56ef",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "프로젝트_손목정원/01_로드맵.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "01_로드맵"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "75e223e9d199d010",
+    "type": "split",
+    "children": [
+      {
+        "id": "9d18e33f7dafe092",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b5a71adf3ee008b5",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "파일 탐색기"
+            }
+          },
+          {
+            "id": "8d49bfa7e8d8e507",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "검색"
+            }
+          },
+          {
+            "id": "992e0fdc25a851e5",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "북마크"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "8fc5cf7397ea9e07",
+    "type": "split",
+    "children": [
+      {
+        "id": "38661e1b8a6f6595",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "82ffaf5406b425df",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "작업일지/2026-05-01.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "2026-05-01 의 백링크"
+            }
+          },
+          {
+            "id": "6e2a67ed9bf85271",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "작업일지/2026-05-01.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "2026-05-01 의 나가는 링크"
+            }
+          },
+          {
+            "id": "6b45af04c6e3073a",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "태그"
+            }
+          },
+          {
+            "id": "b6a9a662e6af2a5e",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "모든 속성"
+            }
+          },
+          {
+            "id": "51cf552383a439a7",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "작업일지/2026-05-01.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "2026-05-01 의 개요"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:빠른 전환기 열기": false,
+      "graph:그래프 뷰 열기": false,
+      "canvas:새 캔버스 만들기": false,
+      "daily-notes:오늘의 일일 노트 열기": false,
+      "templates:템플릿 삽입": false,
+      "command-palette:명령어 팔레트 열기": false,
+      "bases:새 베이스 생성하기": false
+    }
+  },
+  "active": "dbba86e02c7a56ef",
+  "lastOpenFiles": [
+    "2026-05-02.md.tmp.16300.1777729453767",
+    "대시보드.md.tmp.22000.1777728840484",
+    "대시보드.md.tmp.22000.1777728834438",
+    "solve1_telegram_bot.md.tmp.22000.1777728831005",
+    "solve1_telegram_bot.md.tmp.35796.1777727955314",
+    "solve1_telegram_bot.md",
+    "프로젝트_손목정원/02_백로그.md",
+    "프로젝트_손목정원/03_상품관리.md",
+    "2026-05-02.md",
+    "작업일지/2026-05-01.md",
+    "telegram-troubleshooting.md",
+    "프로젝트_손목정원/01_로드맵.md",
+    "무제.md",
+    "무제.canvas",
+    "무제",
+    "대시보드.md",
+    "작업관리/이번주_할일.md",
+    "대시보드.md.tmp.12560.1777628490549"
+  ]
+}
