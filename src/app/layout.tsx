@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import SiteHeader from '@/components/layout/SiteHeader';
+import SiteFooter from '@/components/layout/SiteFooter';
 
 export const metadata: Metadata = {
   title: { default: '모든 아이의 모든 예술', template: '%s | 모든 아이의 모든 예술' },
@@ -18,9 +19,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen bg-white" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
+      <body className="min-h-screen bg-white flex flex-col" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
         <SiteHeader />
-        {children}
+        <main className="flex-1">{children}</main>
+        <SiteFooter />
       </body>
     </html>
   );
