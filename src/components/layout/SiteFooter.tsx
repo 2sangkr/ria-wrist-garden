@@ -12,12 +12,15 @@ export default function SiteFooter() {
               모든 창작물의 저작권은<br />
               각 작품을 만든 어린이 작가에게 있습니다.
             </p>
+            <p className="text-[11px] text-gray-300 mt-3">
+              © {new Date().getFullYear()} 모든 아이의 모든 예술. All rights reserved.
+            </p>
           </div>
 
           {/* 링크 */}
           <div className="flex flex-col sm:flex-row gap-6 sm:gap-12 text-[12px] text-gray-400">
             <div className="space-y-2">
-              <p className="font-medium text-gray-600 text-[11px] uppercase tracking-widest mb-2">Contact</p>
+              <p className="font-medium text-gray-600 text-[11px] uppercase tracking-widest mb-2">Contact Us</p>
               <a
                 href="https://docs.google.com/forms/d/e/1FAIpQLScC1hyx1mblspGbI2s-DUxt3P9MIBQOVYAsEAUC50JfwftWqg/viewform?usp=header"
                 target="_blank"
@@ -36,10 +39,6 @@ export default function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-[11px] text-gray-300">
-          <p>© {new Date().getFullYear()} 모든 아이의 모든 예술. All rights reserved.</p>
-          <p>모든 작품의 권리는 어린이 작가들에게 있습니다.</p>
-        </div>
 
       </div>
     </footer>
