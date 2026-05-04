@@ -65,15 +65,10 @@ export default async function WorkDetailPage({ params }: Props) {
         <div className="border-t border-gray-100 mb-6" />
 
         {/* 작가 메시지 */}
-        {work.artistMessage ? (
+        {work.artistMessage && (
           <p className="text-[14px] text-gray-700 leading-relaxed mb-4">
             {work.artistMessage}
           </p>
-        ) : (
-          <div className="flex items-center gap-2 my-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-            <p className="text-[12px] text-gray-400 tracking-wide">작가가 소개글을 작성 중이에요</p>
-          </div>
         )}
 
         {/* 재료 스토리 */}
