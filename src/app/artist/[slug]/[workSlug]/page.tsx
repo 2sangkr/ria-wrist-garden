@@ -61,23 +61,6 @@ export default async function WorkDetailPage({ params }: Props) {
           </p>
         )}
 
-        {/* 구분선 */}
-        <div className="border-t border-gray-100 mb-6" />
-
-        {/* 작가 메시지 */}
-        {work.artistMessage && (
-          <p className="text-[14px] text-gray-700 leading-relaxed mb-4">
-            {work.artistMessage}
-          </p>
-        )}
-
-        {/* 재료 스토리 */}
-        {work.materialsStory && (
-          <p className="text-[13px] text-gray-500 leading-relaxed mt-2">
-            {work.materialsStory}
-          </p>
-        )}
-
         {/* 작가 */}
         <div className="mt-10 flex items-center gap-4">
           <ArtistBlob artist={artist} />
