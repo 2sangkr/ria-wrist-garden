@@ -19,18 +19,12 @@ export default function SiteFooter() {
             <div className="space-y-2">
               <p className="font-medium text-gray-600 text-[11px] uppercase tracking-widest mb-2">Contact</p>
               <a
-                href="mailto:letters81@gmail.com"
-                className="block hover:text-gray-700 transition-colors"
-              >
-                letters81@gmail.com
-              </a>
-              <a
                 href="https://docs.google.com/forms/d/e/1FAIpQLScC1hyx1mblspGbI2s-DUxt3P9MIBQOVYAsEAUC50JfwftWqg/viewform?usp=header"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block hover:text-gray-700 transition-colors"
               >
-                참여 문의
+                작가 등록 문의
               </a>
             </div>
 
