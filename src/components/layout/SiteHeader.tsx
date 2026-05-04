@@ -32,11 +32,11 @@ export default function SiteHeader() {
                 {l.label}
               </Link>
             ))}
-            <ShareButton title="모든 아이의 모든 예술" text="아이들의 작품 갤러리를 구경해보세요" />
+            <ShareButton />
           </nav>
 
           <div className="sm:hidden flex items-center gap-2">
-            <ShareButton title="모든 아이의 모든 예술" text="아이들의 작품 갤러리를 구경해보세요" className="text-[11px] px-2.5 py-1" />
+            <ShareButton className="text-[11px] px-2.5 py-1" />
             <button className="p-1" onClick={() => setMenuOpen(!menuOpen)} aria-label="메뉴">
               <span className={`block w-5 h-[1.5px] bg-gray-800 transition-all origin-center mb-[5px] ${menuOpen ? 'rotate-45 translate-y-[6.5px]' : ''}`} />
               <span className={`block w-5 h-[1.5px] bg-gray-800 transition-all mb-[5px] ${menuOpen ? 'opacity-0' : ''}`} />

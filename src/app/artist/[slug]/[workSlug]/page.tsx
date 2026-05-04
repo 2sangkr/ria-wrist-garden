@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ARTISTS, Artist, workDateLabel } from '@/lib/artists';
-import ShareButton from '@/components/ui/ShareButton';
 
 type Props = { params: Promise<{ slug: string; workSlug: string }> };
 
@@ -51,10 +50,7 @@ export default async function WorkDetailPage({ params }: Props) {
 
         {/* 제목 + 날짜 */}
         <div className="mt-7 mb-2">
-          <div className="flex items-start justify-between gap-3">
-            <h1 className="text-[20px] font-bold text-gray-900">{work.title}</h1>
-            <ShareButton title={work.title} text={`${artist.name}의 작품 — ${work.title}`} className="shrink-0 mt-0.5" />
-          </div>
+          <h1 className="text-[20px] font-bold text-gray-900">{work.title}</h1>
           <p className="text-[12px] text-gray-400 mt-1">{formattedDate}</p>
         </div>
 
