@@ -246,6 +246,16 @@ export const ARTISTS: Artist[] = [
     profileColor: '#a8c8f0',
     works: [
       {
+        slug: 'work-2',
+        title: '페라리 488 GTB',
+        image: '/images/whee-work-2.jpg',
+        artistMessage: '',
+        materialsStory: '',
+        materials: ['레고'],
+        created_at: '2021-01-01',
+        age: 8,
+      },
+      {
         slug: 'work-1',
         title: '2017년형 포드 F-150 랩터',
         image: '/images/whee-work-1.jpg',
