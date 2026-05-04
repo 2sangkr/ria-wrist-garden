@@ -36,7 +36,7 @@ export const ARTISTS: Artist[] = [
       {
         slug: 'work-1',
         title: '책갈피',
-        image: '/images/dhee-work-1.jpg',
+        image: '/images/dhee-work-1b.jpg',
         materials: ['종이', '리본', '수작업 마감'],
         created_at: '2026-04-29',
         age: 12,
