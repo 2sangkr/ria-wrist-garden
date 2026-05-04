@@ -6,6 +6,18 @@ import ShareButton from '@/components/ui/ShareButton';
 
 type Props = { params: Promise<{ slug: string }> };
 
+export async function generateMetadata({ params }: Props) {
+  const { slug } = await params;
+  const artist = ARTISTS.find((a) => a.slug === slug);
+  const firstWork = artist?.works?.[0];
+  return {
+    title: artist ? `${artist.name} 갤러리` : '작가 갤러리',
+    openGraph: {
+      images: firstWork ? [firstWork.image] : [],
+    },
+  };
+}
+
 function groupByYear(works: Work[]): { label: string; works: Work[] }[] {
   const map = new Map<string, { year: number; age?: number; works: Work[] }>();
   for (const work of works) {

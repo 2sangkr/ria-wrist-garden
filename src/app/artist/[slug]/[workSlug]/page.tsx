@@ -6,6 +6,18 @@ import ShareButton from '@/components/ui/ShareButton';
 
 type Props = { params: Promise<{ slug: string; workSlug: string }> };
 
+export async function generateMetadata({ params }: Props) {
+  const { slug, workSlug } = await params;
+  const artist = ARTISTS.find((a) => a.slug === slug);
+  const work = artist?.works?.find((w) => w.slug === workSlug);
+  return {
+    title: work?.title ?? '작품',
+    openGraph: {
+      images: work ? [work.image] : [],
+    },
+  };
+}
+
 export default async function WorkDetailPage({ params }: Props) {
   const { slug, workSlug } = await params;
   const artist = ARTISTS.find((a) => a.slug === slug);
