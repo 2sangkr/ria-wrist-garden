@@ -432,8 +432,8 @@ export const ARTISTS: Artist[] = [
         artistMessage: '',
         materialsStory: '',
         materials: ['색연필', '도화지'],
-        created_at: '2023-01-01',
-        age: 9,
+        created_at: '2022-01-01',
+        age: 8,
       },
       {
         slug: 'work-5',
