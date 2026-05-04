@@ -28,8 +28,8 @@ export default async function WorkDetailPage({ params }: Props) {
   const formattedDate = workDateLabel(work);
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="max-w-[600px] mx-auto px-5 sm:px-8 py-12">
+    <div className="bg-white">
+      <div className="max-w-[600px] mx-auto px-5 sm:px-8 py-8">
 
         {/* 뒤로가기 */}
         <Link href={`/artist/${slug}`} className="text-[12px] text-gray-400 hover:text-gray-700 transition-colors">
@@ -62,7 +62,7 @@ export default async function WorkDetailPage({ params }: Props) {
         )}
 
         {/* 작가 */}
-        <div className="mt-10 flex items-center gap-4">
+        <div className="mt-6 flex items-center gap-4">
           <ArtistBlob artist={artist} />
           <div>
             <p className="text-[13px] font-medium text-gray-800">{artist.name}</p>
