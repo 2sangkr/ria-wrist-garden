@@ -1,24 +1,54 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-type Props = {
-  title?: string;
-  text?: string;
-  className?: string;
-};
+declare global {
+  interface Window { Kakao: any; }
+}
 
-export default function ShareButton({ title, text, className = '' }: Props) {
+const KAKAO_JS_KEY = 'a074a4f8e957124e912520036470fe39';
+
+type Props = { className?: string };
+
+export default function ShareButton({ className = '' }: Props) {
   const [copied, setCopied] = useState(false);
+  const [kakaoReady, setKakaoReady] = useState(false);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (window.Kakao) {
+        if (!window.Kakao.isInitialized()) window.Kakao.init(KAKAO_JS_KEY);
+        setKakaoReady(true);
+        clearInterval(timer);
+      }
+    }, 100);
+    return () => clearInterval(timer);
+  }, []);
 
   async function handleShare() {
     const url = window.location.href;
-    if (navigator.share) {
-      try {
-        await navigator.share({ title, text, url });
-      } catch {}
+    const pageTitle = document.title;
+    const ogImage = document.querySelector('meta[property="og:image"]')?.getAttribute('content') ?? '';
+
+    if (kakaoReady && window.Kakao?.Share) {
+      window.Kakao.Share.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: pageTitle,
+          description: '모든 아이의 모든 예술',
+          imageUrl: ogImage,
+          link: { mobileWebUrl: url, webUrl: url },
+        },
+        buttons: [{ title: '보러 가기', link: { mobileWebUrl: url, webUrl: url } }],
+      });
       return;
     }
+
+    if (navigator.share) {
+      try { await navigator.share({ title: pageTitle, url }); } catch {}
+      return;
+    }
+
     await navigator.clipboard.writeText(url);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
