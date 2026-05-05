@@ -10,7 +10,6 @@ export const metadata: Metadata = {
   description: '모든 아이의 모든 예술 — 어린이 작가들의 작품을 만나보세요.',
   openGraph: {
     siteName: '모든 아이의 모든 예술',
-    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
 };
 
