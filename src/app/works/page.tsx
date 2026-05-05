@@ -1,9 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ARTISTS, workDateLabel } from '@/lib/artists';
+import { workDateLabel } from '@/lib/artists';
+import { getAllArtistsWithWorks } from '@/lib/data';
 
-export default function WorksPage() {
-  const allWorks = ARTISTS.flatMap((artist) =>
+export const dynamic = 'force-dynamic';
+
+export default async function WorksPage() {
+  const artists = await getAllArtistsWithWorks();
+  const allWorks = artists.flatMap((artist) =>
     (artist.works ?? []).map((work) => ({ work, artist }))
   );
 

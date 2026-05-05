@@ -1,13 +1,17 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ARTISTS, Artist, workDateLabel } from '@/lib/artists';
+import type { Artist } from '@/lib/artists';
+import { workDateLabel } from '@/lib/artists';
+import { getArtistWithWorks } from '@/lib/data';
+
+export const dynamic = 'force-dynamic';
 
 type Props = { params: Promise<{ slug: string; workSlug: string }> };
 
 export async function generateMetadata({ params }: Props) {
   const { slug, workSlug } = await params;
-  const artist = ARTISTS.find((a) => a.slug === slug);
+  const artist = await getArtistWithWorks(slug);
   const work = artist?.works?.find((w) => w.slug === workSlug);
   return {
     title: work?.title ?? '작품',
@@ -19,7 +23,7 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function WorkDetailPage({ params }: Props) {
   const { slug, workSlug } = await params;
-  const artist = ARTISTS.find((a) => a.slug === slug);
+  const artist = await getArtistWithWorks(slug);
   if (!artist?.works) notFound();
 
   const work = artist.works.find((w) => w.slug === workSlug);

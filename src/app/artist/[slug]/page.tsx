@@ -1,13 +1,16 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ARTISTS, Work } from '@/lib/artists';
+import type { Work } from '@/lib/artists';
+import { getArtistWithWorks } from '@/lib/data';
+
+export const dynamic = 'force-dynamic';
 
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const artist = ARTISTS.find((a) => a.slug === slug);
+  const artist = await getArtistWithWorks(slug);
   const firstWork = artist?.works?.[0];
   return {
     title: artist ? `${artist.name} 갤러리` : '작가 갤러리',
@@ -34,7 +37,7 @@ function groupByYear(works: Work[]): { label: string; works: Work[] }[] {
 
 export default async function ArtistPage({ params }: Props) {
   const { slug } = await params;
-  const artist = ARTISTS.find((a) => a.slug === slug);
+  const artist = await getArtistWithWorks(slug);
   if (!artist) notFound();
 
   const works = artist.works ?? [];

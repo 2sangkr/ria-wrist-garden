@@ -1,7 +1,14 @@
-'use client';
-
 import Link from 'next/link';
-import { ARTISTS } from '@/lib/artists';
+import type { Artist } from '@/lib/artists';
+import { getArtists } from '@/lib/data';
+
+export const dynamic = 'force-dynamic';
+
+const EMPTY_SLOTS: Artist[] = [
+  { id: 'empty-1', slug: '', name: '', tags: [], bio: '', profileColor: '', isEmpty: true },
+  { id: 'empty-2', slug: '', name: '', tags: [], bio: '', profileColor: '', isEmpty: true },
+  { id: 'empty-3', slug: '', name: '', tags: [], bio: '', profileColor: '', isEmpty: true },
+];
 
 const BLOB_SHAPES = [
   '60% 40% 55% 45% / 50% 60% 40% 50%',
@@ -10,7 +17,9 @@ const BLOB_SHAPES = [
   '40% 60% 50% 50% / 55% 45% 60% 40%',
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const realArtists = await getArtists();
+  const ARTISTS = [...realArtists, ...EMPTY_SLOTS];
   return (
     <div className="min-h-screen bg-white">
 
