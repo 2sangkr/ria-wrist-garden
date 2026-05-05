@@ -85,7 +85,7 @@ export default async function HomePage() {
           {ARTISTS.map((artist, idx) =>
             artist.isEmpty ? (
               <div key={artist.id} className="flex flex-col items-center gap-3 text-center">
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLScC1hyx1mblspGbI2s-DUxt3P9MIBQOVYAsEAUC50JfwftWqg/viewform?usp=header"
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScpB6jkb5a05_y_p4GsIPSOLZSXWDApX61UBZ44oSTse3oPPg/viewform?usp=header"
                   target="_blank" rel="noopener noreferrer">
                   <div
                     className="w-[96px] h-[96px] mx-auto flex items-center justify-center transition-transform duration-200 hover:scale-105"
@@ -95,7 +95,7 @@ export default async function HomePage() {
                   </div>
                 </a>
                 <p className="text-[12px] text-gray-400">모집 중</p>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLScC1hyx1mblspGbI2s-DUxt3P9MIBQOVYAsEAUC50JfwftWqg/viewform?usp=header"
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScpB6jkb5a05_y_p4GsIPSOLZSXWDApX61UBZ44oSTse3oPPg/viewform?usp=header"
                   target="_blank" rel="noopener noreferrer"
                   className="text-[11px] text-gray-400 border border-dashed border-gray-200 px-3 py-1.5 rounded-full hover:border-gray-400 hover:text-gray-600 transition-colors">
                   참여하기

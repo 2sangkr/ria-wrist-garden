@@ -25,7 +25,7 @@ export default function SiteFooter() {
             <div className="space-y-2">
               <p className="font-medium text-gray-600 text-[11px] uppercase tracking-widest mb-2">Contact Us</p>
               <a
-                href="https://docs.google.com/forms/d/e/1FAIpQLScC1hyx1mblspGbI2s-DUxt3P9MIBQOVYAsEAUC50JfwftWqg/viewform?usp=header"
+                href="https://docs.google.com/forms/d/e/1FAIpQLScpB6jkb5a05_y_p4GsIPSOLZSXWDApX61UBZ44oSTse3oPPg/viewform?usp=header"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block hover:text-gray-700 transition-colors"

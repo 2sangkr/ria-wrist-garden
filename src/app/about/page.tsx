@@ -46,7 +46,7 @@ export default function AboutPage() {
             <h2 className="text-[15px] font-semibold text-gray-900 mb-3">함께하고 싶다면</h2>
             <p>내 아이의 작품을 갤러리에 올리고 싶다면 언제든 문의해주세요.</p>
             <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLScC1hyx1mblspGbI2s-DUxt3P9MIBQOVYAsEAUC50JfwftWqg/viewform?usp=header"
+              href="https://docs.google.com/forms/d/e/1FAIpQLScpB6jkb5a05_y_p4GsIPSOLZSXWDApX61UBZ44oSTse3oPPg/viewform?usp=header"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-6 text-[13px] font-medium text-white bg-gray-900 px-6 py-3 rounded-full hover:bg-gray-700 transition-colors"
