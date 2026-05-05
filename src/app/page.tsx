@@ -68,13 +68,30 @@ export default async function HomePage() {
       </section>
 
       {/* ══ 메인 카피 ══ */}
-      <section className="py-8 text-center px-4">
-        <p
-          className="text-[22px] sm:text-[28px] text-gray-800"
-          style={{ fontFamily: "'Jua', sans-serif" }}
-        >
-          손으로 만든 게 제일 힙해요
-        </p>
+      <section className="py-10 sm:py-14 text-center px-4">
+        <div className="max-w-[560px] mx-auto">
+          <p
+            className="text-[30px] sm:text-[40px] text-gray-800 leading-tight"
+            style={{ fontFamily: "'Nanum Brush Script', cursive" }}
+          >
+            모든 아이들은 예술가다.
+          </p>
+          <p
+            className="text-[14px] sm:text-[17px] text-gray-400 mt-1.5 italic"
+            style={{ fontFamily: "Georgia, serif" }}
+          >
+            Every child is an artist.
+          </p>
+          <p className="text-[11px] text-gray-300 mt-2 tracking-[0.2em]">— 파블로 피카소 —</p>
+
+          <p
+            className="text-[14px] sm:text-[15px] text-gray-500 mt-8 leading-[2]"
+            style={{ fontFamily: "'Noto Sans KR', sans-serif" }}
+          >
+            우리 아이가 만든 것들,<br />
+            박스 속으로 사라지기 전에 이곳에 남겨두세요.
+          </p>
+        </div>
       </section>
 
       {/* ══ 작가 그리드 ══ */}
