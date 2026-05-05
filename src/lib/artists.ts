@@ -1,4 +1,5 @@
 export type Work = {
+  id?: number;
   slug: string;
   title: string;
   image: string;

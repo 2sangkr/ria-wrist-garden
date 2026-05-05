@@ -5,6 +5,7 @@ import type { Artist, Work } from './artists';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapWork(w: any): Work {
   return {
+    id: w.id,
     slug: w.slug,
     title: w.title,
     image: w.image,
