@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function SiteFooter() {
   return (
     <footer className="border-t border-gray-100 bg-white mt-auto">
@@ -19,6 +21,7 @@ export default function SiteFooter() {
 
           {/* 링크 */}
           <div className="flex flex-col sm:flex-row gap-6 sm:gap-12 text-[12px] text-gray-400">
+
             <div className="space-y-2">
               <p className="font-medium text-gray-600 text-[11px] uppercase tracking-widest mb-2">Contact Us</p>
               <a
@@ -39,6 +42,11 @@ export default function SiteFooter() {
           </div>
         </div>
 
+        <div className="mt-8 pt-6 border-t border-gray-50 text-right">
+          <Link href="/admin" className="text-[11px] text-gray-200 hover:text-gray-400 transition-colors">
+            관리자
+          </Link>
+        </div>
 
       </div>
     </footer>
