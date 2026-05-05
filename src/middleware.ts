@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+  if (pathname === '/api/admin/login') return NextResponse.next();
+
   const token = request.cookies.get('admin_token')?.value;
   const expected = process.env.ADMIN_PASSWORD;
 
   if (!expected || token !== expected) {
-    if (request.nextUrl.pathname.startsWith('/api/admin')) {
+    if (pathname.startsWith('/api/admin')) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
     return NextResponse.redirect(new URL('/admin', request.url));
