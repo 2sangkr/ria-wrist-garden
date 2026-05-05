@@ -82,7 +82,7 @@ export default async function HomePage() {
           >
             Every child is an artist.
           </p>
-          <p className="text-[11px] text-gray-300 mt-2 tracking-[0.2em]">— 파블로 피카소 —</p>
+          <p className="text-[12px] text-gray-500 mt-2 tracking-[0.15em] font-medium">— 파블로 피카소 —</p>
 
           <p
             className="text-[14px] sm:text-[15px] text-gray-500 mt-8 leading-[2]"
