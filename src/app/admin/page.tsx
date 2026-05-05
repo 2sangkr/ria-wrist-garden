@@ -30,8 +30,14 @@ export default function AdminLoginPage() {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
       <div className="w-full max-w-[320px]">
-        <h1 className="text-[20px] font-bold text-gray-800 mb-1 text-center">어드민</h1>
-        <p className="text-[12px] text-gray-400 mb-8 text-center">모든 아이의 모든 예술</p>
+        <h1
+          className="text-[22px] font-bold text-gray-900 mb-1 text-center"
+          style={{ fontFamily: "'Jua', sans-serif" }}
+        >
+          <span style={{ display: 'inline-block', background: '#e8312a', color: 'white', padding: '0 5px 1px', borderRadius: '4px', transform: 'rotate(-1.5deg)' }}>모</span>든 아이의{' '}
+          <span style={{ display: 'inline-block', background: '#1a6fce', color: 'white', padding: '0 5px 1px', borderRadius: '4px', transform: 'rotate(1deg)' }}>모</span>든 예술
+        </h1>
+        <p className="text-[12px] text-gray-400 mb-8 text-center tracking-widest uppercase">admin</p>
         <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm p-6 space-y-4">
           <div>
             <label className="block text-[12px] text-gray-500 mb-1">비밀번호</label>
