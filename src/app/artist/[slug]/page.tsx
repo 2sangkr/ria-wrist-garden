@@ -1,8 +1,7 @@
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
-import Link from 'next/link';
 import type { Work } from '@/lib/artists';
 import { getArtistWithWorks } from '@/lib/data';
+import ArtistGallery from './ArtistGallery';
 
 export const dynamic = 'force-dynamic';
 
@@ -78,38 +77,9 @@ export default async function ArtistPage({ params }: Props) {
         )}
       </div>
 
-      {/* 갤러리 — 나이별 그룹 */}
+      {/* 갤러리 */}
       {groups.length > 0 ? (
-        <div className="px-5 sm:px-8 pb-20 space-y-12">
-          {groups.map((group) => (
-            <div key={group.label}>
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-[13px] font-semibold text-gray-500">{group.label}</span>
-                <div className="flex-1 h-px bg-gray-100" />
-              </div>
-              <div className="grid grid-cols-2 gap-4 sm:gap-6">
-                {group.works.map((work) => (
-                  <Link
-                    key={work.slug}
-                    href={`/artist/${slug}/${work.slug}`}
-                    className="group block"
-                  >
-                    <div className="aspect-square rounded-xl overflow-hidden relative bg-gray-100 mb-3">
-                      <Image
-                        src={work.image}
-                        alt={work.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        sizes="(max-width: 640px) 50vw, 33vw"
-                      />
-                    </div>
-                    <p className="text-[13px] font-medium text-gray-900 leading-snug">{work.title}</p>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+        <ArtistGallery artist={artist} groups={groups} allWorks={works} />
       ) : (
         <p className="px-10 text-[14px] text-gray-400">작품이 곧 올라옵니다.</p>
       )}
