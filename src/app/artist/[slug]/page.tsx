@@ -44,6 +44,7 @@ export default async function ArtistPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-white">
+      <div className="max-w-[1100px] mx-auto">
 
       {/* 작가 정보 */}
       <div className="px-6 sm:px-10 pt-10 pb-8">
@@ -84,6 +85,7 @@ export default async function ArtistPage({ params }: Props) {
         <p className="px-10 text-[14px] text-gray-400">작품이 곧 올라옵니다.</p>
       )}
 
+      </div>
     </div>
   );
 }

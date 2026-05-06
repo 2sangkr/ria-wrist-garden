@@ -65,7 +65,7 @@ export default function ArtistGallery({ artist, groups, allWorks }: Props) {
                         src={work.image}
                         alt={work.title}
                         fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="object-cover scale-110 group-hover:scale-125 transition-transform duration-500"
                         sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                       />
                     </div>
