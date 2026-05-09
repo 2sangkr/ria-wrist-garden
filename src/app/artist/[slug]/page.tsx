@@ -39,7 +39,9 @@ export default async function ArtistPage({ params }: Props) {
   const artist = await getArtistWithWorks(slug);
   if (!artist) notFound();
 
-  const works = artist.works ?? [];
+  const works = [...(artist.works ?? [])].sort((a, b) =>
+    a.created_at.localeCompare(b.created_at)
+  );
   const groups = groupByYear(works);
 
   return (
