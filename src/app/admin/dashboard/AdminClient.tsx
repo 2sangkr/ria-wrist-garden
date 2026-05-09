@@ -151,14 +151,25 @@ function AddWorkForm({ artist, onSuccess }: { artist: Artist; onSuccess: () => v
     const fd = new FormData(form);
     fd.set('artist_id', artist.id);
 
-    const res = await fetch('/api/admin/works', { method: 'POST', body: fd });
-    if (res.ok) {
-      formRef.current?.reset();
-      setPreview(null);
-      onSuccess();
-    } else {
-      const data = await res.json();
-      setError(data.error ?? '오류가 발생했어요');
+    try {
+      const res = await fetch('/api/admin/works', { method: 'POST', body: fd });
+      if (res.ok) {
+        formRef.current?.reset();
+        setPreview(null);
+        onSuccess();
+      } else {
+        let message = '오류가 발생했어요';
+        try {
+          const data = await res.json();
+          message = data.error ?? message;
+        } catch {
+          message = `서버 오류 (${res.status})`;
+        }
+        setError(message);
+        setLoading(false);
+      }
+    } catch {
+      setError('네트워크 오류가 발생했어요');
       setLoading(false);
     }
   }
