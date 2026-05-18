@@ -5,9 +5,11 @@ import { useState } from 'react';
 import ShareButton from '@/components/ui/ShareButton';
 
 const NAV_LINKS = [
-  { href: '/',      label: '홈' },
-  { href: '/works', label: '작품 보기' },
-  { href: '/about', label: '소개' },
+  { href: '/',              label: '홈' },
+  { href: '/about',         label: '소개' },
+  { href: '/artist/dhee',   label: 'D.hee' },
+  { href: '/artist/james',  label: 'James' },
+  { href: '/artist/emma',   label: 'Emma' },
 ];
 
 export default function SiteHeader() {

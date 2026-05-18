@@ -10,8 +10,8 @@ export type Work = {
 
 export function workDateLabel(work: Work): string {
   const year = work.created_at.slice(0, 4);
-  if (work.age !== undefined) return `${work.age}살 · ${year}`;
-  return year;
+  const month = work.created_at.slice(5, 7);
+  return `${year}.${month}`;
 }
 
 export type Artist = {

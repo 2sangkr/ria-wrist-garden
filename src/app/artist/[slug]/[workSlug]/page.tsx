@@ -4,6 +4,7 @@ import Link from 'next/link';
 import type { Artist } from '@/lib/artists';
 import { workDateLabel } from '@/lib/artists';
 import { getArtistWithWorks } from '@/lib/data';
+import LikeButton from '@/components/ui/LikeButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -54,7 +55,10 @@ export default async function WorkDetailPage({ params }: Props) {
 
         {/* 제목 + 날짜 */}
         <div className="mt-7 mb-2">
-          <h1 className="text-[20px] font-bold text-gray-900">{work.title}</h1>
+          <div className="flex items-center justify-between gap-4">
+            <h1 className="text-[20px] font-bold text-gray-900">{work.title}</h1>
+            <LikeButton workId={String(work.id ?? '')} />
+          </div>
           <p className="text-[12px] text-gray-400 mt-1">{formattedDate}</p>
         </div>
 

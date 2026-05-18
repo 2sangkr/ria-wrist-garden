@@ -47,6 +47,24 @@ export const getArtistWithWorks = cache(async (slug: string): Promise<Artist | n
   return mapArtist(a, (works ?? []).map(mapWork));
 });
 
+export const getLatestWorks = cache(async (limit = 4): Promise<Work[]> => {
+  const { data } = await supabase
+    .from('works')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(limit);
+  return (data ?? []).map(mapWork);
+});
+
+export const getWorksByTitles = cache(async (titles: string[]): Promise<Work[]> => {
+  const { data } = await supabase.from('works').select('*').in('title', titles);
+  if (!data) return [];
+  return titles
+    .map(t => data.find(w => w.title === t))
+    .filter((w): w is NonNullable<typeof w> => w != null)
+    .map(mapWork);
+});
+
 export const getAllArtistsWithWorks = cache(async (): Promise<Artist[]> => {
   const { data: artists } = await supabase.from('artists').select('*').order('sort_order');
   if (!artists) return [];

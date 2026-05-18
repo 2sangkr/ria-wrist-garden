@@ -19,39 +19,40 @@ export default function AboutPage() {
 
           <section>
             <p>
-              아이들이 그리고 만든 것들,<br />
-              결국 박스에 넣어 두다가 버려지곤 했어요.
+              모모갤러리는 어린 작가들의 공간이에요.
             </p>
             <p className="mt-4">
-              그게 아까웠어요.
-            </p>
-          </section>
-
-          <section>
-            <p>
-              모든 아이의 모든 예술은<br />
-              그 작품들이 사라지지 않도록<br />
-              온라인 갤러리로 남기는 공간이에요.
-            </p>
-          </section>
-
-          <section>
-            <p>
               그림이든, 핸드메이드든, 레고든—<br />
-              아이가 만든 것이라면 무엇이든 여기서 작품이 됩니다.
+              네가 만든 것이라면 무엇이든 여기서 작품이 됩니다.
             </p>
           </section>
 
           <section>
-            <h2 className="text-[15px] font-semibold text-gray-900 mb-3">함께하고 싶다면</h2>
-            <p>내 아이의 작품을 갤러리에 올리고 싶다면 언제든 문의해주세요.</p>
+            <p>
+              작가로 등록하면 나만의 갤러리 페이지가 생겨요.<br />
+              내 작품을 올리고, 친구들에게 링크를 보내보세요.
+            </p>
+            <p className="mt-4">
+              친구가 내 페이지를 보고 "나도 올리고 싶다"고 한다면—<br />
+              그 친구도 이곳의 작가가 될 수 있어요.
+            </p>
+          </section>
+
+          <section>
+            <p>
+              모모갤러리는 지금도 새로운 작가를 기다리고 있어요.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-[15px] font-semibold text-gray-900 mb-3">작가가 되고 싶다면</h2>
             <a
               href="https://docs.google.com/forms/d/e/1FAIpQLScpB6jkb5a05_y_p4GsIPSOLZSXWDApX61UBZ44oSTse3oPPg/viewform?usp=header"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block mt-6 text-[13px] font-medium text-white bg-gray-900 px-6 py-3 rounded-full hover:bg-gray-700 transition-colors"
+              className="inline-block mt-2 text-[13px] font-medium text-white bg-gray-900 px-6 py-3 rounded-full hover:bg-gray-700 transition-colors"
             >
-              참여 문의하기
+              나도 작가 되기 →
             </a>
           </section>
 

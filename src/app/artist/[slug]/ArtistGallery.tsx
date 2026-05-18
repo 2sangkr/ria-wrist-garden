@@ -15,6 +15,8 @@ interface Props {
 
 export default function ArtistGallery({ artist, groups, allWorks }: Props) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [likeCount, setLikeCount] = useState(0);
+  const [liked, setLiked] = useState(false);
 
   const selectedWork = selectedIndex !== null ? allWorks[selectedIndex] : null;
 
@@ -24,6 +26,42 @@ export default function ArtistGallery({ artist, groups, allWorks }: Props) {
     () => setSelectedIndex((i) => (i !== null && i < allWorks.length - 1 ? i + 1 : i)),
     [allWorks.length]
   );
+
+  useEffect(() => {
+    const work = selectedIndex !== null ? allWorks[selectedIndex] : null;
+    if (!work?.id) { setLikeCount(0); setLiked(false); return; }
+    const workId = String(work.id);
+    let vid = localStorage.getItem('vid') ?? '';
+    if (!vid) { vid = crypto.randomUUID(); localStorage.setItem('vid', vid); }
+    fetch(`/api/likes?work_id=${workId}&visitor_id=${vid}`)
+      .then(r => r.json())
+      .then(d => { setLikeCount(d.count ?? 0); setLiked(d.liked ?? false); })
+      .catch(() => {});
+  }, [selectedIndex, allWorks]);
+
+  async function toggleLike() {
+    const work = selectedIndex !== null ? allWorks[selectedIndex] : null;
+    if (!work?.id) return;
+    const workId = String(work.id);
+    let vid = localStorage.getItem('vid') ?? '';
+    if (!vid) { vid = crypto.randomUUID(); localStorage.setItem('vid', vid); }
+    const prev = { likeCount, liked };
+    setLikeCount(liked ? likeCount - 1 : likeCount + 1);
+    setLiked(!liked);
+    try {
+      const r = await fetch('/api/likes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ work_id: workId, visitor_id: vid }),
+      });
+      const d = await r.json();
+      setLikeCount(d.count ?? (prev.liked ? prev.likeCount - 1 : prev.likeCount + 1));
+      setLiked(d.liked ?? !prev.liked);
+    } catch {
+      setLikeCount(prev.likeCount);
+      setLiked(prev.liked);
+    }
+  }
 
   useEffect(() => {
     if (selectedIndex === null) return;
@@ -138,7 +176,15 @@ export default function ArtistGallery({ artist, groups, allWorks }: Props) {
 
             {/* 정보 */}
             <div className="px-5 py-4 shrink-0">
-              <p className="text-[16px] font-bold text-gray-900 leading-snug">{selectedWork.title}</p>
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-[16px] font-bold text-gray-900 leading-snug">{selectedWork.title}</p>
+                <button onClick={toggleLike} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', background: 'none', border: 'none', padding: 0, flexShrink: 0 }}>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill={liked ? '#f43f5e' : 'white'} stroke="#f43f5e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                  </svg>
+                  {likeCount > 0 && <span style={{ fontSize: '13px', fontWeight: 500, color: '#f43f5e' }}>{likeCount}</span>}
+                </button>
+              </div>
               <p className="text-[12px] text-gray-400 mt-1">{workDateLabel(selectedWork)}</p>
               {selectedWork.materials.length > 0 && (
                 <p className="text-[12px] text-gray-400 mt-0.5">{selectedWork.materials.join(' · ')}</p>
