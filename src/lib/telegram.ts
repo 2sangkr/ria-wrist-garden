@@ -23,6 +23,8 @@ export function formatBriefing(m: {
   newWorksToday: number;
   newWorksYesterday: number;
   totalLikes: number;
+  viewsToday: number;
+  viewsYesterday: number;
   topWorks: { title: string; artistName: string; likes: number }[];
 }) {
   const top =
@@ -33,6 +35,7 @@ export function formatBriefing(m: {
   return `📊 <b>mymomo.gallery 브리핑</b>
 ${m.date}
 
+👁 방문: ${m.viewsToday}회${delta(m.viewsToday, m.viewsYesterday)}
 👩‍🎨 작가: ${m.artists}명
 🖼 작품: ${m.works}개 (주간 신작 ${m.newWorksThisWeek}개${delta(m.newWorksToday, m.newWorksYesterday)})
 ♥ 좋아요: 총 ${m.totalLikes}개

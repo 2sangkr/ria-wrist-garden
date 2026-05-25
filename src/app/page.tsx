@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Artist } from '@/lib/artists';
 import { getArtists, getWorksByTitles } from '@/lib/data';
+import { ViewTracker } from '@/components/ui/ViewTracker';
 
 export const dynamic = 'force-dynamic';
 
@@ -80,6 +81,7 @@ export default async function HomePage() {
   const ARTISTS = [...realArtists, ...EMPTY_SLOTS];
   return (
     <div className="min-h-screen bg-white">
+      <ViewTracker path="/" />
 
       {/* ══ 분홍 배너 ══ */}
       <section className="max-w-[1100px] mx-auto px-5 sm:px-8 pt-6 pb-2">

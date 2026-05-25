@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import type { Work } from '@/lib/artists';
 import { getArtistWithWorks } from '@/lib/data';
 import ArtistGallery from './ArtistGallery';
+import { ViewTracker } from '@/components/ui/ViewTracker';
 
 export const dynamic = 'force-dynamic';
 
@@ -89,6 +90,7 @@ export default async function ArtistPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-white">
+      <ViewTracker path={`/artist/${artist.slug}`} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

@@ -15,6 +15,8 @@ export async function getMetrics() {
     { count: newWorksToday },
     { count: newWorksYesterday },
     { count: totalLikes },
+    { count: viewsToday },
+    { count: viewsYesterday },
     { data: likesRaw },
     { data: worksRaw },
   ] = await Promise.all([
@@ -24,6 +26,8 @@ export async function getMetrics() {
     client.from('works').select('*', { count: 'exact', head: true }).gte('created_at', oneDayAgo.toISOString()),
     client.from('works').select('*', { count: 'exact', head: true }).gte('created_at', twoDaysAgo.toISOString()).lt('created_at', oneDayAgo.toISOString()),
     client.from('work_likes').select('*', { count: 'exact', head: true }),
+    client.from('page_views').select('*', { count: 'exact', head: true }).gte('created_at', oneDayAgo.toISOString()),
+    client.from('page_views').select('*', { count: 'exact', head: true }).gte('created_at', twoDaysAgo.toISOString()).lt('created_at', oneDayAgo.toISOString()),
     client.from('work_likes').select('work_id'),
     client.from('works').select('id, title, artists(name)'),
   ]);
@@ -59,6 +63,8 @@ export async function getMetrics() {
     newWorksToday: newWorksToday ?? 0,
     newWorksYesterday: newWorksYesterday ?? 0,
     totalLikes: totalLikes ?? 0,
+    viewsToday: viewsToday ?? 0,
+    viewsYesterday: viewsYesterday ?? 0,
     topWorks,
   };
 }
