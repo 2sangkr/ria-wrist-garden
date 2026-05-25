@@ -19,6 +19,10 @@ const BLOB_SHAPES = [
 
 const ROTATIONS = ['-2deg', '1.5deg', '-1deg', '2deg', '1deg', '-1.5deg', '2deg', '-0.5deg'];
 
+const ARTIST_AVATARS: Record<string, string> = {
+  dhee: '/artists/dhee.jpg',
+};
+
 const SHOWCASE_TITLES = [
   '숲의 반짝임',
   'HARIBO',
@@ -188,10 +192,14 @@ export default async function HomePage() {
               <div key={artist.id} className="flex flex-col items-center gap-3 text-center">
                 <Link href={`/artist/${artist.slug}`}>
                   <div
-                    className="w-[96px] h-[96px] mx-auto flex items-center justify-center shadow-sm transition-all duration-200 hover:scale-105 hover:shadow-md"
+                    className="w-[96px] h-[96px] mx-auto flex items-center justify-center shadow-sm transition-all duration-200 hover:scale-105 hover:shadow-md overflow-hidden"
                     style={{ background: artist.profileColor, borderRadius: BLOB_SHAPES[idx % BLOB_SHAPES.length] }}
                   >
-                    <span className="text-[34px] font-bold text-white/70 select-none">{artist.name[0]}</span>
+                    {ARTIST_AVATARS[artist.slug] ? (
+                      <img src={ARTIST_AVATARS[artist.slug]} alt={artist.name} className="w-[130%] h-[130%] object-cover object-center" style={{ marginTop: '-8px' }} />
+                    ) : (
+                      <span className="text-[34px] font-bold text-white/70 select-none">{artist.name[0]}</span>
+                    )}
                   </div>
                 </Link>
                 <div>

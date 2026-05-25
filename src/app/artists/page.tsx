@@ -3,6 +3,10 @@ import { getArtists } from '@/lib/data';
 
 export const dynamic = 'force-dynamic';
 
+const ARTIST_AVATARS: Record<string, string> = {
+  dhee: '/artists/dhee.jpg',
+};
+
 const BLOB_SHAPES = [
   '60% 40% 55% 45% / 50% 60% 40% 50%',
   '45% 55% 40% 60% / 60% 40% 55% 45%',
@@ -26,13 +30,17 @@ export default async function ArtistsPage() {
           {artists.filter((a) => !a.isEmpty).map((artist, idx) => (
             <Link key={artist.id} href={`/artist/${artist.slug}`} className="group flex flex-col items-center gap-3 text-center">
               <div
-                className="w-[110px] h-[110px] shadow-md transition-all duration-200 group-hover:scale-110 group-hover:shadow-xl flex items-center justify-center"
+                className="w-[110px] h-[110px] shadow-md transition-all duration-200 group-hover:scale-110 group-hover:shadow-xl flex items-center justify-center overflow-hidden"
                 style={{
                   background: artist.profileColor,
                   borderRadius: BLOB_SHAPES[idx % BLOB_SHAPES.length],
                 }}
               >
-                <span className="text-[40px] font-bold text-white/75 select-none">{artist.name[0]}</span>
+                {ARTIST_AVATARS[artist.slug] ? (
+                  <img src={ARTIST_AVATARS[artist.slug]} alt={artist.name} className="w-[130%] h-[130%] object-cover object-center" style={{ marginTop: '-8px' }} />
+                ) : (
+                  <span className="text-[40px] font-bold text-white/75 select-none">{artist.name[0]}</span>
+                )}
               </div>
               <div>
                 <p className="text-[14px] font-medium text-gray-800">{artist.name}</p>

@@ -14,10 +14,27 @@ export async function generateMetadata({ params }: Props) {
   const { slug, workSlug } = await params;
   const artist = await getArtistWithWorks(slug);
   const work = artist?.works?.find((w) => w.slug === workSlug);
+  if (!work || !artist) return { title: '작품' };
+  const description = `${artist.name}의 작품 "${work.title}". ${work.materials.join(', ')} — 모모갤러리`;
   return {
-    title: work?.title ?? '작품',
+    title: work.title,
+    description,
+    keywords: [work.title, artist.name, ...work.materials, '어린이 미술', '모모갤러리'],
     openGraph: {
-      images: work ? [work.image] : [],
+      type: 'article',
+      title: `${work.title} — ${artist.name}`,
+      description,
+      url: `https://mymomo.gallery/artist/${slug}/${workSlug}`,
+      images: [{ url: work.image, alt: `${artist.name}의 작품 — ${work.title}` }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${work.title} — ${artist.name}`,
+      description,
+      images: [work.image],
+    },
+    alternates: {
+      canonical: `https://mymomo.gallery/artist/${slug}/${workSlug}`,
     },
   };
 }
@@ -32,8 +49,31 @@ export default async function WorkDetailPage({ params }: Props) {
 
   const formattedDate = workDateLabel(work);
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'VisualArtwork',
+    name: work.title,
+    image: work.image,
+    url: `https://mymomo.gallery/artist/${slug}/${workSlug}`,
+    artMedium: work.materials.join(', '),
+    dateCreated: work.created_at,
+    creator: {
+      '@type': 'Person',
+      name: artist.name,
+      url: `https://mymomo.gallery/artist/${slug}`,
+    },
+    isPartOf: {
+      '@type': 'ProfilePage',
+      url: `https://mymomo.gallery/artist/${slug}`,
+    },
+  };
+
   return (
     <div className="bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="max-w-[600px] mx-auto px-5 sm:px-8 py-8">
 
         {/* 뒤로가기 */}
