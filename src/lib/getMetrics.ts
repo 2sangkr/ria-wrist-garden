@@ -2,13 +2,18 @@ import { getServiceClient } from '@/lib/supabase';
 
 export async function getMetrics() {
   const client = getServiceClient();
-  const weekAgo = new Date();
-  weekAgo.setDate(weekAgo.getDate() - 7);
+
+  const now = new Date();
+  const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+  const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+  const twoDaysAgo = new Date(now.getTime() - 48 * 60 * 60 * 1000);
 
   const [
     { count: artistCount },
     { count: workCount },
     { count: newWorkCount },
+    { count: newWorksToday },
+    { count: newWorksYesterday },
     { count: totalLikes },
     { data: likesRaw },
     { data: worksRaw },
@@ -16,6 +21,8 @@ export async function getMetrics() {
     client.from('artists').select('*', { count: 'exact', head: true }).eq('is_empty', false),
     client.from('works').select('*', { count: 'exact', head: true }),
     client.from('works').select('*', { count: 'exact', head: true }).gte('created_at', weekAgo.toISOString()),
+    client.from('works').select('*', { count: 'exact', head: true }).gte('created_at', oneDayAgo.toISOString()),
+    client.from('works').select('*', { count: 'exact', head: true }).gte('created_at', twoDaysAgo.toISOString()).lt('created_at', oneDayAgo.toISOString()),
     client.from('work_likes').select('*', { count: 'exact', head: true }),
     client.from('work_likes').select('work_id'),
     client.from('works').select('id, title, artists(name)'),
@@ -49,6 +56,8 @@ export async function getMetrics() {
     artists: artistCount ?? 0,
     works: workCount ?? 0,
     newWorksThisWeek: newWorkCount ?? 0,
+    newWorksToday: newWorksToday ?? 0,
+    newWorksYesterday: newWorksYesterday ?? 0,
     totalLikes: totalLikes ?? 0,
     topWorks,
   };
