@@ -69,7 +69,10 @@ export const getAllArtistsWithWorks = cache(async (): Promise<Artist[]> => {
   const { data: artists } = await supabase.from('artists').select('*').order('sort_order');
   if (!artists) return [];
 
-  const { data: works } = await supabase.from('works').select('*');
+  const { data: works } = await supabase
+    .from('works')
+    .select('*')
+    .order('created_at', { ascending: false });
 
   return artists
     .filter((a) => !a.is_empty)

@@ -219,6 +219,14 @@ export const ARTISTS: Artist[] = [
         age: 11,
       },
       {
+        slug: 'work-33',
+        title: "DADA's ART",
+        image: '/images/dhee-work-33.jpg',
+        materials: ['마커', '스케치북'],
+        created_at: '2026-05-31',
+        age: 12,
+      },
+      {
         slug: 'work-21',
         title: '녹아내리는 도시',
         image: '/images/dhee-work-21.jpg',

@@ -9,13 +9,13 @@ export default function SiteFooter() {
 
           {/* 브랜드 + 슬로건 */}
           <div>
-            <p className="text-[13px] font-semibold text-gray-800">모든 아이의 모든 예술</p>
+            <p className="text-[13px] font-bold text-gray-900">모모갤러리 · 모든 아이의 모든 예술</p>
             <p className="text-[11px] text-gray-400 mt-1 leading-relaxed">
               모든 창작물의 저작권은<br />
               각 작품을 만든 어린이 작가에게 있습니다.
             </p>
             <p className="text-[11px] text-gray-300 mt-3">
-              © {new Date().getFullYear()} 모든 아이의 모든 예술. All rights reserved.
+              © {new Date().getFullYear()} mymomo.gallery. All rights reserved.
             </p>
           </div>
 

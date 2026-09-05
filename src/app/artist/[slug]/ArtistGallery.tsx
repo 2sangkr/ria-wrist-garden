@@ -82,14 +82,14 @@ export default function ArtistGallery({ artist, groups, allWorks }: Props) {
   return (
     <>
       {/* 그리드 */}
-      <div className="px-5 sm:px-8 pb-20 space-y-12">
+      <div className="pb-20 space-y-14">
         {groups.map((group) => (
           <div key={group.label}>
             <div className="flex items-center gap-3 mb-6">
-              <span className="text-[13px] font-semibold text-gray-500">{group.label}</span>
-              <div className="flex-1 h-px bg-gray-100" />
+              <span className="text-[13px] font-bold text-gray-900">{group.label}</span>
+              <div className="flex-1 h-px bg-gray-200" />
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-8">
               {group.works.map((work) => {
                 const globalIndex = allWorks.findIndex((w) => w.slug === work.slug);
                 return (
@@ -98,20 +98,19 @@ export default function ArtistGallery({ artist, groups, allWorks }: Props) {
                     onClick={() => setSelectedIndex(globalIndex)}
                     className="group text-left"
                   >
-                    <div className="aspect-square rounded-xl overflow-hidden relative bg-gray-100 mb-2">
+                    <div className="aspect-[4/5] overflow-hidden relative bg-gray-100 mb-3">
                       <Image
                         src={work.image}
                         alt={work.title}
                         fill
-                        className="object-cover scale-110 group-hover:scale-125 transition-transform duration-500"
+                        className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
                         sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                       />
                     </div>
-                    <p className="text-[13px] font-medium text-gray-900 leading-snug line-clamp-2">{work.title}</p>
-                    <p className="text-[11px] text-gray-400 mt-0.5">{workDateLabel(work)}</p>
-                    {work.materials.length > 0 && (
-                      <p className="text-[11px] text-gray-300 mt-0.5 truncate">{work.materials.join(' · ')}</p>
-                    )}
+                    <p className="text-[15px] sm:text-[16px] font-bold text-gray-900 leading-snug line-clamp-2">{work.title}</p>
+                    <p className="text-[11px] text-gray-500 mt-1">
+                      {work.materials.length > 0 ? `${work.materials.join(', ')} · ` : ''}{workDateLabel(work)}
+                    </p>
                   </button>
                 );
               })}

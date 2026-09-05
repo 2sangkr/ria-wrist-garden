@@ -1,8 +1,12 @@
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import type { Work } from '@/lib/artists';
 import { getArtistWithWorks } from '@/lib/data';
 import ArtistGallery from './ArtistGallery';
 import { ViewTracker } from '@/components/ui/ViewTracker';
+import ShareButton from '@/components/ui/ShareButton';
+
+const eyebrowFont = { fontFamily: "'Archivo Black', 'Noto Sans KR', sans-serif" };
 
 export const dynamic = 'force-dynamic';
 
@@ -49,7 +53,7 @@ function groupByYear(works: Work[]): { label: string; works: Work[] }[] {
     map.get(year)!.works.push(work);
   }
   return Array.from(map.values())
-    .sort((a, b) => a.year - b.year)
+    .sort((a, b) => b.year - a.year)
     .map(({ year, age, works }) => ({
       label: age !== undefined ? `${age}살 · ${year}` : `${year}`,
       works,
@@ -62,9 +66,13 @@ export default async function ArtistPage({ params }: Props) {
   if (!artist) notFound();
 
   const works = [...(artist.works ?? [])].sort((a, b) =>
-    a.created_at.localeCompare(b.created_at)
+    b.created_at.localeCompare(a.created_at)
   );
   const groups = groupByYear(works);
+
+  const activeSinceYear = works.length > 0
+    ? Math.min(...works.map((w) => Number(w.created_at.slice(0, 4))))
+    : undefined;
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -95,51 +103,79 @@ export default async function ArtistPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="max-w-[1100px] mx-auto">
+      {/* 작가 히어로 */}
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pt-6">
+        <Link href="/" className="text-[13px] font-bold text-gray-500 hover:text-gray-900 transition-colors">
+          &larr; 모모갤러리
+        </Link>
+      </div>
 
-      {/* 작가 정보 */}
-      <div className="px-6 sm:px-10 pt-10 pb-8">
-        <div className="mt-2 flex items-center gap-5">
-          <div
-            className="w-14 h-14 flex items-center justify-center shrink-0 overflow-hidden"
-            style={{
-              background: artist.profileColor,
-              borderRadius: '60% 40% 55% 45% / 50% 60% 40% 50%',
-            }}
-          >
-            {ARTIST_AVATARS[artist.slug] ? (
-              <img src={ARTIST_AVATARS[artist.slug]} alt={artist.name} className="w-[130%] h-[130%] object-cover object-center" style={{ marginTop: '-6px' }} />
-            ) : (
-              <span className="text-[20px] font-bold text-white/80 select-none">{artist.name[0]}</span>
-            )}
-          </div>
-          <div>
-            <h1 className="text-[22px] font-bold text-gray-900 leading-tight">{artist.name}</h1>
-            <p className="text-[13px] text-gray-400 mt-0.5">{artist.bio}</p>
-            <div className="flex gap-2 mt-1.5">
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pt-8 pb-14 sm:pb-20 border-b-2 border-gray-900">
+        <div className="flex flex-col md:flex-row items-stretch gap-8 md:gap-14">
+          <div className="flex-1 flex flex-col justify-center gap-4 sm:gap-5 min-w-0">
+            <span className="text-[11px] font-bold tracking-[0.2em] text-gray-400" style={eyebrowFont}>ARTIST</span>
+            <h1 className="text-[48px] sm:text-[64px] md:text-[80px] font-black text-gray-900 leading-none tracking-tight">
+              {artist.name}
+            </h1>
+            <div className="flex gap-2 flex-wrap">
               {artist.tags.map((tag) => (
-                <span key={tag} className="text-[11px] text-gray-300">{tag}</span>
+                <span key={tag} className="text-[12px] font-bold border-[1.5px] border-gray-900 px-3 py-1">{tag}</span>
               ))}
             </div>
+            {artist.bio && (
+              <p className="text-[16px] sm:text-[19px] font-medium text-gray-700 leading-relaxed max-w-[440px]">
+                {artist.bio}
+              </p>
+            )}
+
+            <div className="flex gap-8 sm:gap-10 mt-2 pt-6 border-t border-gray-200">
+              <div className="flex flex-col gap-1">
+                <span className="text-[24px] sm:text-[28px] font-black text-gray-900">{works.length}</span>
+                <span className="text-[10px] font-bold tracking-[0.12em] text-gray-400" style={eyebrowFont}>작품 수</span>
+              </div>
+              {activeSinceYear && (
+                <div className="flex flex-col gap-1">
+                  <span className="text-[24px] sm:text-[28px] font-black text-gray-900">{activeSinceYear}&ndash;</span>
+                  <span className="text-[10px] font-bold tracking-[0.12em] text-gray-400" style={eyebrowFont}>활동 기간</span>
+                </div>
+              )}
+            </div>
+
+            <div className="mt-4">
+              <ShareButton />
+            </div>
+          </div>
+
+          <div
+            className="relative flex-1 max-w-full md:max-w-[420px] aspect-[4/5] shrink-0 overflow-hidden bg-gray-100"
+          >
+            {ARTIST_AVATARS[artist.slug] ? (
+              <img src={ARTIST_AVATARS[artist.slug]} alt={artist.name} className="w-full h-full object-cover" />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center" style={{ background: artist.profileColor }}>
+                <span className="text-[64px] font-black text-white/70 select-none">{artist.name[0]}</span>
+              </div>
+            )}
           </div>
         </div>
-
-        {works.length > 0 && (
-          <div className="mt-5">
-            <p className="text-[12px] text-gray-300 tracking-widest uppercase">
-              {works.length} works
-            </p>
-          </div>
-        )}
       </div>
 
       {/* 갤러리 */}
-      {groups.length > 0 ? (
-        <ArtistGallery artist={artist} groups={groups} allWorks={works} />
-      ) : (
-        <p className="px-10 text-[14px] text-gray-400">작품이 곧 올라옵니다.</p>
-      )}
+      <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pt-14 sm:pt-20">
+        {groups.length > 0 && (
+          <div className="flex items-end justify-between border-b-2 border-gray-900 pb-5 mb-10 sm:mb-14">
+            <div>
+              <span className="text-[11px] font-bold tracking-[0.2em] text-gray-400" style={eyebrowFont}>WORKS</span>
+              <h2 className="mt-1.5 text-[26px] sm:text-[36px] md:text-[42px] font-black text-gray-900">작품 ({works.length})</h2>
+            </div>
+          </div>
+        )}
 
+        {groups.length > 0 ? (
+          <ArtistGallery artist={artist} groups={groups} allWorks={works} />
+        ) : (
+          <p className="pb-20 text-[14px] text-gray-400">작품이 곧 올라옵니다.</p>
+        )}
       </div>
     </div>
   );

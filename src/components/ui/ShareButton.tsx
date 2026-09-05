@@ -24,7 +24,7 @@ export default function ShareButton({ className = '' }: Props) {
   return (
     <button
       onClick={handleShare}
-      className={`inline-flex items-center gap-2 text-[11px] font-semibold tracking-wide text-amber-800 bg-yellow-200/50 px-4 py-1.5 rounded-lg hover:bg-yellow-200/70 transition-colors ${className}`}
+      className={`inline-flex items-center gap-2 text-[13px] font-bold text-gray-900 border-2 border-gray-900 px-5 py-2.5 hover:bg-gray-900 hover:text-white transition-colors ${className}`}
     >
       {copied ? (
         <>
@@ -37,7 +37,7 @@ export default function ShareButton({ className = '' }: Props) {
             <rect x="2" y="4" width="20" height="16" rx="2"/>
             <path d="M2 7l10 7 10-7"/>
           </svg>
-          <span>내 전시 초대</span>
+          <span>갤러리 초대</span>
         </>
       )}
     </button>
