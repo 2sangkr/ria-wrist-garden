@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     description: '아이들의 작품이 빛나는 온라인 갤러리. 어린이 작가들의 그림, 핸드메이드, 일러스트를 만나보세요.',
     images: [
       {
-        url: '/og-default.png',
+        url: '/og-default.jpg',
         width: 1200,
         height: 630,
         alt: '모모갤러리',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: '모모갤러리 — 모든 아이의 모든 예술',
     description: '아이들의 작품이 빛나는 온라인 갤러리.',
-    images: ['/og-default.png'],
+    images: ['/og-default.jpg'],
   },
   robots: {
     index: true,
