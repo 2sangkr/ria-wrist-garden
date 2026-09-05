@@ -21,21 +21,25 @@ export async function generateMetadata({ params }: Props) {
   const artist = await getArtistWithWorks(slug);
   if (!artist) return { title: '작가 갤러리' };
   const firstWork = artist.works?.[0];
-  const description = `${artist.name}의 온라인 갤러리. ${artist.tags.join(', ')} 작품 ${artist.works?.length ?? 0}점을 만나보세요.`;
+  const description = `${artist.name}의 온라인 갤러리(MY모모갤러리). ${artist.tags.join(', ')} 작품 ${artist.works?.length ?? 0}점을 만나보세요.`;
   return {
     title: `${artist.name} 갤러리`,
     description,
-    keywords: [artist.name, ...artist.tags, '어린이 작가', '모모갤러리', '어린이 갤러리'],
+    keywords: [
+      artist.name, ...artist.tags,
+      '어린이 작가', '어린이 갤러리',
+      '모모갤러리', 'MY모모갤러리', '마이모모갤러리', 'mymomo.gallery',
+    ],
     openGraph: {
       type: 'profile',
-      title: `${artist.name} — 모모갤러리`,
+      title: `${artist.name} — MY모모갤러리`,
       description,
       url: `https://mymomo.gallery/artist/${slug}`,
       images: firstWork ? [{ url: firstWork.image, alt: `${artist.name}의 작품` }] : [],
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${artist.name} — 모모갤러리`,
+      title: `${artist.name} — MY모모갤러리`,
       description,
       images: firstWork ? [firstWork.image] : [],
     },

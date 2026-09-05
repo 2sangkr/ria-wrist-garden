@@ -1,9 +1,23 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { workDateLabel } from '@/lib/artists';
 import { getAllArtistsWithWorks } from '@/lib/data';
 
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: '작가들의 작품',
+  description: 'MY모모갤러리(mymomo.gallery)에 올라온 어린이 작가들의 모든 작품을 모아봤어요.',
+  alternates: {
+    canonical: 'https://mymomo.gallery/works',
+  },
+  openGraph: {
+    title: '작가들의 작품 — MY모모갤러리',
+    description: 'MY모모갤러리(mymomo.gallery)에 올라온 어린이 작가들의 모든 작품을 모아봤어요.',
+    url: 'https://mymomo.gallery/works',
+  },
+};
 
 export default async function WorksPage() {
   const artists = await getAllArtistsWithWorks();

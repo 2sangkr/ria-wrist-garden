@@ -1,7 +1,21 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { getArtists } from '@/lib/data';
 
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: '전체 작가',
+  description: 'MY모모갤러리(mymomo.gallery)에 등록된 모든 어린이 작가들을 한눈에 만나보세요.',
+  alternates: {
+    canonical: 'https://mymomo.gallery/artists',
+  },
+  openGraph: {
+    title: '전체 작가 — MY모모갤러리',
+    description: 'MY모모갤러리(mymomo.gallery)에 등록된 모든 어린이 작가들을 한눈에 만나보세요.',
+    url: 'https://mymomo.gallery/artists',
+  },
+};
 
 const ARTIST_AVATARS: Record<string, string> = {
   dhee: '/artists/dhee.jpg',

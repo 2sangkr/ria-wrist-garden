@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     canonical: 'https://mymomo.gallery/about',
   },
   openGraph: {
-    title: '소개 — 모모갤러리',
+    title: '소개 — MY모모갤러리',
     description: '모모갤러리는 어린 작가들의 공간입니다. 그림, 핸드메이드, 레고—무엇이든 작품이 됩니다.',
     url: 'https://mymomo.gallery/about',
   },
