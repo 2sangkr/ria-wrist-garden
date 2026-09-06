@@ -81,6 +81,40 @@ export default async function HomePage() {
         </p>
       </section>
 
+      {/* ══ 소개 ══ */}
+      <section className="max-w-[700px] mx-auto px-5 sm:px-8 py-14 sm:py-16 md:py-20 border-b-2 border-gray-900 text-center">
+        <span className="text-[11px] font-bold tracking-[0.2em] text-gray-400" style={eyebrowFont}>ABOUT</span>
+
+        <div className="mt-6 space-y-4 text-[15px] sm:text-[18px] md:text-[19px] text-gray-600 leading-[1.75]">
+          <p>모모갤러리는 어린 작가들의 공간이에요.</p>
+          <p>
+            그림이든, 핸드메이드든, 레고든—<br />
+            무엇이든 여기서 작품이 됩니다.
+          </p>
+          <p>
+            작가로 등록하면 나만의 갤러리 페이지가 생겨요.<br />
+            내 작품을 올리고, 친구들에게 링크를 보내보세요.
+          </p>
+          <p>
+            친구가 내 페이지를 보고 &ldquo;나도 올리고 싶다&rdquo;고 한다면—<br />
+            그 친구도 이곳의 작가가 될 수 있어요.
+          </p>
+          <p>모모갤러리는 지금도 새로운 작가를 기다리고 있어요.</p>
+        </div>
+
+        <div className="mt-8">
+          <h3 className="text-[15px] font-black text-gray-900 mb-3">작가가 되고 싶다면</h3>
+          <a
+            href={GOOGLE_FORM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block text-[13px] font-bold text-white bg-gray-900 px-6 py-3 hover:opacity-85 transition-opacity"
+          >
+            나도 작가 되기 →
+          </a>
+        </div>
+      </section>
+
       {/* ══ 작가 그리드 ══ */}
       <section className="max-w-[1280px] mx-auto px-5 sm:px-8 py-14 sm:py-20 md:py-24">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2 border-b-2 border-gray-900 pb-5 mb-10 sm:mb-14">
