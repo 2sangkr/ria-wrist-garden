@@ -3,6 +3,7 @@ import './globals.css';
 import SiteHeader from '@/components/layout/SiteHeader';
 import SiteFooter from '@/components/layout/SiteFooter';
 import { Analytics } from '@vercel/analytics/next';
+import { accountsEnabled } from '@/lib/account-settings';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://mymomo.gallery'),
@@ -69,7 +70,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="min-h-screen bg-white flex flex-col" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
-<SiteHeader />
+<SiteHeader accountsEnabled={accountsEnabled()} />
         <main className="flex-1">{children}</main>
         <SiteFooter />
         <Analytics />

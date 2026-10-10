@@ -5,6 +5,7 @@ import type { Artist } from '@/lib/artists';
 import { workDateLabel } from '@/lib/artists';
 import { getArtistWithWorks } from '@/lib/data';
 import LikeButton from '@/components/ui/LikeButton';
+import WorkControls from '@/components/account/WorkControls';
 
 export const dynamic = 'force-dynamic';
 
@@ -103,6 +104,8 @@ export default async function WorkDetailPage({ params }: Props) {
         </div>
 
         {/* 재료 */}
+        {work.description && <p className="whitespace-pre-wrap my-6">{work.description}</p>}
+        {work.id !== undefined && <WorkControls artistId={artist.id} workId={work.id} />}
         {work.materials.length > 0 && (
           <p className="text-[12px] text-gray-400 mb-6">
             {work.materials.join(' · ')}

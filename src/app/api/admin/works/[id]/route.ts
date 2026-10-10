@@ -1,3 +1,4 @@
+import { accountsEnabled } from '@/lib/account-settings';
 import { NextRequest, NextResponse } from 'next/server';
 import { getServiceClient } from '@/lib/supabase';
 
@@ -5,6 +6,7 @@ export async function DELETE(
   _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  if (accountsEnabled()) return NextResponse.json({ error: '로그인 기반 관리 화면을 이용해 주세요.' }, { status: 410 });
   const { id } = await params;
   const client = getServiceClient();
 

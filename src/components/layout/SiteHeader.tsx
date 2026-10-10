@@ -8,7 +8,7 @@ const NAV_LINKS = [
   { href: '/', label: '홈' },
 ];
 
-export default function SiteHeader() {
+export default function SiteHeader({ accountsEnabled = false }: { accountsEnabled?: boolean }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -40,6 +40,7 @@ export default function SiteHeader() {
                 {l.label}
               </Link>
             ))}
+            {accountsEnabled && <Link href="/my" className="text-[14px] font-bold">내 작품 · 로그인</Link>}
             <ShareButton />
           </nav>
 
@@ -55,6 +56,7 @@ export default function SiteHeader() {
 
         {menuOpen && (
           <div className="sm:hidden py-3 border-t border-gray-100">
+            {accountsEnabled && <Link href="/my" className="block py-3 font-bold" onClick={() => setMenuOpen(false)}>내 작품 · 로그인</Link>}
             {NAV_LINKS.map((l) => (
               <Link key={l.href} href={l.href}
                 className="block py-3 text-[14px] font-bold text-gray-700 hover:text-gray-900"

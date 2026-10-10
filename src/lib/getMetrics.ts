@@ -1,3 +1,4 @@
+import { visibleWorks } from './visible-works';
 import { getServiceClient } from '@/lib/supabase';
 
 export async function getMetrics() {
@@ -21,15 +22,15 @@ export async function getMetrics() {
     { data: worksRaw },
   ] = await Promise.all([
     client.from('artists').select('*', { count: 'exact', head: true }).eq('is_empty', false),
-    client.from('works').select('*', { count: 'exact', head: true }),
-    client.from('works').select('*', { count: 'exact', head: true }).gte('created_at', weekAgo.toISOString()),
-    client.from('works').select('*', { count: 'exact', head: true }).gte('created_at', oneDayAgo.toISOString()),
-    client.from('works').select('*', { count: 'exact', head: true }).gte('created_at', twoDaysAgo.toISOString()).lt('created_at', oneDayAgo.toISOString()),
+    visibleWorks(client.from('works').select('*', { count: 'exact', head: true })),
+    visibleWorks(client.from('works').select('*', { count: 'exact', head: true })).gte('created_at', weekAgo.toISOString()),
+    visibleWorks(client.from('works').select('*', { count: 'exact', head: true })).gte('created_at', oneDayAgo.toISOString()),
+    visibleWorks(client.from('works').select('*', { count: 'exact', head: true })).gte('created_at', twoDaysAgo.toISOString()).lt('created_at', oneDayAgo.toISOString()),
     client.from('work_likes').select('*', { count: 'exact', head: true }),
     client.from('page_views').select('*', { count: 'exact', head: true }).gte('created_at', oneDayAgo.toISOString()),
     client.from('page_views').select('*', { count: 'exact', head: true }).gte('created_at', twoDaysAgo.toISOString()).lt('created_at', oneDayAgo.toISOString()),
     client.from('work_likes').select('work_id'),
-    client.from('works').select('id, title, artists(name)'),
+    visibleWorks(client.from('works').select('id, title, artists(name)')),
   ]);
 
   const likeMap: Record<string, number> = {};

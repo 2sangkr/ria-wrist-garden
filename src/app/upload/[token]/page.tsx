@@ -1,6 +1,7 @@
 import { slugFromToken } from '@/lib/uploadToken';
 import { supabase } from '@/lib/supabase';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
+import { legacyUploadAllowed } from '@/lib/account-settings';
 import type { Metadata } from 'next';
 import UploadForm from './UploadForm';
 
@@ -33,6 +34,7 @@ export default async function UploadPage({ params }: { params: Promise<{ token: 
   const { token } = await params;
   const artist = await getArtist(token);
   if (!artist) notFound();
+  if (!legacyUploadAllowed(artist.slug)) redirect('/my');
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-12" style={{ fontFamily: "'Noto Sans KR', sans-serif", background: 'linear-gradient(160deg, #f0faf0 0%, #f9fffe 60%, #f5f5f5 100%)' }}>

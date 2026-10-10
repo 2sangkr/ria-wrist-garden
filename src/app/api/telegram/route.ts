@@ -1,3 +1,5 @@
+import { accountsEnabled } from '@/lib/account-settings';
+import { visibleWorks } from '@/lib/visible-works';
 import { NextRequest, NextResponse } from 'next/server';
 import { getServiceClient } from '@/lib/supabase';
 import { getMetrics } from '@/lib/getMetrics';
@@ -49,7 +51,7 @@ export async function POST(request: NextRequest) {
     if (!artists || artists.length === 0) {
       await sendTelegram('등록된 작가가 없어요.', chatId);
     } else {
-      const { data: works } = await client.from('works').select('artist_id');
+      const { data: works } = await visibleWorks(client.from('works').select('artist_id'));
       const countMap: Record<string, number> = {};
       for (const w of works ?? []) {
         countMap[w.artist_id] = (countMap[w.artist_id] ?? 0) + 1;
@@ -61,6 +63,8 @@ export async function POST(request: NextRequest) {
 
       await sendTelegram(`👩‍🎨 <b>등록 작가 (${artists.length}명)</b>\n\n${lines}`, chatId);
     }
+  } else if (cmd === '/link' && accountsEnabled()) {
+    await sendTelegram('작품 관리는 로그인 후 이용해 주세요.\nhttps://mymomo.gallery/my', chatId);
   } else if (cmd === '/link') {
     const slug = args[0];
     if (!slug) {
@@ -85,9 +89,7 @@ export async function POST(request: NextRequest) {
         await sendTelegram(`"${name}" 작가를 찾을 수 없어요.`, chatId);
       } else {
         const artist = artists[0];
-        const { count: workCount } = await client
-          .from('works')
-          .select('*', { count: 'exact', head: true })
+        const { count: workCount } = await visibleWorks(client.from('works').select('*', { count: 'exact', head: true }))
           .eq('artist_id', (await client.from('artists').select('id').eq('slug', artist.slug).single()).data?.id);
 
         const token = tokenForSlug(artist.slug);
@@ -95,7 +97,7 @@ export async function POST(request: NextRequest) {
           `👩‍🎨 <b>${artist.name}</b>\n\n` +
           `🖼 작품: ${workCount ?? 0}개\n` +
           `🔗 갤러리: https://mymomo.gallery/artist/${artist.slug}\n` +
-          `📤 업로드: https://mymomo.gallery/upload/${token}`,
+          (accountsEnabled() ? '📤 작품 관리: https://mymomo.gallery/my' : `📤 업로드: https://mymomo.gallery/upload/${token}`),
           chatId,
         );
       }

@@ -1,3 +1,4 @@
+import { visibleWorks } from './visible-works';
 import { cache } from 'react';
 import { supabase } from './supabase';
 import type { Artist, Work } from './artists';
@@ -6,6 +7,7 @@ import type { Artist, Work } from './artists';
 function mapWork(w: any): Work {
   return {
     id: w.id,
+    description: w.description,
     slug: w.slug,
     title: w.title,
     image: w.image,
@@ -38,9 +40,7 @@ export const getArtistWithWorks = cache(async (slug: string): Promise<Artist | n
   const { data: a } = await supabase.from('artists').select('*').eq('slug', slug).single();
   if (!a) return null;
 
-  const { data: works } = await supabase
-    .from('works')
-    .select('*')
+  const { data: works } = await visibleWorks(supabase.from('works').select('*'))
     .eq('artist_id', a.id)
     .order('created_at', { ascending: false });
 
@@ -48,16 +48,14 @@ export const getArtistWithWorks = cache(async (slug: string): Promise<Artist | n
 });
 
 export const getLatestWorks = cache(async (limit = 4): Promise<Work[]> => {
-  const { data } = await supabase
-    .from('works')
-    .select('*')
+  const { data } = await visibleWorks(supabase.from('works').select('*'))
     .order('created_at', { ascending: false })
     .limit(limit);
   return (data ?? []).map(mapWork);
 });
 
 export const getWorksByTitles = cache(async (titles: string[]): Promise<Work[]> => {
-  const { data } = await supabase.from('works').select('*').in('title', titles);
+  const { data } = await visibleWorks(supabase.from('works').select('*')).in('title', titles);
   if (!data) return [];
   return titles
     .map(t => data.find(w => w.title === t))
@@ -69,9 +67,7 @@ export const getAllArtistsWithWorks = cache(async (): Promise<Artist[]> => {
   const { data: artists } = await supabase.from('artists').select('*').order('sort_order');
   if (!artists) return [];
 
-  const { data: works } = await supabase
-    .from('works')
-    .select('*')
+  const { data: works } = await visibleWorks(supabase.from('works').select('*'))
     .order('created_at', { ascending: false });
 
   return artists

@@ -5,6 +5,7 @@ import { getArtistWithWorks } from '@/lib/data';
 import ArtistGallery from './ArtistGallery';
 import { ViewTracker } from '@/components/ui/ViewTracker';
 import ShareButton from '@/components/ui/ShareButton';
+import ArtistControls from '@/components/account/ArtistControls';
 
 const eyebrowFont = { fontFamily: "'Archivo Black', 'Noto Sans KR', sans-serif" };
 
@@ -147,6 +148,7 @@ export default async function ArtistPage({ params }: Props) {
 
             <div className="mt-4">
               <ShareButton />
+              <ArtistControls artistId={artist.id} slug={artist.slug} />
             </div>
           </div>
 

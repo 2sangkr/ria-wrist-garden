@@ -29,6 +29,7 @@ yarn-error.log*
 
 # vercel
 .vercel
+/private-backups/
 
 # typescript
 *.tsbuildinfo
