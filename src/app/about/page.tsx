@@ -61,7 +61,7 @@ export default function AboutPage() {
           <section>
             <h2 className="text-[15px] font-semibold text-gray-900 mb-3">작가가 되고 싶다면</h2>
             <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLScpB6jkb5a05_y_p4GsIPSOLZSXWDApX61UBZ44oSTse3oPPg/viewform?usp=header"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSdpyTuxurRhzBDfW11KMUoHK6-Osj4DAstCerCGaUyr7z2AyA/viewform"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-2 text-[13px] font-medium text-white bg-gray-900 px-6 py-3 rounded-full hover:bg-gray-700 transition-colors"

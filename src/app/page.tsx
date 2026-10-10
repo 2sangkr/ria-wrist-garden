@@ -7,7 +7,7 @@ import { ViewTracker } from '@/components/ui/ViewTracker';
 export const dynamic = 'force-dynamic';
 
 const GOOGLE_FORM_URL =
-  'https://docs.google.com/forms/d/e/1FAIpQLScpB6jkb5a05_y_p4GsIPSOLZSXWDApX61UBZ44oSTse3oPPg/viewform?usp=header';
+  'https://docs.google.com/forms/d/e/1FAIpQLSdpyTuxurRhzBDfW11KMUoHK6-Osj4DAstCerCGaUyr7z2AyA/viewform';
 
 const EMPTY_SLOTS: Artist[] = [
   { id: 'empty-1', slug: '', name: '', tags: [], bio: '', profileColor: '', isEmpty: true },
