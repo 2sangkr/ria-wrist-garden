@@ -1,3 +1,4 @@
+import { safeJsonLd } from '@/lib/security';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -73,7 +74,7 @@ export default async function WorkDetailPage({ params }: Props) {
     <div className="bg-white">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
       />
       <div className="max-w-[600px] mx-auto px-5 sm:px-8 py-8">
 
@@ -143,3 +144,4 @@ function ArtistBlob({ artist }: { artist: Artist }) {
     </div>
   );
 }
+

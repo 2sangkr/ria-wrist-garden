@@ -1,10 +1,11 @@
+import { validSecret } from '@/lib/security';
 import { NextRequest, NextResponse } from 'next/server';
 import { getMetrics } from '@/lib/getMetrics';
 import { sendTelegram, formatBriefing } from '@/lib/telegram';
 
 export async function GET(request: NextRequest) {
   const authHeader = request.headers.get('authorization');
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+  if (!process.env.CRON_SECRET || !validSecret(authHeader, `Bearer ${process.env.CRON_SECRET}`)) {
     return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
   }
 
@@ -13,3 +14,4 @@ export async function GET(request: NextRequest) {
 
   return NextResponse.json({ ok: true });
 }
+

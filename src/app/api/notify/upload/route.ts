@@ -1,10 +1,11 @@
+import { validSecret } from '@/lib/security';
 import { NextRequest, NextResponse } from 'next/server';
 import { getServiceClient } from '@/lib/supabase';
 import { sendTelegram } from '@/lib/telegram';
 
 export async function POST(request: NextRequest) {
   const secret = request.headers.get('x-webhook-secret');
-  if (secret !== process.env.SUPABASE_WEBHOOK_SECRET) {
+  if (!validSecret(secret, process.env.SUPABASE_WEBHOOK_SECRET)) {
     return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
   }
 
@@ -33,3 +34,4 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json({ ok: true });
 }
+

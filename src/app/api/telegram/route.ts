@@ -1,3 +1,4 @@
+import { validSecret } from '@/lib/security';
 import { accountsEnabled } from '@/lib/account-settings';
 import { visibleWorks } from '@/lib/visible-works';
 import { NextRequest, NextResponse } from 'next/server';
@@ -8,7 +9,7 @@ import { tokenForSlug } from '@/lib/uploadToken';
 
 export async function POST(request: NextRequest) {
   const secret = request.headers.get('x-telegram-bot-api-secret-token');
-  if (secret !== process.env.TELEGRAM_WEBHOOK_SECRET) {
+  if (!validSecret(secret, process.env.TELEGRAM_WEBHOOK_SECRET)) {
     return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
   }
 
@@ -106,3 +107,4 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json({ ok: true });
 }
+

@@ -1,3 +1,4 @@
+import { safeJsonLd } from '@/lib/security';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Work } from '@/lib/artists';
@@ -106,7 +107,7 @@ export default async function ArtistPage({ params }: Props) {
       <ViewTracker path={`/artist/${artist.slug}`} />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
       />
       {/* 작가 히어로 */}
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8 pt-6">
@@ -186,3 +187,4 @@ export default async function ArtistPage({ params }: Props) {
     </div>
   );
 }
+
