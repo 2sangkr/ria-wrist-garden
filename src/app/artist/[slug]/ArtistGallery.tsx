@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import type { Artist, Work } from '@/lib/artists';
 import { workDateLabel } from '@/lib/artists';
 
@@ -188,6 +189,7 @@ export default function ArtistGallery({ artist, groups, allWorks }: Props) {
               {selectedWork.materials.length > 0 && (
                 <p className="text-[12px] text-gray-400 mt-0.5">{selectedWork.materials.join(' · ')}</p>
               )}
+              <Link href={`/artist/${artist.slug}/${selectedWork.slug}`} className="inline-block mt-3 rounded-lg border border-gray-300 px-4 py-2 text-sm font-bold">작품 상세 보기</Link>
               <div className="flex items-center gap-3 mt-4 pt-3 border-t border-gray-100">
                 <div
                   className="w-8 h-8 shrink-0 flex items-center justify-center"

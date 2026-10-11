@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import ShareButton from '@/components/ui/ShareButton';
+import AccountMenu from '@/components/account/AccountMenu';
 
 const NAV_LINKS = [
   { href: '/', label: '홈' },
@@ -40,11 +41,12 @@ export default function SiteHeader({ accountsEnabled = false }: { accountsEnable
                 {l.label}
               </Link>
             ))}
-            {accountsEnabled && <Link href="/my" className="text-[14px] font-bold">내 작품 · 로그인</Link>}
+            {accountsEnabled && <AccountMenu />}
             <ShareButton />
           </nav>
 
           <div className="sm:hidden flex items-center gap-2">
+            {accountsEnabled && <AccountMenu />}
             <ShareButton className="text-[11px] px-3 py-1.5" />
             <button className="p-1" onClick={() => setMenuOpen(!menuOpen)} aria-label="메뉴">
               <span className={`block w-5 h-[2px] bg-gray-900 transition-all origin-center mb-[5px] ${menuOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
@@ -56,7 +58,7 @@ export default function SiteHeader({ accountsEnabled = false }: { accountsEnable
 
         {menuOpen && (
           <div className="sm:hidden py-3 border-t border-gray-100">
-            {accountsEnabled && <Link href="/my" className="block py-3 font-bold" onClick={() => setMenuOpen(false)}>내 작품 · 로그인</Link>}
+            {accountsEnabled && <Link href="/my" className="block py-3 font-bold" onClick={() => setMenuOpen(false)}>내 작품 관리</Link>}
             {NAV_LINKS.map((l) => (
               <Link key={l.href} href={l.href}
                 className="block py-3 text-[14px] font-bold text-gray-700 hover:text-gray-900"
