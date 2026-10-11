@@ -20,8 +20,11 @@ export default function ArtistGallery({ artist, groups }: Props) {
   }
   return <div className="pb-20 space-y-10">
     <div className="flex justify-end gap-2" role="group" aria-label="작품 보기 방식">
-      {(['grid', 'large'] as const).map(mode => <button key={mode} type="button" aria-pressed={view === mode} onClick={() => changeView(mode)} className={'rounded-lg border px-4 py-2 text-sm font-bold ' + (view === mode ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-600 border-gray-200')}>
-        {mode === 'grid' ? '격자 보기' : '크게 보기'}
+      {(['grid', 'large'] as const).map(mode => <button key={mode} type="button" aria-label={mode === 'grid' ? '격자 보기' : '크게 보기'} aria-pressed={view === mode} onClick={() => changeView(mode)} className={'inline-flex min-h-11 items-center gap-2 rounded-lg border px-3 py-2 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 ' + (view === mode ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50')}>
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
+          {mode === 'grid' ? <><rect x="2" y="2" width="6" height="6" rx="1"/><rect x="12" y="2" width="6" height="6" rx="1"/><rect x="2" y="12" width="6" height="6" rx="1"/><rect x="12" y="12" width="6" height="6" rx="1"/></> : <rect x="2" y="2" width="16" height="16" rx="1.5"/>}
+        </svg>
+        {mode === 'grid' ? '격자' : '크게'}
       </button>)}
     </div>
     {groups.map(group => <section key={group.label}>
