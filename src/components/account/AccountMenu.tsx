@@ -39,13 +39,11 @@ export default function AccountMenu() {
     if (error) { setError('로그아웃하지 못했어요. 다시 시도해 주세요.'); setBusy(false); return; }
     setUser(null); setOpen(false); setBusy(false); router.replace('/'); router.refresh();
   }
-  return <div className="relative flex items-center gap-4">
-    <Link href="/my" className="hidden sm:block text-sm font-bold">내 작품</Link>
+  return <div className="relative flex shrink-0 items-center">
     <button onClick={() => setOpen(!open)} aria-label={`로그인 계정: ${user.email ?? name}`} aria-expanded={open} className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200 bg-gray-900 text-white font-bold flex items-center justify-center">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       {avatar ? <img src={avatar} alt="" referrerPolicy="no-referrer" className="w-full h-full object-cover" /> : name[0]}
     </button>
-    <button onClick={signOut} disabled={busy} className="hidden sm:block text-sm text-gray-600">{busy ? '로그아웃 중…' : '로그아웃'}</button>
     {open && <div className="absolute right-0 top-12 w-72 max-w-[85vw] rounded-xl border bg-white shadow-lg p-4 space-y-3 text-gray-900">
       <p className="font-bold truncate">{name}</p><p className="text-sm break-all text-gray-600">{user.email}</p>
       <Link href="/my" className="block font-bold">내 작품 관리</Link>

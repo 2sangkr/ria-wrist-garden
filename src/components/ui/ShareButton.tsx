@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 
-type Props = { className?: string };
+type Props = { className?: string; variant?: 'outlined' | 'plain' };
 
-export default function ShareButton({ className = '' }: Props) {
+export default function ShareButton({ className = '', variant = 'outlined' }: Props) {
   const [copied, setCopied] = useState(false);
 
   async function handleShare() {
@@ -24,12 +24,13 @@ export default function ShareButton({ className = '' }: Props) {
   return (
     <button
       onClick={handleShare}
-      className={`inline-flex items-center gap-2 text-[13px] font-bold text-gray-900 border-2 border-gray-900 px-5 py-2.5 hover:bg-gray-900 hover:text-white transition-colors ${className}`}
+      aria-label={copied ? '초대 링크 복사됨' : '갤러리 초대'}
+      className={`inline-flex shrink-0 items-center gap-2 text-[13px] font-bold text-gray-900 transition-colors ${variant === 'plain' ? 'min-h-11 rounded-lg px-2 hover:bg-gray-50' : 'border-2 border-gray-900 px-5 py-2.5 hover:bg-gray-900 hover:text-white'} ${className}`}
     >
       {copied ? (
         <>
           <span>✓</span>
-          <span>초대 링크 복사됨</span>
+          <span>{variant === 'plain' ? '복사됨' : '초대 링크 복사됨'}</span>
         </>
       ) : (
         <>
@@ -37,7 +38,7 @@ export default function ShareButton({ className = '' }: Props) {
             <rect x="2" y="4" width="20" height="16" rx="2"/>
             <path d="M2 7l10 7 10-7"/>
           </svg>
-          <span>갤러리 초대</span>
+          <span>{variant === 'plain' ? '초대' : '갤러리 초대'}</span>
         </>
       )}
     </button>
