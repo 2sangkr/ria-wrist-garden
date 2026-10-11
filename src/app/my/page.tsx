@@ -21,7 +21,7 @@ export default async function MyPage() {
  <h2 className="text-xl font-bold">{a.name}</h2>
  <div className="flex flex-wrap gap-3"><Link className="bg-gray-900 text-white rounded-lg px-4 py-3 font-bold" href={'/my/artists/' + a.slug + '/new'}>새 작품 등록</Link>
  <Link className="border rounded-lg px-4 py-3" href={'/artist/' + a.slug}>작품 보기 · 수정 · 삭제</Link></div>
- <p className="text-sm text-gray-500">갤러리에서 작품을 선택하고 ‘작품 상세 보기’를 누르면 수정·삭제할 수 있어요.</p>
+ <p className="text-sm text-gray-500">갤러리에서 작품을 누르면 상세 페이지에서 수정·삭제할 수 있어요.</p>
  </section>)}
  {!error && !artists?.length && <p>아직 연결된 작가가 없습니다. 기존 작가라면 로그인 계정 연결을 운영자에게 요청해 주세요.</p>}
  {applications?.map(a => <p key={a.id}>{a.name}: {a.status === 'pending' ? '승인 대기 중' : a.status === 'approved' ? '승인 완료' : '신청이 승인되지 않았어요. 운영자에게 문의해 주세요.'}</p>)}

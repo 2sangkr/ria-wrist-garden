@@ -1,212 +1,44 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Artist, Work } from '@/lib/artists';
 import { workDateLabel } from '@/lib/artists';
 
 type Group = { label: string; works: Work[] };
+interface Props { artist: Artist; groups: Group[]; allWorks: Work[] }
 
-interface Props {
-  artist: Artist;
-  groups: Group[];
-  allWorks: Work[];
-}
-
-export default function ArtistGallery({ artist, groups, allWorks }: Props) {
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [likeCount, setLikeCount] = useState(0);
-  const [liked, setLiked] = useState(false);
-
-  const selectedWork = selectedIndex !== null ? allWorks[selectedIndex] : null;
-
-  const close = useCallback(() => setSelectedIndex(null), []);
-  const prev = useCallback(() => setSelectedIndex((i) => (i !== null && i > 0 ? i - 1 : i)), []);
-  const next = useCallback(
-    () => setSelectedIndex((i) => (i !== null && i < allWorks.length - 1 ? i + 1 : i)),
-    [allWorks.length]
-  );
-
+export default function ArtistGallery({ artist, groups }: Props) {
+  const [view, setView] = useState<'grid' | 'large'>('grid');
   useEffect(() => {
-    const work = selectedIndex !== null ? allWorks[selectedIndex] : null;
-    if (!work?.id) { setLikeCount(0); setLiked(false); return; }
-    const workId = String(work.id);
-    let vid = localStorage.getItem('vid') ?? '';
-    if (!vid) { vid = crypto.randomUUID(); localStorage.setItem('vid', vid); }
-    fetch(`/api/likes?work_id=${workId}&visitor_id=${vid}`)
-      .then(r => r.json())
-      .then(d => { setLikeCount(d.count ?? 0); setLiked(d.liked ?? false); })
-      .catch(() => {});
-  }, [selectedIndex, allWorks]);
-
-  async function toggleLike() {
-    const work = selectedIndex !== null ? allWorks[selectedIndex] : null;
-    if (!work?.id) return;
-    const workId = String(work.id);
-    let vid = localStorage.getItem('vid') ?? '';
-    if (!vid) { vid = crypto.randomUUID(); localStorage.setItem('vid', vid); }
-    const prev = { likeCount, liked };
-    setLikeCount(liked ? likeCount - 1 : likeCount + 1);
-    setLiked(!liked);
-    try {
-      const r = await fetch('/api/likes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ work_id: workId, visitor_id: vid }),
-      });
-      const d = await r.json();
-      setLikeCount(d.count ?? (prev.liked ? prev.likeCount - 1 : prev.likeCount + 1));
-      setLiked(d.liked ?? !prev.liked);
-    } catch {
-      setLikeCount(prev.likeCount);
-      setLiked(prev.liked);
-    }
+    try { if (sessionStorage.getItem('gallery-view') === 'large') setView('large'); } catch {}
+  }, []);
+  function changeView(next: 'grid' | 'large') {
+    setView(next);
+    try { sessionStorage.setItem('gallery-view', next); } catch {}
   }
-
-  useEffect(() => {
-    if (selectedIndex === null) return;
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') close();
-      if (e.key === 'ArrowLeft') prev();
-      if (e.key === 'ArrowRight') next();
-    };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, [selectedIndex, close, prev, next]);
-
-  useEffect(() => {
-    document.body.style.overflow = selectedIndex !== null ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [selectedIndex]);
-
-  return (
-    <>
-      {/* 그리드 */}
-      <div className="pb-20 space-y-14">
-        {groups.map((group) => (
-          <div key={group.label}>
-            <div className="flex items-center gap-3 mb-6">
-              <span className="text-[13px] font-bold text-gray-900">{group.label}</span>
-              <div className="flex-1 h-px bg-gray-200" />
+  return <div className="pb-20 space-y-10">
+    <div className="flex justify-end gap-2" role="group" aria-label="작품 보기 방식">
+      {(['grid', 'large'] as const).map(mode => <button key={mode} type="button" aria-pressed={view === mode} onClick={() => changeView(mode)} className={'rounded-lg border px-4 py-2 text-sm font-bold ' + (view === mode ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-600 border-gray-200')}>
+        {mode === 'grid' ? '격자 보기' : '크게 보기'}
+      </button>)}
+    </div>
+    {groups.map(group => <section key={group.label}>
+      <div className="flex items-center gap-3 mb-6"><h3 className="text-[13px] font-bold text-gray-900">{group.label}</h3><div className="flex-1 h-px bg-gray-200" /></div>
+      <div className={view === 'grid' ? 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-8' : 'max-w-[640px] mx-auto space-y-12'}>
+        {group.works.map(work => <article key={work.slug} id={'work-' + work.slug}>
+          <Link href={`/artist/${artist.slug}/${work.slug}`} className="group block" aria-label={`${work.title} 작품 상세 보기`}>
+            <div className={(view === 'grid' ? 'aspect-[4/5]' : 'aspect-square') + ' overflow-hidden relative bg-gray-50 mb-3'}>
+              <Image src={work.image} alt={work.title} fill className={(view === 'grid' ? 'object-cover' : 'object-contain') + ' group-hover:scale-[1.02] transition-transform duration-300'} sizes={view === 'grid' ? '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw' : '(max-width: 640px) 100vw, 640px'} />
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-8">
-              {group.works.map((work) => {
-                const globalIndex = allWorks.findIndex((w) => w.slug === work.slug);
-                return (
-                  <button
-                    key={work.slug}
-                    onClick={() => setSelectedIndex(globalIndex)}
-                    className="group text-left"
-                  >
-                    <div className="aspect-[4/5] overflow-hidden relative bg-gray-100 mb-3">
-                      <Image
-                        src={work.image}
-                        alt={work.title}
-                        fill
-                        className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
-                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                      />
-                    </div>
-                    <p className="text-[15px] sm:text-[16px] font-bold text-gray-900 leading-snug line-clamp-2">{work.title}</p>
-                    <p className="text-[11px] text-gray-500 mt-1">
-                      {work.materials.length > 0 ? `${work.materials.join(', ')} · ` : ''}{workDateLabel(work)}
-                    </p>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        ))}
+            <h4 className={view === 'grid' ? 'text-[15px] sm:text-[16px] font-bold text-gray-900 leading-snug line-clamp-2' : 'text-xl font-bold text-gray-900'}>{work.title}</h4>
+          </Link>
+          <p className="text-xs text-gray-500 mt-1">{work.materials.length ? work.materials.join(', ') + ' · ' : ''}{workDateLabel(work)}</p>
+          {view === 'large' && work.description && <p className="mt-3 whitespace-pre-wrap text-sm text-gray-700">{work.description}</p>}
+          {view === 'large' && <Link href={`/artist/${artist.slug}/${work.slug}`} className="inline-block mt-3 text-sm underline underline-offset-4">작품 상세 보기 →</Link>}
+        </article>)}
       </div>
-
-      {/* 라이트박스 */}
-      {selectedWork && selectedIndex !== null && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70"
-          onClick={close}
-        >
-          <div
-            className="bg-white rounded-2xl overflow-hidden w-full mx-4 flex flex-col"
-            style={{ maxWidth: 480, maxHeight: '92vh' }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* 이미지 영역 */}
-            <div className="relative w-full bg-gray-50" style={{ aspectRatio: '1 / 1' }}>
-              <Image
-                src={selectedWork.image}
-                alt={selectedWork.title}
-                fill
-                className="object-contain"
-                sizes="480px"
-                priority
-              />
-
-              {/* 닫기 */}
-              <button
-                onClick={close}
-                className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/25 hover:bg-black/50 flex items-center justify-center text-white text-[14px] transition-colors"
-                aria-label="닫기"
-              >
-                ✕
-              </button>
-
-              {/* 이전 */}
-              {selectedIndex > 0 && (
-                <button
-                  onClick={prev}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/25 hover:bg-black/50 flex items-center justify-center text-white text-[18px] transition-colors"
-                  aria-label="이전 작품"
-                >
-                  ←
-                </button>
-              )}
-
-              {/* 다음 */}
-              {selectedIndex < allWorks.length - 1 && (
-                <button
-                  onClick={next}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/25 hover:bg-black/50 flex items-center justify-center text-white text-[18px] transition-colors"
-                  aria-label="다음 작품"
-                >
-                  →
-                </button>
-              )}
-            </div>
-
-            {/* 정보 */}
-            <div className="px-5 py-4 shrink-0">
-              <div className="flex items-center justify-between gap-3">
-                <p className="text-[16px] font-bold text-gray-900 leading-snug">{selectedWork.title}</p>
-                <button onClick={toggleLike} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', background: 'none', border: 'none', padding: 0, flexShrink: 0 }}>
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill={liked ? '#f43f5e' : 'white'} stroke="#f43f5e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                  </svg>
-                  {likeCount > 0 && <span style={{ fontSize: '13px', fontWeight: 500, color: '#f43f5e' }}>{likeCount}</span>}
-                </button>
-              </div>
-              <p className="text-[12px] text-gray-400 mt-1">{workDateLabel(selectedWork)}</p>
-              {selectedWork.materials.length > 0 && (
-                <p className="text-[12px] text-gray-400 mt-0.5">{selectedWork.materials.join(' · ')}</p>
-              )}
-              <Link href={`/artist/${artist.slug}/${selectedWork.slug}`} className="inline-block mt-3 rounded-lg border border-gray-300 px-4 py-2 text-sm font-bold">작품 상세 보기</Link>
-              <div className="flex items-center gap-3 mt-4 pt-3 border-t border-gray-100">
-                <div
-                  className="w-8 h-8 shrink-0 flex items-center justify-center"
-                  style={{
-                    background: artist.profileColor,
-                    borderRadius: '60% 40% 55% 45% / 50% 60% 40% 50%',
-                  }}
-                >
-                  <span className="text-[12px] font-bold text-white/80 select-none">{artist.name[0]}</span>
-                </div>
-                <p className="text-[13px] font-medium text-gray-700">{artist.name}</p>
-                <p className="ml-auto text-[11px] text-gray-400">{selectedIndex + 1} / {allWorks.length}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
-  );
+    </section>)}
+  </div>;
 }

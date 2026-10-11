@@ -78,8 +78,8 @@ export default async function WorkDetailPage({ params }: Props) {
       <div className="max-w-[600px] mx-auto px-5 sm:px-8 py-8">
 
         {/* 뒤로가기 */}
-        <Link href={`/artist/${slug}`} className="text-[12px] text-gray-400 hover:text-gray-700 transition-colors">
-          ← {artist.name}
+        <Link href={`/artist/${slug}#work-${workSlug}`} className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+          ← {artist.name} 갤러리
         </Link>
 
         {/* 이미지 */}
@@ -88,7 +88,7 @@ export default async function WorkDetailPage({ params }: Props) {
             src={work.image}
             alt={work.title}
             fill
-            className="object-cover"
+            className="object-contain"
             sizes="(max-width: 600px) 100vw, 600px"
             priority
           />

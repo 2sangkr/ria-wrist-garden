@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import ShareButton from '@/components/ui/ShareButton';
 import AccountMenu from '@/components/account/AccountMenu';
 
@@ -11,6 +12,12 @@ const NAV_LINKS = [
 
 export default function SiteHeader({ accountsEnabled = false }: { accountsEnabled?: boolean }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const [menuPath, setMenuPath] = useState(pathname);
+  if (menuPath !== pathname) {
+    setMenuPath(pathname);
+    setMenuOpen(false);
+  }
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b-2 border-gray-900">
