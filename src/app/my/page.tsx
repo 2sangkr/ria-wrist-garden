@@ -11,6 +11,7 @@ export default async function MyPage() {
  ctx.client.rpc('is_gallery_admin')
  ]);
  const ids = (memberships ?? []).map(m => m.artist_id);
+ const pending = applications?.some(a => a.status === 'pending');
  const { data: artists } = admin ? await ctx.client.from('artists').select('id,name,slug').order('sort_order')
  : ids.length ? await ctx.client.from('artists').select('id,name,slug').in('id',ids) : { data: [] };
  return <div className="max-w-xl mx-auto px-5 py-12 space-y-6"><h1 className="text-3xl font-bold">내 작품</h1>
@@ -24,6 +25,7 @@ export default async function MyPage() {
  </section>)}
  {!error && !artists?.length && <p>아직 연결된 작가가 없습니다. 기존 작가라면 로그인 계정 연결을 운영자에게 요청해 주세요.</p>}
  {applications?.map(a => <p key={a.id}>{a.name}: {a.status === 'pending' ? '승인 대기 중' : a.status === 'approved' ? '승인 완료' : '신청이 승인되지 않았어요. 운영자에게 문의해 주세요.'}</p>)}
- <div className="flex flex-wrap gap-5"><Link href="/my/apply">작가 신청</Link><Link href="/my/trash">휴지통</Link>{admin && <Link href="/my/admin">신청 관리</Link>}</div>
+ <p className="text-sm text-gray-500">한 계정으로 여러 작가를 관리할 수 있습니다. 작가마다 운영자의 승인이 필요합니다.</p>
+ <div className="flex flex-wrap gap-5">{pending ? <span role="status" className="text-gray-500">작가 신청을 검토 중입니다</span> : <Link href="/my/apply">{ids.length ? '다른 작가 추가 신청' : '작가 등록 신청'}</Link>}<Link href="/my/trash">휴지통</Link>{admin && <Link href="/my/admin">신청 관리</Link>}</div>
  <form action={logout}><button className="text-gray-500">로그아웃</button></form></div>;
 }
