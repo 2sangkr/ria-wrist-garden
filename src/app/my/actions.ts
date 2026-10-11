@@ -1,4 +1,5 @@
 'use server';
+import { sendTelegram } from '@/lib/telegram';
 import { accountContext, accountClient } from '@/lib/account-auth';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
@@ -75,6 +76,7 @@ export async function applyArtist(_state: ActionResult, form: FormData): Promise
     return { error: '필수 항목과 작품 보관 안내 확인을 입력해 주세요.' };
   const { error } = await ctx.client.from('artist_applications').insert({ user_id: ctx.user.id, name, bio, contact_email: email, referral });
   if (error) return { error: '신청하지 못했어요. 대기 중인 신청이 있는지 확인해 주세요.' };
+  try { await sendTelegram('📮 <b>작가 등록 신청 도착!</b>\n\n신청 관리에서 확인해 주세요.\nhttps://mymomo.gallery/my/admin'); } catch { console.error('Artist application notification failed'); }
   revalidatePath('/my'); redirect('/my');
 }
 export async function reviewApplication(_state: ActionResult, form: FormData): Promise<ActionResult> {

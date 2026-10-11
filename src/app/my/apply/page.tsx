@@ -1,10 +1,12 @@
 import { accountContext } from '@/lib/account-auth';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import ActionForm from '@/components/account/ActionForm';
 import { applyArtist } from '../actions';
 export const dynamic = 'force-dynamic';
 export default async function ApplyPage() {
- const ctx = (await accountContext(true))!;
+ const ctx = await accountContext();
+ if (!ctx) redirect('/login?next=/my/apply');
  const [{ data: memberships, error: membershipError }, { data: pending, error: applicationError }] = await Promise.all([
  ctx.client.from('artist_memberships').select('artist_id').eq('user_id', ctx.user.id),
  ctx.client.from('artist_applications').select('id').eq('user_id', ctx.user.id).eq('status', 'pending')

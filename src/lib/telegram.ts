@@ -1,11 +1,14 @@
 export async function sendTelegram(text: string, chatId?: string) {
   const token = process.env.TELEGRAM_BOT_TOKEN!;
   const id = chatId ?? process.env.TELEGRAM_CHAT_ID!;
-  await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+  if (!token || !id) throw new Error('Telegram configuration missing');
+  const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ chat_id: id, text, parse_mode: 'HTML' }),
+    signal: AbortSignal.timeout(10000),
   });
+  if (!response.ok || !(await response.json()).ok) throw new Error('Telegram delivery failed');
 }
 
 function delta(today: number, yesterday: number): string {

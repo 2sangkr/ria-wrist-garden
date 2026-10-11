@@ -6,8 +6,7 @@ import { ViewTracker } from '@/components/ui/ViewTracker';
 
 export const dynamic = 'force-dynamic';
 
-const GOOGLE_FORM_URL =
-  'https://docs.google.com/forms/d/e/1FAIpQLSdpyTuxurRhzBDfW11KMUoHK6-Osj4DAstCerCGaUyr7z2AyA/viewform';
+const APPLY_URL = '/my/apply';
 
 const EMPTY_SLOTS: Artist[] = [
   { id: 'empty-1', slug: '', name: '', tags: [], bio: '', profileColor: '', isEmpty: true },
@@ -58,9 +57,9 @@ export default async function HomePage() {
               오늘의 낙서가 내일의 멋진 전시회가 됩니다.
             </p>
             <a
-              href={GOOGLE_FORM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={APPLY_URL}
+
+
               className="inline-block w-fit bg-white text-gray-900 text-[12px] sm:text-[13px] md:text-[14px] font-black px-5 sm:px-6 py-3 sm:py-3.5 mt-1 hover:opacity-85 transition-opacity"
             >
               작가로 등록하고 나만의 갤러리 시작
@@ -106,9 +105,9 @@ export default async function HomePage() {
         <div className="mt-8">
           <h3 className="text-[15px] font-black text-gray-900 mb-3">작가가 되고 싶다면</h3>
           <a
-            href={GOOGLE_FORM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+            href={APPLY_URL}
+
+
             className="inline-block text-[13px] font-bold text-white bg-gray-900 px-6 py-3 hover:opacity-85 transition-opacity"
           >
             나도 작가 되기 →
@@ -138,9 +137,9 @@ export default async function HomePage() {
               return (
                 <a
                   key={artist.id}
-                  href={GOOGLE_FORM_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={APPLY_URL}
+
+
                   className="group flex flex-col items-center justify-center gap-3 aspect-[4/5] border-[1.5px] border-dashed border-gray-300 hover:border-gray-900 transition-colors"
                 >
                   <span className="text-[36px] font-light leading-none text-gray-300 group-hover:text-gray-900 transition-colors">+</span>
