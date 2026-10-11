@@ -23,6 +23,7 @@ const eyebrowFont = { fontFamily: "'Archivo Black', 'Noto Sans KR', sans-serif" 
 
 export default async function HomePage() {
   const realArtists = await getAllArtistsWithWorks();
+  const workCount = realArtists.reduce((total, artist) => total + (artist.works?.length ?? 0), 0);
   const ARTISTS = [...realArtists, ...EMPTY_SLOTS];
 
   return (
@@ -117,14 +118,18 @@ export default async function HomePage() {
 
       {/* ══ 작가 그리드 ══ */}
       <section className="max-w-[1280px] mx-auto px-5 sm:px-8 py-14 sm:py-20 md:py-24">
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2 border-b-2 border-gray-900 pb-5 mb-10 sm:mb-14">
-          <div>
-            <span className="text-[11px] font-bold tracking-[0.2em] text-gray-400" style={eyebrowFont}>ARTISTS</span>
-            <h2 className="mt-1.5 text-[26px] sm:text-[36px] md:text-[42px] font-black text-gray-900">등록 작가</h2>
-          </div>
-          <span className="text-[12px] sm:text-[13px] text-gray-500 font-medium">
-            현재 {realArtists.length}명의 작가가 활동 중입니다
-          </span>
+        <div className="border-b-2 border-gray-900 pb-6 mb-10 sm:mb-14">
+          <h2 className="text-[11px] font-bold tracking-[0.2em] text-gray-400" style={eyebrowFont}>ARTISTS</h2>
+          <dl className="mt-5 flex flex-wrap items-baseline gap-x-8 sm:gap-x-12 gap-y-3 text-gray-900">
+            <div className="flex items-baseline gap-3">
+              <dt className="text-[13px] sm:text-[16px] font-medium">등록 작가</dt>
+              <dd className="flex items-baseline gap-1"><span className="text-[42px] sm:text-[56px] font-black leading-none tracking-tight tabular-nums">{realArtists.length.toLocaleString('ko-KR')}</span><span className="text-[13px] sm:text-[16px]">명</span></dd>
+            </div>
+            <div className="flex items-baseline gap-3">
+              <dt className="text-[13px] sm:text-[16px] font-medium">작품</dt>
+              <dd className="flex items-baseline gap-1"><span className="text-[42px] sm:text-[56px] font-black leading-none tracking-tight tabular-nums">{workCount.toLocaleString('ko-KR')}</span><span className="text-[13px] sm:text-[16px]">점</span></dd>
+            </div>
+          </dl>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 sm:gap-7 md:gap-8">
