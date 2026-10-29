@@ -17,7 +17,7 @@ export default async function ApplicationAdmin({ searchParams }: { searchParams:
  ctx.client.from('artists').select('id,name,slug').order('sort_order')
  ]);
  return <div className="max-w-2xl mx-auto px-5 py-12 space-y-6"><h1 className="text-3xl font-bold">작가 신청 관리</h1>
- <nav aria-label="신청 상태" className="flex gap-6 border-b"><Link href="/my/admin" aria-current={!completed ? 'page' : undefined} className={'py-3 border-b-2 ' + (!completed ? 'border-gray-900 font-bold' : 'border-transparent text-gray-500')}>대기 중</Link><Link href="/my/admin?tab=completed" aria-current={completed ? 'page' : undefined} className={'py-3 border-b-2 ' + (completed ? 'border-gray-900 font-bold' : 'border-transparent text-gray-500')}>처리 완료</Link></nav>
+ <nav aria-label="신청 상태" className="flex gap-6 border-b"><a href="/my/admin" aria-current={!completed ? 'page' : undefined} className={'inline-flex min-h-12 items-center px-3 py-3 border-b-2 ' + (!completed ? 'border-gray-900 font-bold' : 'border-transparent text-gray-500')}>대기 중</a><a href="/my/admin?tab=completed" aria-current={completed ? 'page' : undefined} className={'inline-flex min-h-12 items-center px-3 py-3 border-b-2 ' + (completed ? 'border-gray-900 font-bold' : 'border-transparent text-gray-500')}>처리 완료</a></nav>
  {!completed && <p className="text-sm text-gray-500">기존 작가를 선택하면 신청자의 로그인 계정에 연결됩니다. 신청자 본인인지 확인한 후 처리하세요.</p>}
  {error || artistError ? <p role="alert">신청 정보를 불러오지 못했어요. 잠시 후 다시 시도해 주세요.</p> : !applications?.length ? <p>{completed ? '처리 완료된 신청이 없습니다.' : '대기 중인 신청이 없습니다.'}</p> : applications.map(a => {
  const artist = artists?.find(v => v.id === a.artist_id);
