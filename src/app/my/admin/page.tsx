@@ -26,7 +26,9 @@ export default async function ApplicationAdmin({ searchParams }: { searchParams:
  <div className="overflow-x-auto"><table className="w-full table-fixed text-left text-sm"><caption className="sr-only">등록 작가별 가입일과 연락 이메일</caption><thead className="border-b"><tr><th scope="col" className="w-1/4 py-3 pr-2">작가명</th><th scope="col" className="w-1/4 py-3 pr-2">가입일</th><th scope="col" className="w-1/2 py-3">연락 이메일</th></tr></thead><tbody>{artists?.map(artist => {
  const records = applications?.filter(a => a.artist_id === artist.id) ?? [];
  const firstApproval = records.find(a => a.reviewed_at)?.reviewed_at;
- const emails = [...new Set(records.map(a => a.contact_email).filter(Boolean))];
+ // Legacy artist contact confirmed by the operator; this does not link login accounts.
+ const contactRecords = records.length || artist.slug !== 'evan' ? records : (applications?.filter(a => a.artist_id === artists?.find(v => v.slug === 'artist-832f5f27-6d37-4481-ba2e-d85eb15c2e8a')?.id) ?? []);
+ const emails = [...new Set(contactRecords.map(a => a.contact_email).filter(Boolean))];
  return <tr key={artist.id} className="border-b align-top"><th scope="row" className="py-4 pr-2 font-medium break-words"><Link className="underline underline-offset-4" href={'/artist/' + artist.slug}>{artist.name}</Link></th><td className="py-4 pr-2">{firstApproval ? new Date(firstApproval).toLocaleDateString('ko-KR', {timeZone:'Asia/Seoul'}) : '미확인'}</td><td className="py-4 break-all">{emails.length ? emails.map(email => <div key={email}>{email}</div>) : '미확인'}</td></tr>;
  })}</tbody></table>{!artists?.length && <p className="py-4">등록된 작가가 없습니다.</p>}</div></> : !applications?.length ? <p>{completed ? '처리 완료된 신청이 없습니다.' : '대기 중인 신청이 없습니다.'}</p> : applications.map(a => {
  const artist = artists?.find(v => v.id === a.artist_id);
