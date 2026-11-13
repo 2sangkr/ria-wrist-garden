@@ -27,3 +27,10 @@ body {
 
 a { color: inherit; text-decoration: none; }
 ul, ol { list-style: none; }
+
+@keyframes new-badge-glow {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.5); text-shadow: 0 0 6px #fbbf24; }
+}
+.new-badge { animation: new-badge-glow 2.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .new-badge { animation: none; } }

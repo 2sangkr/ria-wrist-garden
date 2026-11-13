@@ -1,4 +1,5 @@
 export type Work = {
+  uploadedAt?: string;
   description?: string;
   id?: number;
   slug: string;
@@ -16,6 +17,7 @@ export function workDateLabel(work: Work): string {
 }
 
 export type Artist = {
+  registeredAt?: string;
   id: string;
   slug: string;
   name: string;

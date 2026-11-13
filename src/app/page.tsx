@@ -18,10 +18,16 @@ const ARTIST_AVATARS: Record<string, string> = {
   dhee: '/artists/dhee.jpg',
 };
 
+function isRecent(date: string | undefined, now: number) {
+  const timestamp = Date.parse(date ?? '');
+  return timestamp <= now && timestamp > now - 7 * 24 * 60 * 60 * 1000;
+}
+
 const eyebrowFont = { fontFamily: "'Archivo Black', 'Noto Sans KR', sans-serif" };
 
 export default async function HomePage() {
   const realArtists = await getAllArtistsWithWorks();
+  const now = Date.now();
   const workCount = realArtists.reduce((total, artist) => total + (artist.works?.length ?? 0), 0);
   const ARTISTS = [...realArtists, ...EMPTY_SLOTS];
 
@@ -148,6 +154,8 @@ export default async function HomePage() {
               );
             }
 
+            const hasNewWork = artist.works?.some(work => isRecent(work.uploadedAt, now));
+            const isNewArtist = isRecent(artist.registeredAt, now);
             const thumb = ARTIST_AVATARS[artist.slug] ?? artist.works?.[0]?.image;
 
             return (
@@ -166,8 +174,9 @@ export default async function HomePage() {
                       <span className="text-[40px] font-black text-white/70 select-none">{artist.name[0]}</span>
                     </div>
                   )}
+                  {hasNewWork && <span aria-label="최근 7일 내 새 작품" className="new-badge absolute left-2 top-2 z-10 rounded-full bg-white px-2 py-1 text-[11px] font-black text-amber-700 shadow-sm">✦ New</span>}
                 </div>
-                <h3 className="mt-4 text-[18px] sm:text-[22px] font-black text-gray-900">{artist.name}</h3>
+                <h3 className="mt-4 text-[18px] sm:text-[22px] font-black text-gray-900">{artist.name}{isNewArtist && <span aria-label="최근 7일 내 등록 작가" className="new-badge ml-1 inline-block align-super text-[10px] font-black text-amber-700">✦ New</span>}</h3>
                 <p className="mt-1 text-[11px] sm:text-[12px] text-gray-500 font-medium">{artist.tags.join(' ')}</p>
                 <span className="mt-3 self-start text-[11px] font-bold border-2 border-gray-900 px-3 py-1.5 group-hover:bg-gray-900 group-hover:text-white transition-colors">
                   둘러보기

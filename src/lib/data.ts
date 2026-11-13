@@ -7,6 +7,7 @@ import type { Artist, Work } from './artists';
 function mapWork(w: any): Work {
   return {
     id: w.id,
+    uploadedAt: w.uploaded_at ?? undefined,
     description: w.description,
     slug: w.slug,
     title: w.title,
@@ -21,6 +22,7 @@ function mapWork(w: any): Work {
 function mapArtist(a: any, works?: Work[]): Artist {
   return {
     id: a.id,
+    registeredAt: a.registered_at ?? undefined,
     slug: a.slug,
     name: a.name,
     tags: a.tags,
