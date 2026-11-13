@@ -47,7 +47,7 @@ export default function AboutPage() {
               내 작품을 올리고, 친구들에게 링크를 보내보세요.
             </p>
             <p className="mt-4">
-              친구가 내 페이지를 보고 "나도 올리고 싶다"고 한다면—<br />
+              친구가 내 페이지를 보고 "나도 올리고 싶다" 하면<br />
               그 친구도 이곳의 작가가 될 수 있어요.
             </p>
           </section>
