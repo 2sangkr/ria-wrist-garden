@@ -11,6 +11,7 @@ export default function InstallButton() {
   const prompt = useRef<InstallPrompt | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   const [installed, setInstalled] = useState(false);
+  const [canInstall, setCanInstall] = useState(false);
   const [ios, setIos] = useState(false);
 
   useEffect(() => {
@@ -21,6 +22,7 @@ export default function InstallButton() {
     const capture = (event: Event) => {
       event.preventDefault();
       prompt.current = event as InstallPrompt;
+      setCanInstall(true);
     };
     const complete = () => { prompt.current = null; setInstalled(true); dialog.current?.close(); };
     standalone.addEventListener('change', sync);
@@ -37,6 +39,8 @@ export default function InstallButton() {
     const pending = prompt.current;
     if (pending) {
       prompt.current = null;
+      setCanInstall(false);
+      dialog.current?.close();
       try {
         await pending.prompt();
         await pending.userChoice;
@@ -49,16 +53,19 @@ export default function InstallButton() {
   if (installed) return null;
 
   return <>
-    <button onClick={install} aria-label="홈 화면에 추가" className="inline-flex shrink-0 items-center gap-1 min-h-11 rounded-lg px-1 sm:px-2 text-[12px] sm:text-[13px] font-bold text-gray-900 hover:bg-gray-50">
+    <button onClick={() => dialog.current?.showModal()} aria-label="홈 화면에 추가하기" className="inline-flex shrink-0 items-center gap-1 min-h-11 rounded-lg px-1 sm:px-2 text-[12px] sm:text-[13px] font-bold text-gray-900 hover:bg-gray-50">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M4 16v5h16v-5" /></svg>
-      <span className="sm:hidden">홈에 추가</span><span className="hidden sm:inline">홈 화면에 추가</span>
+      <span>홈</span>
     </button>
     <dialog ref={dialog} aria-labelledby="install-title" className="w-[calc(100%-32px)] max-w-sm rounded-xl p-6 text-gray-900 backdrop:bg-black/40" onClick={event => { if (event.target === event.currentTarget) dialog.current?.close(); }}>
-      <h2 id="install-title" className="text-lg font-bold">홈 화면에 추가</h2>
+      <h2 id="install-title" className="text-lg font-bold">홈 화면에 추가하기</h2>
       <p className="mt-3 text-sm leading-7">{ios
         ? 'Safari에서 공유 버튼을 누른 뒤 ‘홈 화면에 추가’를 선택해 주세요.'
         : '브라우저 메뉴에서 ‘홈 화면에 추가’ 또는 ‘앱 설치’를 선택해 주세요. 앱 안에서 열었다면 Chrome이나 Safari로 열어 주세요.'}</p>
-      <form method="dialog" className="mt-5 text-right"><button className="min-h-11 rounded-lg bg-gray-900 px-5 text-sm font-bold text-white">확인</button></form>
+      <div className="mt-5 flex justify-end gap-2">
+        {canInstall && <button onClick={install} className="min-h-11 rounded-lg bg-gray-900 px-5 text-sm font-bold text-white">홈 화면에 추가하기</button>}
+      <form method="dialog"><button className="min-h-11 rounded-lg bg-gray-100 px-5 text-sm font-bold text-gray-900">닫기</button></form>
+      </div>
     </dialog>
   </>;
 }
