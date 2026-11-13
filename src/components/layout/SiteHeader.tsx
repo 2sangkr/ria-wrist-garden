@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import ShareButton from '@/components/ui/ShareButton';
+import InstallButton from '@/components/ui/InstallButton';
 import AccountMenu from '@/components/account/AccountMenu';
 
 export default function SiteHeader({ accountsEnabled = false }: { accountsEnabled?: boolean }) {
@@ -15,8 +16,9 @@ export default function SiteHeader({ accountsEnabled = false }: { accountsEnable
             <span className="text-[8px] sm:text-[9px] font-bold text-gray-500 whitespace-nowrap">모든 아이의 모든 예술</span>
           </div>
         </Link>
-        <nav aria-label="초대 및 계정" className="flex shrink-0 items-center gap-2 sm:gap-5">
+        <nav aria-label="초대, 홈 화면 추가 및 계정" className="flex shrink-0 items-center gap-2 sm:gap-5">
           <ShareButton variant="plain" />
+          <InstallButton />
           {accountsEnabled && <AccountMenu />}
         </nav>
       </div>

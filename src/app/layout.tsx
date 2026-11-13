@@ -7,6 +7,8 @@ import { accountsEnabled } from '@/lib/account-settings';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://mymomo.gallery'),
+  appleWebApp: { capable: true, title: '모모갤러리', statusBarStyle: 'default' },
+  icons: { apple: '/apple-touch-icon.png' },
   title: { default: 'MY모모갤러리 — 모든 아이의 모든 예술', template: '%s | MY모모갤러리' },
   description: '마이모모갤러리(mymomo.gallery) — 아이들의 작품이 빛나는 온라인 갤러리. 어린이 작가들의 그림, 핸드메이드, 일러스트를 만나보세요.',
   keywords: [
