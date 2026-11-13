@@ -29,7 +29,14 @@ export default async function HomePage() {
   const realArtists = await getAllArtistsWithWorks();
   const now = Date.now();
   const workCount = realArtists.reduce((total, artist) => total + (artist.works?.length ?? 0), 0);
-  const ARTISTS = [...realArtists, ...EMPTY_SLOTS];
+  const rankedArtists = realArtists
+    .map(artist => ({
+      artist,
+      recentWorkCount: (artist.works ?? []).filter(work => isRecent(work.uploadedAt, now)).length,
+    }))
+    .sort((a, b) => b.recentWorkCount - a.recentWorkCount)
+    .map(({ artist }) => artist);
+  const ARTISTS = [...rankedArtists, ...EMPTY_SLOTS];
 
   return (
     <div className="min-h-screen bg-white">
