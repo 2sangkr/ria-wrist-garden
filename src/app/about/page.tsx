@@ -54,7 +54,7 @@ export default function AboutPage() {
 
           <section>
             <p>
-              모모갤러리는 지금도 새로운 작가를 기다리고 있어요.
+              모모갤러리는 언제나 새로운 작가를 기다립니다.
             </p>
           </section>
 
